@@ -15,12 +15,13 @@ interface SettingsRowProps {
   arrows?: boolean;
   href?: string;
   onClick?: () => void;
+  onHover?: () => void;
   /** Replaces the value slot (inputs). The row becomes a <label> for it. */
   children?: ReactNode;
   className?: string;
 }
 
-export function SettingsRow({ label, value, selected, state, size = 'sm', gold, onPrev, onNext, arrows, href, onClick, children, className }: SettingsRowProps) {
+export function SettingsRow({ label, value, selected, state, size = 'sm', gold, onPrev, onNext, arrows, href, onClick, onHover, children, className }: SettingsRowProps) {
   const classes = cls('settings-row', size === 'md' && 'settings-row--md', selected && 'is-selected', className);
   const labelEl = <span className={cls('settings-row__label', gold && 'is-gold')}>{label}</span>;
   const cyclers = selected && (onPrev || onNext);
@@ -39,13 +40,13 @@ export function SettingsRow({ label, value, selected, state, size = 'sm', gold, 
   if (href) {
     const external = /^https?:/.test(href);
     return (
-      <a className={classes} data-state={state} href={href} onClick={onClick} target={external ? '_blank' : undefined} rel={external ? 'noreferrer' : undefined}>
+      <a className={classes} data-state={state} href={href} onClick={onClick} onMouseEnter={onHover} target={external ? '_blank' : undefined} rel={external ? 'noreferrer' : undefined}>
         {labelEl}{valueEl}
       </a>
     );
   }
   if (children) {
-    return <label className={classes} data-state={state} onClick={onClick}>{labelEl}{valueEl}</label>;
+    return <label className={classes} data-state={state} onClick={onClick} onMouseEnter={onHover}>{labelEl}{valueEl}</label>;
   }
   const onKey = (e: KeyboardEvent) => {
     if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onClick?.(); }
@@ -53,7 +54,7 @@ export function SettingsRow({ label, value, selected, state, size = 'sm', gold, 
     if (selected && e.key === 'ArrowRight') onNext?.();
   };
   return (
-    <div className={classes} data-state={state} role="button" tabIndex={0} aria-pressed={selected} onClick={onClick} onKeyDown={onKey}>
+    <div className={classes} data-state={state} role="button" tabIndex={0} aria-pressed={selected} onClick={onClick} onMouseEnter={onHover} onKeyDown={onKey}>
       {labelEl}{valueEl}
     </div>
   );

@@ -4,6 +4,7 @@ import { App } from './App';
 import './styles/tokens.css';
 import './styles/components.css';
 import './styles/mobile.css';
+import './styles/desktop.css';
 import './styles/sheet.css';
 
 createRoot(document.getElementById('root')!).render(

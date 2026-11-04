@@ -50,6 +50,7 @@ export function fromHash(hash: string, cur: AppState): Partial<AppState> {
       if (!allIds().includes(b)) return { screen: 'projects' };
       return listIds(cur).includes(b) ? { screen: 'briefing', projId: b } : { screen: 'briefing', projId: b, listKey: 'featured' };
     }
+    case 'archive': return { screen: 'projects', listKey: 'all' };
     case 'about': return { screen: 'about', aboutTab: Math.max(0, ABOUT_SLUGS.indexOf(b)) };
     case 'experience':
     case 'skills':

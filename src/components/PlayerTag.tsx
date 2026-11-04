@@ -1,8 +1,9 @@
-export function Level({ value = 7, size = 'sm' }: { value?: number; size?: 'sm' | 'lg' }) {
+export function Level({ value = 7, size = 'sm', suffix }: { value?: number; size?: 'sm' | 'lg'; suffix?: string }) {
   return (
-    <span className={size === 'lg' ? 'level level--lg' : 'level'} aria-label={`Level ${value}`}>
+    <span className={size === 'lg' ? 'level level--lg' : 'level'} aria-label={suffix ? `${value} ${suffix}` : `Level ${value}`}>
       <span className="level__gem" />
       {value}
+      {suffix && <span className="level__suffix">{suffix}</span>}
     </span>
   );
 }
@@ -24,9 +25,10 @@ interface PlayerBlockProps {
   level?: number;
   /** Filled XP segments out of 10. */
   xp?: number;
+  levelSuffix?: string;
 }
 
-export function PlayerBlock({ name = 'TAIMOOR', initials = 'TA', status = 'Toronto, ON · Open to work', level = 7, xp = 8 }: PlayerBlockProps) {
+export function PlayerBlock({ name = 'TAIMOOR', initials = 'TA', status = 'Toronto, ON · Open to work', level = 7, xp = 8, levelSuffix }: PlayerBlockProps) {
   return (
     <div className="player-block">
       <div className="player-block__row">
@@ -38,7 +40,7 @@ export function PlayerBlock({ name = 'TAIMOOR', initials = 'TA', status = 'Toron
         {Array.from({ length: 10 }, (_, i) => <span key={i} className={i < xp ? 'on' : undefined} />)}
       </div>
       <div className="player-block__rule" />
-      <Level value={level} size="lg" />
+      <Level value={level} size="lg" suffix={levelSuffix} />
     </div>
   );
 }

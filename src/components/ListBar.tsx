@@ -1,4 +1,4 @@
-import { forwardRef, type ReactNode } from 'react';
+import { forwardRef, type CSSProperties, type ReactNode } from 'react';
 import { cls } from './cls';
 
 interface ListBarProps {
@@ -7,14 +7,17 @@ interface ListBarProps {
   disabled?: boolean;
   isNew?: boolean;
   featured?: boolean;
+  /** Right-aligned meta (e.g. a count). */
+  trailing?: ReactNode;
   state?: 'hover';
   className?: string;
+  style?: CSSProperties;
   onClick?: () => void;
   onMouseEnter?: () => void;
 }
 
 export const ListBar = forwardRef<HTMLButtonElement, ListBarProps>(function ListBar(
-  { label, selected, disabled, isNew, featured, state, className, onClick, onMouseEnter },
+  { label, selected, disabled, isNew, featured, trailing, state, className, style, onClick, onMouseEnter },
   ref,
 ) {
   return (
@@ -22,6 +25,7 @@ export const ListBar = forwardRef<HTMLButtonElement, ListBarProps>(function List
       ref={ref}
       type="button"
       className={cls('btn-reset list-bar', selected && 'is-selected', className)}
+      style={style}
       data-state={state}
       disabled={disabled}
       aria-pressed={selected}
@@ -30,6 +34,7 @@ export const ListBar = forwardRef<HTMLButtonElement, ListBarProps>(function List
     >
       {isNew && <span className="list-bar__new" aria-label="New" />}
       <span>{label}</span>
+      {trailing !== undefined && <span className="list-bar__trailing">{trailing}</span>}
       {featured && <span className="list-bar__featured" aria-label="Featured" />}
     </button>
   );
