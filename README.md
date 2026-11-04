@@ -27,6 +27,22 @@ npm run build      # type-check + production build
 | `#/contact` | Comms |
 | `#/components` | Component sheet: live mobile frames + every component state |
 
+## Colours and theming
+
+Every colour derives from a few **knobs** at the top of `src/styles/tokens.css`:
+
+| Knob | Controls | Example |
+| --- | --- | --- |
+| `--hue` | All background gradients, glows, panels, award rows, result cards | `25` red, `250` blue, `195` teal |
+| `--alt-shift` | Skills/Contact background hue, relative to `--hue` | `-15` nearby, `180` contrasting |
+| `--vivid` / `--light` / `--glow` | Background saturation, brightness, glow strength | `0` = greyscale backgrounds |
+| `--tint` | How much panels and cards pick up `--hue` | `0` = neutral grey |
+| `--hue-accent`, `--hue-info`, `--hue-alert`, `--hue-new`, `--hue-neutral` | Gold/amber, blue labels, alert red, NEW green, off-whites | |
+
+To experiment, open `#/components`. The **Theme lab** at the top has presets and sliders that recolour the page live.
+**Copy CSS** gives you the knob block to paste over the one in `tokens.css`. "Preview on the live site" applies the
+lab values to the real site in your browser only, with a badge in the corner to reset.
+
 ## Layout
 
 - `src/styles/tokens.css`: design tokens (colors, type, scenes)

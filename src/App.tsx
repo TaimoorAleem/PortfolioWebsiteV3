@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { DesktopApp } from './desktop/DesktopApp';
 import { MobileApp } from './mobile/MobileApp';
 import { ComponentSheet } from './sheet/ComponentSheet';
+import { ThemePreviewBadge } from './theme/ThemeLab';
 
 const isSheet = () => window.location.hash.startsWith('#/components');
 
@@ -31,10 +32,16 @@ export function App() {
   }, []);
 
   if (sheet) return <ComponentSheet />;
-  if (desktop) return <DesktopApp />;
   return (
-    <div className="app-root">
-      <div className="app-root__phone"><MobileApp /></div>
-    </div>
+    <>
+      {desktop ? (
+        <DesktopApp />
+      ) : (
+        <div className="app-root">
+          <div className="app-root__phone"><MobileApp /></div>
+        </div>
+      )}
+      <ThemePreviewBadge />
+    </>
   );
 }

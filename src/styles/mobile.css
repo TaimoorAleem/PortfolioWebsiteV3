@@ -19,9 +19,9 @@
   inset: -40px;
   filter: blur(20px);
   background:
-    radial-gradient(circle at 78% 22%, rgba(var(--glow-warm), 0.55) 0, rgba(var(--glow-warm), 0) 26%),
-    radial-gradient(circle at 86% 70%, rgba(var(--glow-warm-2), 0.35) 0, rgba(var(--glow-warm-2), 0) 20%),
-    radial-gradient(circle at 70% 12%, rgba(var(--glow-hot), 0.6) 0, rgba(var(--glow-hot), 0) 4%);
+    radial-gradient(circle at 78% 22%, oklch(var(--glow-warm) / calc(0.55 * var(--glow))) 0, oklch(var(--glow-warm) / 0) 26%),
+    radial-gradient(circle at 86% 70%, oklch(var(--glow-warm-2) / calc(0.35 * var(--glow))) 0, oklch(var(--glow-warm-2) / 0) 20%),
+    radial-gradient(circle at 70% 12%, oklch(var(--glow-hot) / calc(0.6 * var(--glow))) 0, oklch(var(--glow-hot) / 0) 4%);
 }
 .scene--home::after {
   inset: 0;
@@ -30,14 +30,14 @@
 .scene--haze { background: var(--scene-haze); }
 .scene--haze::after {
   inset: 0;
-  background: radial-gradient(ellipse at 70% 20%, rgba(var(--glow-warm), 0.35) 0, rgba(var(--glow-warm), 0) 45%), radial-gradient(ellipse at 50% 50%, rgba(0, 0, 0, 0) 30%, rgba(0, 0, 0, 0.6) 100%);
+  background: radial-gradient(ellipse at 70% 20%, oklch(var(--glow-warm) / calc(0.35 * var(--glow))) 0, oklch(var(--glow-warm) / 0) 45%), radial-gradient(ellipse at 50% 50%, rgba(0, 0, 0, 0) 30%, rgba(0, 0, 0, 0.6) 100%);
 }
 .scene--dark { background: var(--scene-dark); }
-.scene--dark::after { inset: 0; background: radial-gradient(ellipse at 90% 0%, rgba(var(--glow-dark), 0.3) 0, rgba(var(--glow-dark), 0) 50%); }
+.scene--dark::after { inset: 0; background: radial-gradient(ellipse at 90% 0%, oklch(var(--glow-dark) / calc(0.3 * var(--glow))) 0, oklch(var(--glow-dark) / 0) 50%); }
 .scene--comms { background: var(--scene-comms); }
 .scene--comms::after {
   inset: 0;
-  background: radial-gradient(circle at 80% 18%, rgba(var(--glow-spark), 0.5) 0, rgba(var(--glow-spark), 0) 3%), radial-gradient(ellipse at 50% 50%, rgba(0, 0, 0, 0) 30%, rgba(0, 0, 0, 0.6) 100%);
+  background: radial-gradient(circle at 80% 18%, oklch(var(--glow-spark) / calc(0.5 * var(--glow))) 0, oklch(var(--glow-spark) / 0) 3%), radial-gradient(ellipse at 50% 50%, rgba(0, 0, 0, 0) 30%, rgba(0, 0, 0, 0.6) 100%);
 }
 
 .m-player { position: absolute; right: 20px; top: 24px; z-index: 3; }

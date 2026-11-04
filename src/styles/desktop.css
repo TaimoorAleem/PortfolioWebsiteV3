@@ -25,31 +25,31 @@
 .d-scene { position: absolute; inset: -60px; filter: blur(24px); transition: opacity 400ms ease; }
 .d-scene--a {
   background:
-    radial-gradient(circle at 70% 28%, rgba(var(--glow-warm),0.55) 0, rgba(var(--glow-warm),0) 18%),
-    radial-gradient(circle at 88% 62%, rgba(var(--glow-warm-2),0.38) 0, rgba(var(--glow-warm-2),0) 14%),
-    radial-gradient(circle at 56% 76%, rgba(var(--glow-warm-3),0.3) 0, rgba(var(--glow-warm-3),0) 20%),
-    radial-gradient(circle at 80% 14%, rgba(var(--glow-hot),0.6) 0, rgba(var(--glow-hot),0) 3%),
-    radial-gradient(circle at 64% 46%, rgba(var(--glow-hot),0.45) 0, rgba(var(--glow-hot),0) 2.4%),
-    radial-gradient(circle at 93% 36%, rgba(var(--glow-hot),0.4) 0, rgba(var(--glow-hot),0) 2%),
-    radial-gradient(circle at 74% 84%, rgba(var(--glow-hot),0.35) 0, rgba(var(--glow-hot),0) 2.6%),
-    linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 46%, rgba(var(--glow-band),0.55) 49%, rgba(0,0,0,0) 53%, rgba(0,0,0,0) 76%, rgba(var(--glow-band),0.5) 79%, rgba(0,0,0,0) 83%),
+    radial-gradient(circle at 70% 28%, oklch(var(--glow-warm) / calc(0.55 * var(--glow))) 0, oklch(var(--glow-warm) / 0) 18%),
+    radial-gradient(circle at 88% 62%, oklch(var(--glow-warm-2) / calc(0.38 * var(--glow))) 0, oklch(var(--glow-warm-2) / 0) 14%),
+    radial-gradient(circle at 56% 76%, oklch(var(--glow-warm-3) / calc(0.3 * var(--glow))) 0, oklch(var(--glow-warm-3) / 0) 20%),
+    radial-gradient(circle at 80% 14%, oklch(var(--glow-hot) / calc(0.6 * var(--glow))) 0, oklch(var(--glow-hot) / 0) 3%),
+    radial-gradient(circle at 64% 46%, oklch(var(--glow-hot) / calc(0.45 * var(--glow))) 0, oklch(var(--glow-hot) / 0) 2.4%),
+    radial-gradient(circle at 93% 36%, oklch(var(--glow-hot) / calc(0.4 * var(--glow))) 0, oklch(var(--glow-hot) / 0) 2%),
+    radial-gradient(circle at 74% 84%, oklch(var(--glow-hot) / calc(0.35 * var(--glow))) 0, oklch(var(--glow-hot) / 0) 2.6%),
+    linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 46%, oklch(var(--glow-band) / calc(0.55 * var(--glow))) 49%, rgba(0,0,0,0) 53%, rgba(0,0,0,0) 76%, oklch(var(--glow-band) / calc(0.5 * var(--glow))) 79%, rgba(0,0,0,0) 83%),
     var(--scene-home);
 }
 .d-scene--b {
   background:
-    radial-gradient(circle at 72% 32%, rgba(var(--glow-comms),0.7) 0, rgba(var(--glow-comms),0) 24%),
-    radial-gradient(circle at 90% 70%, rgba(var(--glow-comms-2),0.45) 0, rgba(var(--glow-comms-2),0) 16%),
-    radial-gradient(circle at 66% 22%, rgba(var(--glow-spark),0.7) 0, rgba(var(--glow-spark),0) 1.6%),
-    radial-gradient(circle at 84% 48%, rgba(var(--glow-spark),0.55) 0, rgba(var(--glow-spark),0) 1.2%),
-    radial-gradient(circle at 58% 64%, rgba(var(--glow-spark),0.5) 0, rgba(var(--glow-spark),0) 1.4%),
-    radial-gradient(circle at 94% 18%, rgba(var(--glow-cool),0.4) 0, rgba(var(--glow-cool),0) 3%),
-    linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 54%, rgba(var(--glow-band-comms),0.6) 57%, rgba(0,0,0,0) 61%, rgba(0,0,0,0) 82%, rgba(var(--glow-band-comms),0.55) 85%, rgba(0,0,0,0) 89%),
+    radial-gradient(circle at 72% 32%, oklch(var(--glow-comms) / calc(0.7 * var(--glow))) 0, oklch(var(--glow-comms) / 0) 24%),
+    radial-gradient(circle at 90% 70%, oklch(var(--glow-comms-2) / calc(0.45 * var(--glow))) 0, oklch(var(--glow-comms-2) / 0) 16%),
+    radial-gradient(circle at 66% 22%, oklch(var(--glow-spark) / calc(0.7 * var(--glow))) 0, oklch(var(--glow-spark) / 0) 1.6%),
+    radial-gradient(circle at 84% 48%, oklch(var(--glow-spark) / calc(0.55 * var(--glow))) 0, oklch(var(--glow-spark) / 0) 1.2%),
+    radial-gradient(circle at 58% 64%, oklch(var(--glow-spark) / calc(0.5 * var(--glow))) 0, oklch(var(--glow-spark) / 0) 1.4%),
+    radial-gradient(circle at 94% 18%, oklch(var(--glow-cool) / calc(0.4 * var(--glow))) 0, oklch(var(--glow-cool) / 0) 3%),
+    linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 54%, oklch(var(--glow-band-comms) / calc(0.6 * var(--glow))) 57%, rgba(0,0,0,0) 61%, rgba(0,0,0,0) 82%, oklch(var(--glow-band-comms) / calc(0.55 * var(--glow))) 85%, rgba(0,0,0,0) 89%),
     var(--scene-comms);
 }
 .d-scene--c {
   background:
-    radial-gradient(ellipse at 86% 8%, rgba(var(--glow-dark),0.38) 0, rgba(var(--glow-dark),0) 38%),
-    radial-gradient(circle at 78% 20%, rgba(var(--glow-hot),0.3) 0, rgba(var(--glow-hot),0) 4%),
+    radial-gradient(ellipse at 86% 8%, oklch(var(--glow-dark) / calc(0.38 * var(--glow))) 0, oklch(var(--glow-dark) / 0) 38%),
+    radial-gradient(circle at 78% 20%, oklch(var(--glow-hot) / calc(0.3 * var(--glow))) 0, oklch(var(--glow-hot) / 0) 4%),
     var(--scene-dark);
 }
 .d-vignette {
@@ -114,7 +114,7 @@
 /* ---------- home ---------- */
 .d-news {
   position: absolute; left: 560px; top: 96px; width: 560px; padding: 14px 20px 14px 56px;
-  background: linear-gradient(90deg, rgba(18,14,10,0) 0%, rgba(18,14,10,0.5) 22%);
+  background: linear-gradient(90deg, oklch(var(--sf) / 0) 0%, oklch(var(--sf) / 0.5) 22%);
   display: flex; gap: 16px; align-items: flex-start;
 }
 .d-news__tag { display: flex; align-items: center; gap: 10px; font-size: 22px; line-height: 26px; font-weight: 600; color: var(--c-gold); }
@@ -134,13 +134,13 @@
 .d-menu__subs { overflow: hidden; margin-top: -8px; transition: height 160ms var(--ease); }
 .d-menu__subs .sub-row { height: 24px; align-items: center; margin-left: -8px; flex-wrap: nowrap; }
 
-.d-latest { position: absolute; left: 880px; top: 420px; width: 440px; display: flex; flex-direction: column; background: rgba(18, 14, 10, 0.55); }
+.d-latest { position: absolute; left: 880px; top: 420px; width: 440px; display: flex; flex-direction: column; background: oklch(var(--sf) / 0.55); }
 .d-latest__hero { position: relative; display: block; height: 150px; overflow: hidden; background: var(--hatch), var(--c-media); }
 .d-latest__word {
   position: absolute; left: 18px; top: 28px; font-family: var(--f-mono); font-size: 64px; line-height: 64px; letter-spacing: 0.04em;
   color: var(--c-new); text-shadow: 1px 0 0 rgba(255,80,80,0.6), -1px 0 0 rgba(80,160,255,0.6);
 }
-.d-latest__scan { position: absolute; inset: 0; background: repeating-linear-gradient(180deg, rgba(0,0,0,0) 0 3px, rgba(20,16,12,0.55) 3px 6px); }
+.d-latest__scan { position: absolute; inset: 0; background: repeating-linear-gradient(180deg, rgba(0,0,0,0) 0 3px, oklch(var(--sf) / 0.55) 3px 6px); }
 .d-latest__cap { position: absolute; right: 10px; bottom: 8px; font-family: var(--f-mono); font-size: 10px; color: var(--c-faint); text-shadow: none; }
 .d-latest__body { padding: 12px 14px 14px; display: flex; flex-direction: column; gap: 2px; }
 .d-latest__title { font-size: 15px; line-height: 20px; font-weight: 600; }
@@ -162,7 +162,7 @@
 /* ---------- projects ---------- */
 .d-loaded {
   position: absolute; left: 620px; top: 112px; width: 220px; height: 30px; padding: 0 10px;
-  background: rgba(18, 14, 10, 0.7); display: flex; align-items: center; gap: 10px;
+  background: oklch(var(--sf) / 0.7); display: flex; align-items: center; gap: 10px;
 }
 .d-loaded div { display: flex; flex-direction: column; }
 .d-loaded b { font-size: 11px; line-height: 12px; font-weight: 600; letter-spacing: 0.06em; }
@@ -186,7 +186,7 @@
 .d-proj-media { position: absolute; left: 880px; top: 200px; width: 440px; height: 580px; }
 .d-proj-media__frame {
   position: absolute; left: 70px; top: 0; width: 300px; height: 540px;
-  background: repeating-linear-gradient(135deg, rgba(255,255,255,0.07) 0 1px, rgba(0,0,0,0) 1px 11px), rgba(60,50,40,0.25);
+  background: repeating-linear-gradient(135deg, rgba(255,255,255,0.07) 0 1px, rgba(0,0,0,0) 1px 11px), oklch(var(--sf-warm) / 0.25);
   display: flex; align-items: center; justify-content: center;
 }
 .d-proj-media__frame span { font-family: var(--f-mono); font-size: 11px; line-height: 16px; letter-spacing: 0.06em; color: var(--c-muted); text-align: center; max-width: 220px; }
@@ -194,8 +194,8 @@
 
 /* ---------- archive ---------- */
 .d-tiles { position: absolute; left: 364px; top: 200px; width: 1006px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
-.d-tile { position: relative; display: flex; flex-direction: column; background: rgba(18,14,10,0.6); outline: 1px solid rgba(255,255,255,0); transition: background 140ms, outline-color 140ms; }
-.d-tile:hover, .d-tile:focus-visible { outline: 1px solid rgba(255,255,255,0.85); background: rgba(36,30,24,0.7); }
+.d-tile { position: relative; display: flex; flex-direction: column; background: oklch(var(--sf) / 0.6); outline: 1px solid rgba(255,255,255,0); transition: background 140ms, outline-color 140ms; }
+.d-tile:hover, .d-tile:focus-visible { outline: 1px solid rgba(255,255,255,0.85); background: oklch(var(--sf-hover) / 0.7); }
 .d-tile__media { position: relative; height: 120px; background: var(--hatch), var(--c-media); display: flex; align-items: flex-end; padding: 8px 10px; }
 .d-tile__media > span:first-child { font-family: var(--f-mono); font-size: 10px; color: var(--c-faint); text-shadow: none; }
 .d-tile__new { position: absolute; left: 0; top: 0; width: 10px; height: 10px; background: var(--c-new); clip-path: polygon(0 0, 100% 0, 0 100%); }

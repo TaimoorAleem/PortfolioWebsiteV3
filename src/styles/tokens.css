@@ -1,62 +1,132 @@
-/* Design tokens — from the Component Sheet "TOKENS" block. */
+/* ============================================================================
+   DESIGN TOKENS
+
+   Every colour on the site is derived from the THEME KNOBS below.
+   Change a knob, and every shade, gradient, glow and panel that depends on it
+   follows. Try values live at  #/components  (Theme lab panel), then paste
+   the "Copy CSS" output over the knobs here.
+
+   Colours use OKLCH:  oklch(lightness chroma hue)
+     lightness 0–1 (black → white), chroma 0–~0.3 (grey → vivid), hue 0–360.
+   Hue guide: 25 red · 50 orange · 85 gold · 140 green · 190 teal ·
+              250 blue · 290 violet · 330 pink
+   ========================================================================== */
 :root {
-  /* text */
+  /* ---------------------------------------------------------------- KNOBS */
+  --hue: 25;                          /* background family (25 = red, 250 = blue) */
+  --alt-shift: -15;                   /* Skills + Contact hue = --hue + this (try 180 for a contrast colour) */
+  --hue-alt: calc(var(--hue) + var(--alt-shift));
+  --vivid: 1;                         /* background saturation: 0 grey · 1 default · 1.5 punchy */
+  --light: 1;                         /* background brightness: 0.8 darker · 1 default · 1.2 lighter */
+  --glow: 1;                          /* strength of the soft lights/bokeh: 0 off · 1 default */
+  --tint: 0.012;                      /* how much panels and cards pick up --hue (0 = neutral grey) */
+
+  --hue-accent: 80;                   /* amber / gold highlights, Résumé, selection strip */
+  --hue-info: 225;                    /* blue sub-labels, links, the line beside your name */
+  --hue-alert: 25;                    /* "Incoming transmission" box */
+  --hue-new: 150;                     /* green NEW badges */
+  --hue-neutral: 90;                  /* the warm off-white of titles and selected rows */
+
+  /* --------------------------------------------- background shade scale */
+  /* Lightness/chroma steps; hue comes from the knobs. 950 = darkest. */
+  --bg-950: oklch(calc(0.141 * var(--light)) calc(0.009 * var(--vivid)) var(--hue));
+  --bg-900: oklch(calc(0.171 * var(--light)) calc(0.021 * var(--vivid)) var(--hue));
+  --bg-850: oklch(calc(0.179 * var(--light)) calc(0.037 * var(--vivid)) var(--hue));
+  --bg-800: oklch(calc(0.193 * var(--light)) calc(0.029 * var(--vivid)) var(--hue));
+  --bg-750: oklch(calc(0.211 * var(--light)) calc(0.045 * var(--vivid)) var(--hue));
+  --bg-700: oklch(calc(0.249 * var(--light)) calc(0.062 * var(--vivid)) var(--hue));
+  --bg-600: oklch(calc(0.288 * var(--light)) calc(0.077 * var(--vivid)) var(--hue));
+  --bg-500: oklch(calc(0.340 * var(--light)) calc(0.085 * var(--vivid)) var(--hue));
+  --bg-450: oklch(calc(0.373 * var(--light)) calc(0.106 * var(--vivid)) var(--hue));
+  --bg-400: oklch(calc(0.400 * var(--light)) calc(0.115 * var(--vivid)) var(--hue));
+
+  --alt-900: oklch(calc(0.148 * var(--light)) calc(0.028 * var(--vivid)) var(--hue-alt));
+  --alt-800: oklch(calc(0.203 * var(--light)) calc(0.054 * var(--vivid)) var(--hue-alt));
+  --alt-700: oklch(calc(0.233 * var(--light)) calc(0.058 * var(--vivid)) var(--hue-alt));
+  --alt-500: oklch(calc(0.317 * var(--light)) calc(0.101 * var(--vivid)) var(--hue-alt));
+
+  /* scenes: the full-screen backgrounds */
+  --scene-home: linear-gradient(170deg, var(--bg-600) 0%, var(--bg-400) 38%, var(--bg-700) 72%, var(--bg-850) 100%);
+  --scene-haze: linear-gradient(170deg, var(--bg-600) 0%, var(--bg-450) 40%, var(--bg-750) 80%);
+  --scene-dark: linear-gradient(180deg, var(--bg-900) 0%, var(--bg-800) 50%, var(--bg-950) 100%);
+  --scene-comms: linear-gradient(165deg, var(--alt-800) 0%, var(--alt-500) 45%, var(--alt-700) 75%, var(--alt-900) 100%);
+  --scene-boot: linear-gradient(170deg, var(--bg-700) 0%, var(--bg-500) 45%, var(--bg-850) 100%);
+
+  /* scene glows: "L C H" triples used as oklch(var(--glow-x) / alpha) */
+  --glow-warm: 0.678 calc(0.152 * var(--vivid)) calc(var(--hue) + 4);     /* big soft light */
+  --glow-warm-2: 0.730 calc(0.138 * var(--vivid)) calc(var(--hue) + 14);
+  --glow-warm-3: 0.589 calc(0.130 * var(--vivid)) var(--hue);
+  --glow-hot: 0.876 calc(0.069 * var(--vivid)) calc(var(--hue) + 16);     /* small bright bokeh */
+  --glow-band: 0.172 calc(0.039 * var(--vivid)) var(--hue);               /* dark vertical bands */
+  --glow-dark: 0.573 calc(0.168 * var(--vivid)) calc(var(--hue) + 5);     /* corner light, dark screens */
+  --glow-comms: 0.529 calc(0.184 * var(--vivid)) calc(var(--hue-alt) + 6);
+  --glow-comms-2: 0.595 calc(0.175 * var(--vivid)) calc(var(--hue-alt) + 6);
+  --glow-cool: 0.894 calc(0.058 * var(--vivid)) calc(var(--hue-alt) - 5);
+  --glow-band-comms: 0.141 calc(0.033 * var(--vivid)) var(--hue-alt);
+  --glow-spark: 0.760 0.135 calc(var(--hue-accent) - 6);                   /* amber sparks */
+
+  /* -------------------------------------------------- surface scale */
+  /* Dark, nearly neutral panels that pick up a hint of --hue. "L C H" triples. */
+  --sf: 0.167 var(--tint) var(--hue);                        /* panels, info boxes */
+  --sf-hover: 0.240 calc(var(--tint) * 1.2) var(--hue);
+  --sf-warm: 0.325 calc(var(--tint) * 1.8) var(--hue);       /* warm media wash */
+  --sf-alert: 0.200 0.050 var(--hue-alert);                  /* transmission window */
+
+  /* ---------------------------------------------------- text */
   --c-text: #FFFFFF;
-  --c-title: #FBF8EF;
-  --c-inactive: #B9B4A3;
-  --c-disabled: rgba(185, 180, 163, 0.4);
+  --c-title: oklch(0.979 0.012 var(--hue-neutral));
+  --c-inactive: oklch(0.769 0.024 var(--hue-neutral));
+  --c-disabled: oklch(0.769 0.024 var(--hue-neutral) / 0.4);
   --c-muted: rgba(255, 255, 255, 0.72);
   --c-faint: rgba(255, 255, 255, 0.6);
   --c-ghost: rgba(255, 255, 255, 0.12);
 
-  /* surfaces */
-  --c-page: #0D0808;
-  --c-selected: #E9E5DA;
-  --c-on-selected: #121110;
-  --c-panel: rgba(18, 14, 10, 0.78);
-  --c-panel-soft: rgba(18, 14, 10, 0.6);
+  /* ---------------------------------------------------- surfaces */
+  --c-page: var(--bg-950);
+  --c-selected: oklch(0.922 0.015 var(--hue-neutral));
+  --c-on-selected: oklch(0.178 0.003 var(--hue-neutral));
+  --c-panel: oklch(var(--sf) / 0.78);
+  --c-panel-soft: oklch(var(--sf) / 0.6);
   --c-bar: rgba(0, 0, 0, 0.38);
   --c-bar-disabled: rgba(0, 0, 0, 0.25);
   --c-hover: rgba(255, 255, 255, 0.14);
   --c-card: rgba(255, 255, 255, 0.05);
-  --c-stat: rgba(48, 44, 40, 0.62);
+  --c-stat: oklch(0.296 calc(var(--tint) * 0.8) var(--hue) / 0.62);
   --c-hair: rgba(255, 255, 255, 0.35);
 
-  /* accents */
-  --c-amber: oklch(0.82 0.14 80);
-  --c-gold: oklch(0.84 0.15 85);
-  --c-blue: oklch(0.86 0.07 225);
-  --c-link: oklch(0.80 0.09 235);
-  --c-focus: oklch(0.70 0.17 48);
-  --c-new: oklch(0.78 0.15 150);
-  --c-alert: oklch(0.66 0.17 25);
-  --c-special: #DCA938;
-  --c-special-focus: #FFC94D;
+  /* ---------------------------------------------------- accents */
+  --c-amber: oklch(0.82 0.14 var(--hue-accent));
+  --c-gold: oklch(0.84 0.15 calc(var(--hue-accent) + 5));
+  --c-special: oklch(0.763 0.138 calc(var(--hue-accent) + 3));
+  --c-special-focus: oklch(0.863 0.149 calc(var(--hue-accent) + 5));
+  --c-focus: oklch(0.70 0.17 calc(var(--hue-accent) - 32));
+  --c-highlight: oklch(0.888 0.182 calc(var(--hue-accent) + 17));   /* first award row, selected network */
+  --c-blue: oklch(0.86 0.07 var(--hue-info));
+  --c-link: oklch(0.80 0.09 calc(var(--hue-info) + 10));
+  --c-hero-rule: oklch(0.841 0.069 calc(var(--hue-info) + 10));      /* line beside the name */
+  --c-logbook-gem: oklch(0.68 0.12 calc(var(--hue-info) + 20));
+  --c-new: oklch(0.78 0.15 var(--hue-new));
+  --c-alert: oklch(0.66 0.17 var(--hue-alert));
 
-  /* one-off accents */
-  --c-hero-rule: #9FD3F2;              /* vertical line beside the name */
-  --c-highlight: #FCD909;              /* first award row, selected network */
-  --c-award-row: oklch(0.36 0.11 22);  /* award rows (alpha added where used) */
-  --c-logbook-gem: oklch(0.68 0.12 245);
-  --c-tab: rgba(255, 255, 255, 0.75);  /* "ON RECORD" tab */
-  --c-on-tab: #1A1A1A;
+  /* ---------------------------------------------------- component colours */
+  --c-award-row: oklch(calc(0.36 * var(--light)) calc(0.11 * var(--vivid)) calc(var(--hue) - 3));
+  --c-tab: rgba(255, 255, 255, 0.75);
+  --c-on-tab: oklch(0.218 0 0);
 
-  /* CutCornerButton */
   --c-btn-border: rgba(255, 255, 255, 0.55);
-  --c-btn-fill: #1E1915;
-  --c-btn-fill-hover: #38322C;
-  --c-btn-fill-disabled: #1A1612;
+  --c-btn-fill: oklch(0.218 var(--tint) var(--hue));
+  --c-btn-fill-hover: oklch(0.321 calc(var(--tint) * 1.1) var(--hue));
+  --c-btn-fill-disabled: oklch(0.203 calc(var(--tint) * 0.8) var(--hue));
 
-  /* media placeholders and cards */
-  --c-media: #2A241D;
-  --c-media-tile: #322B23;
-  --c-result-border: #7A2222;
-  --c-result-glow: rgba(230, 80, 60, 0.45);
-  --c-result-bg: #1E0E0E;
-  --c-result-title: rgba(50, 12, 12, 0.9);
-  --c-portrait-bg: #2A0E10;
+  --c-media: oklch(0.265 calc(var(--tint) * 1.3) var(--hue));
+  --c-media-tile: oklch(0.294 calc(var(--tint) * 1.4) var(--hue));
+  --c-result-border: oklch(0.393 calc(0.122 * var(--vivid)) var(--hue));
+  --c-result-glow: oklch(0.633 calc(0.189 * var(--vivid)) calc(var(--hue) + 6) / 0.45);
+  --c-result-bg: oklch(0.187 calc(0.028 * var(--vivid)) var(--hue));
+  --c-result-title: oklch(0.221 calc(0.062 * var(--vivid)) var(--hue) / 0.9);
+  --c-portrait-bg: oklch(0.209 0.047 var(--hue-alert));
 
-  /* type */
+  /* ---------------------------------------------------- type */
   --f-ui: 'Titillium Web', system-ui, sans-serif;
   --f-display: 'Encode Sans Semi Condensed', 'Titillium Web', sans-serif;
   --f-mono: 'Share Tech Mono', ui-monospace, monospace;
@@ -64,27 +134,6 @@
 
   /* hatch used by media placeholders */
   --hatch: repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0 1px, rgba(0, 0, 0, 0) 1px 10px);
-
-  /* scenes */
-  /* scenes (red theme). Home/haze = crimson, dark = oxblood, comms = wine. */
-  --scene-home: linear-gradient(170deg, #4A1816 0%, #7A2824 38%, #3A1312 72%, #1F0A0A 100%);
-  --scene-haze: linear-gradient(170deg, #4A1816 0%, #6E2420 40%, #2A0F0E 80%);
-  --scene-dark: linear-gradient(180deg, #180C0B 0%, #200F0E 50%, #0D0808 100%);
-  --scene-comms: linear-gradient(165deg, #2A0A12 0%, #5A1426 45%, #33101B 75%, #14060A 100%);
-  --scene-boot: linear-gradient(170deg, #3A1312 0%, #5C2320 45%, #1E0B0B 100%);
-
-  /* scene glows: "r, g, b" triples, used as rgba(var(--glow-x), alpha) */
-  --glow-warm: 230, 110, 95;      /* big soft light, home/haze */
-  --glow-warm-2: 240, 135, 100;
-  --glow-warm-3: 190, 90, 85;
-  --glow-hot: 255, 200, 180;      /* small bright bokeh spots */
-  --glow-band: 30, 8, 8;          /* dark vertical bands */
-  --glow-dark: 200, 70, 55;       /* corner light on dark screens */
-  --glow-comms: 190, 40, 70;      /* skills/contact */
-  --glow-comms-2: 210, 70, 90;
-  --glow-spark: 227, 163, 65;     /* amber sparks on skills/contact */
-  --glow-cool: 255, 205, 215;
-  --glow-band-comms: 20, 4, 8;
 
   --dur: 160ms;
   color-scheme: dark;

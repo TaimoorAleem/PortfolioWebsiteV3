@@ -5,21 +5,22 @@ import {
 } from '../components';
 import { MobileApp } from '../mobile/MobileApp';
 import type { AppState } from '../mobile/state';
+import { ThemeLab } from '../theme/ThemeLab';
 
 const THEMES = [
   { name: 'ON DARK · SCENE C', bg: 'var(--scene-dark)' },
   {
     name: 'ON WARM HAZE · SCENE A',
-    bg: 'radial-gradient(circle at 75% 20%, rgba(var(--glow-warm),0.45) 0, rgba(var(--glow-warm),0) 35%), radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0) 40%, rgba(0,0,0,0.5) 100%), var(--scene-haze)',
+    bg: 'radial-gradient(circle at 75% 20%, oklch(var(--glow-warm) / calc(0.45 * var(--glow))) 0, oklch(var(--glow-warm) / 0) 35%), radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0) 40%, rgba(0,0,0,0.5) 100%), var(--scene-haze)',
   },
 ];
 
 const SWATCHES = [
-  ['textPrimary', '#FFFFFF', 'var(--c-text)'], ['textTitle', '#FBF8EF', 'var(--c-title)'], ['textInactive', '#B9B4A3', 'var(--c-inactive)'],
-  ['selectedFill', '#E9E5DA', 'var(--c-selected)'], ['panelDark', '18 14 10 / .78', 'var(--c-panel)'], ['barDefault', '0 0 0 / .38', 'var(--c-bar)'],
-  ['amber', 'oklch .82 .14 80', 'var(--c-amber)'], ['gold', 'oklch .84 .15 85', 'var(--c-gold)'], ['blueInfo', 'oklch .86 .07 225', 'var(--c-blue)'],
-  ['orangeFocus', 'oklch .70 .17 48', 'var(--c-focus)'], ['greenNew', 'oklch .78 .15 150', 'var(--c-new)'], ['redAlert', 'oklch .66 .17 25', 'var(--c-alert)'],
-];
+  ['textPrimary', '--c-text'], ['textTitle', '--c-title'], ['textInactive', '--c-inactive'],
+  ['selectedFill', '--c-selected'], ['panelDark', '--c-panel'], ['barDefault', '--c-bar'],
+  ['amber', '--c-amber'], ['gold', '--c-gold'], ['blueInfo', '--c-blue'],
+  ['orangeFocus', '--c-focus'], ['greenNew', '--c-new'], ['redAlert', '--c-alert'],
+].map(([n, v]) => [n, v, `var(${v})`]);
 
 const FRAMES: { label: string; initial: Partial<AppState> }[] = [
   { label: 'M1 · HOME', initial: { screen: 'home' } },
@@ -168,6 +169,7 @@ function ThemePanel({ name, bg }: { name: string; bg: string }) {
 export function ComponentSheet() {
   return (
     <div className="sheet">
+      <ThemeLab />
       <section className="sheet-section">
         <div className="sheet-head">
           <span className="sheet-head__title">MOBILE</span>
