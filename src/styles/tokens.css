@@ -10,7 +10,7 @@
   --c-ghost: rgba(255, 255, 255, 0.12);
 
   /* surfaces */
-  --c-page: #0B0D0E;
+  --c-page: #0D0808;
   --c-selected: #E9E5DA;
   --c-on-selected: #121110;
   --c-panel: rgba(18, 14, 10, 0.78);
@@ -36,7 +36,7 @@
   /* one-off accents */
   --c-hero-rule: #9FD3F2;              /* vertical line beside the name */
   --c-highlight: #FCD909;              /* first award row, selected network */
-  --c-award-row: oklch(0.42 0.08 245); /* award rows (alpha added where used) */
+  --c-award-row: oklch(0.36 0.11 22);  /* award rows (alpha added where used) */
   --c-logbook-gem: oklch(0.68 0.12 245);
   --c-tab: rgba(255, 255, 255, 0.75);  /* "ON RECORD" tab */
   --c-on-tab: #1A1A1A;
@@ -50,9 +50,10 @@
   /* media placeholders and cards */
   --c-media: #2A241D;
   --c-media-tile: #322B23;
-  --c-result-border: #183D63;
-  --c-result-glow: rgba(60, 140, 220, 0.45);
-  --c-result-bg: #121A22;
+  --c-result-border: #7A2222;
+  --c-result-glow: rgba(230, 80, 60, 0.45);
+  --c-result-bg: #1E0E0E;
+  --c-result-title: rgba(50, 12, 12, 0.9);
   --c-portrait-bg: #2A0E10;
 
   /* type */
@@ -65,11 +66,25 @@
   --hatch: repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0 1px, rgba(0, 0, 0, 0) 1px 10px);
 
   /* scenes */
-  --scene-home: linear-gradient(170deg, #4A4136 0%, #7A6E5C 38%, #3A332B 72%, #221D18 100%);
-  --scene-haze: linear-gradient(170deg, #4A4136 0%, #6E6352 40%, #2E2822 80%);
-  --scene-dark: linear-gradient(180deg, #14120F 0%, #1C1814 50%, #0B0D0E 100%);
-  --scene-comms: linear-gradient(165deg, #0E2233 0%, #1D4466 45%, #10283C 75%, #08141F 100%);
-  --scene-boot: linear-gradient(170deg, #3A332B 0%, #5C5244 45%, #1E1A16 100%);
+  /* scenes (red theme). Home/haze = crimson, dark = oxblood, comms = wine. */
+  --scene-home: linear-gradient(170deg, #4A1816 0%, #7A2824 38%, #3A1312 72%, #1F0A0A 100%);
+  --scene-haze: linear-gradient(170deg, #4A1816 0%, #6E2420 40%, #2A0F0E 80%);
+  --scene-dark: linear-gradient(180deg, #180C0B 0%, #200F0E 50%, #0D0808 100%);
+  --scene-comms: linear-gradient(165deg, #2A0A12 0%, #5A1426 45%, #33101B 75%, #14060A 100%);
+  --scene-boot: linear-gradient(170deg, #3A1312 0%, #5C2320 45%, #1E0B0B 100%);
+
+  /* scene glows: "r, g, b" triples, used as rgba(var(--glow-x), alpha) */
+  --glow-warm: 230, 110, 95;      /* big soft light, home/haze */
+  --glow-warm-2: 240, 135, 100;
+  --glow-warm-3: 190, 90, 85;
+  --glow-hot: 255, 200, 180;      /* small bright bokeh spots */
+  --glow-band: 30, 8, 8;          /* dark vertical bands */
+  --glow-dark: 200, 70, 55;       /* corner light on dark screens */
+  --glow-comms: 190, 40, 70;      /* skills/contact */
+  --glow-comms-2: 210, 70, 90;
+  --glow-spark: 227, 163, 65;     /* amber sparks on skills/contact */
+  --glow-cool: 255, 205, 215;
+  --glow-band-comms: 20, 4, 8;
 
   --dur: 160ms;
   color-scheme: dark;

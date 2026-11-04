@@ -10,7 +10,7 @@ const THEMES = [
   { name: 'ON DARK · SCENE C', bg: 'var(--scene-dark)' },
   {
     name: 'ON WARM HAZE · SCENE A',
-    bg: 'radial-gradient(circle at 75% 20%, rgba(214,200,172,0.45) 0, rgba(214,200,172,0) 35%), radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0) 40%, rgba(0,0,0,0.5) 100%), linear-gradient(170deg, #4A4136 0%, #6E6352 40%, #3A332B 75%, #241F1A 100%)',
+    bg: 'radial-gradient(circle at 75% 20%, rgba(var(--glow-warm),0.45) 0, rgba(var(--glow-warm),0) 35%), radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0) 40%, rgba(0,0,0,0.5) 100%), var(--scene-haze)',
   },
 ];
 
