@@ -1,0 +1,75 @@
+/* Design tokens — from the Component Sheet "TOKENS" block. */
+:root {
+  /* text */
+  --c-text: #FFFFFF;
+  --c-title: #FBF8EF;
+  --c-inactive: #B9B4A3;
+  --c-disabled: rgba(185, 180, 163, 0.4);
+  --c-muted: rgba(255, 255, 255, 0.72);
+  --c-faint: rgba(255, 255, 255, 0.6);
+  --c-ghost: rgba(255, 255, 255, 0.12);
+
+  /* surfaces */
+  --c-page: #0B0D0E;
+  --c-selected: #E9E5DA;
+  --c-on-selected: #121110;
+  --c-panel: rgba(18, 14, 10, 0.78);
+  --c-panel-soft: rgba(18, 14, 10, 0.6);
+  --c-bar: rgba(0, 0, 0, 0.38);
+  --c-bar-disabled: rgba(0, 0, 0, 0.25);
+  --c-hover: rgba(255, 255, 255, 0.14);
+  --c-card: rgba(255, 255, 255, 0.05);
+  --c-stat: rgba(48, 44, 40, 0.62);
+  --c-hair: rgba(255, 255, 255, 0.35);
+
+  /* accents */
+  --c-amber: oklch(0.82 0.14 80);
+  --c-gold: oklch(0.84 0.15 85);
+  --c-blue: oklch(0.86 0.07 225);
+  --c-link: oklch(0.80 0.09 235);
+  --c-focus: oklch(0.70 0.17 48);
+  --c-new: oklch(0.78 0.15 150);
+  --c-alert: oklch(0.66 0.17 25);
+  --c-special: #DCA938;
+  --c-special-focus: #FFC94D;
+
+  /* type */
+  --f-ui: 'Titillium Web', system-ui, sans-serif;
+  --f-display: 'Encode Sans Semi Condensed', 'Titillium Web', sans-serif;
+  --f-mono: 'Share Tech Mono', ui-monospace, monospace;
+  --ts: 0 1px 3px rgba(0, 0, 0, 0.45);
+
+  /* hatch used by media placeholders */
+  --hatch: repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0 1px, rgba(0, 0, 0, 0) 1px 10px);
+
+  /* scenes */
+  --scene-home: linear-gradient(170deg, #4A4136 0%, #7A6E5C 38%, #3A332B 72%, #221D18 100%);
+  --scene-haze: linear-gradient(170deg, #4A4136 0%, #6E6352 40%, #2E2822 80%);
+  --scene-dark: linear-gradient(180deg, #14120F 0%, #1C1814 50%, #0B0D0E 100%);
+  --scene-comms: linear-gradient(165deg, #0E2233 0%, #1D4466 45%, #10283C 75%, #08141F 100%);
+
+  --dur: 160ms;
+  color-scheme: dark;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root { --dur: 0ms; }
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--c-page);
+  color: var(--c-text);
+  font-family: var(--f-ui);
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+
+a { color: var(--c-text); text-decoration: none; }
+
+button { font: inherit; color: inherit; }
+
+:focus-visible { outline: 1px solid var(--c-amber); outline-offset: 2px; }

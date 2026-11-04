@@ -1,0 +1,41 @@
+/* Component sheet / design canvas (#/components). */
+.sheet {
+  min-width: 2200px;
+  padding: 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 80px;
+  background: var(--c-page);
+  font-family: var(--f-ui);
+  color: var(--c-text);
+}
+.sheet-section { display: flex; flex-direction: column; gap: 24px; }
+.sheet-head { display: flex; align-items: baseline; gap: 16px; border-bottom: 1px solid var(--c-hair); padding-bottom: 10px; }
+.sheet-head__title { font-size: 42px; line-height: 48px; font-weight: 600; letter-spacing: 0.02em; }
+.sheet-head__sub { font-size: 15px; color: var(--c-muted); white-space: nowrap; }
+.sheet-head__link { margin-left: auto; font-size: 15px; color: var(--c-amber); }
+
+.sheet-frames { display: flex; gap: 48px; align-items: flex-start; }
+.sheet-frame-wrap { display: flex; flex-direction: column; gap: 10px; }
+.sheet-frame { width: 390px; height: 844px; position: relative; overflow: hidden; }
+
+.sheet-themes { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.sheet-panel {
+  position: relative;
+  overflow: hidden;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+  text-shadow: var(--ts);
+}
+.sheet-block { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.sheet-labeled { display: flex; flex-direction: column; gap: 4px; align-items: flex-start; }
+.sheet-swatches { display: flex; flex-wrap: wrap; gap: 10px; }
+.sheet-swatch { display: flex; flex-direction: column; gap: 4px; width: 92px; }
+.sheet-type { display: flex; flex-direction: column; gap: 6px; margin-top: 6px; }
+.sheet-menu-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px 24px; padding-left: 16px; }
+.sheet-listbars { display: grid; grid-template-columns: repeat(4, 200px); gap: 16px; }
+.sheet-listbars .list-bar { width: 200px; }
+.sheet-two { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 28px; }
+.stat-wrap { display: flex; flex-direction: column; gap: 4px; }

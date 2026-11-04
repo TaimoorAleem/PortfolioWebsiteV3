@@ -1,0 +1,34 @@
+export interface Prompt {
+  k: string;
+  label: string;
+  onClick?: () => void;
+}
+
+/** Desktop key-prompt strip (↵ Select, Esc Back...). */
+export function PromptBar({ prompts }: { prompts: Prompt[] }) {
+  return (
+    <div className="prompt-bar">
+      {prompts.map((p) => (
+        <button key={p.k + p.label} type="button" className="btn-reset prompt" onClick={p.onClick}>
+          <span className="prompt__key">{p.k}</span>{p.label}
+        </button>
+      ))}
+    </div>
+  );
+}
+
+/** Mobile bottom bar: "Tap Select" hint plus either © or a Back control. */
+export function MobilePromptBar({ onBack }: { onBack?: () => void }) {
+  return (
+    <footer className="m-footer">
+      <span className="prompt"><span className="prompt__tap" aria-hidden />Tap Select</span>
+      {onBack ? (
+        <button type="button" className="btn-reset m-footer__back" onClick={onBack}>
+          <span className="prompt__chev" aria-hidden />Back
+        </button>
+      ) : (
+        <span className="m-footer__copy">© 2026</span>
+      )}
+    </footer>
+  );
+}
