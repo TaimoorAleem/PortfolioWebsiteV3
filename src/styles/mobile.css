@@ -125,7 +125,7 @@
   color: var(--c-title);
 }
 .m-hero__roles { display: flex; align-items: center; gap: 12px; }
-.m-hero__rule { width: 2px; height: 44px; background: #9FD3F2; opacity: 0.8; }
+.m-hero__rule { width: 2px; height: 44px; background: var(--c-hero-rule); opacity: 0.8; }
 .m-hero__role { display: flex; flex-direction: column; font-size: 15px; line-height: 20px; font-weight: 600; }
 
 .m-menu { display: flex; flex-direction: column; align-items: flex-start; margin-top: 46px; }
@@ -185,13 +185,13 @@
 .m-skill-use b { color: var(--c-text); font-weight: 600; }
 
 /* ---------- about ---------- */
-.m-award { display: flex; flex-direction: column; gap: 2px; padding: 10px 12px; background: oklch(0.42 0.08 245 / 0.55); }
-.m-award:first-child .m-award__event { color: #FCD909; }
+.m-award { display: flex; flex-direction: column; gap: 2px; padding: 10px 12px; background: color-mix(in oklch, var(--c-award-row) 55%, transparent); }
+.m-award:first-child .m-award__event { color: var(--c-highlight); }
 .m-award__event { font-size: 15px; font-weight: 600; }
 .m-award__result { font-size: 14px; color: var(--c-blue); }
 .m-award__meta { font-family: var(--f-mono); font-size: 11px; color: var(--c-faint); }
 .m-net { display: flex; flex-direction: column; gap: 4px; }
-.m-net__name { font-size: 18px; font-weight: 600; color: #FCD909; }
+.m-net__name { font-size: 18px; font-weight: 600; color: var(--c-highlight); }
 .m-net__role { font-size: 14px; color: var(--c-blue); }
 
 /* ---------- page frame ---------- */

@@ -33,6 +33,28 @@
   --c-special: #DCA938;
   --c-special-focus: #FFC94D;
 
+  /* one-off accents */
+  --c-hero-rule: #9FD3F2;              /* vertical line beside the name */
+  --c-highlight: #FCD909;              /* first award row, selected network */
+  --c-award-row: oklch(0.42 0.08 245); /* award rows (alpha added where used) */
+  --c-logbook-gem: oklch(0.68 0.12 245);
+  --c-tab: rgba(255, 255, 255, 0.75);  /* "ON RECORD" tab */
+  --c-on-tab: #1A1A1A;
+
+  /* CutCornerButton */
+  --c-btn-border: rgba(255, 255, 255, 0.55);
+  --c-btn-fill: #1E1915;
+  --c-btn-fill-hover: #38322C;
+  --c-btn-fill-disabled: #1A1612;
+
+  /* media placeholders and cards */
+  --c-media: #2A241D;
+  --c-media-tile: #322B23;
+  --c-result-border: #183D63;
+  --c-result-glow: rgba(60, 140, 220, 0.45);
+  --c-result-bg: #121A22;
+  --c-portrait-bg: #2A0E10;
+
   /* type */
   --f-ui: 'Titillium Web', system-ui, sans-serif;
   --f-display: 'Encode Sans Semi Condensed', 'Titillium Web', sans-serif;
@@ -47,6 +69,7 @@
   --scene-haze: linear-gradient(170deg, #4A4136 0%, #6E6352 40%, #2E2822 80%);
   --scene-dark: linear-gradient(180deg, #14120F 0%, #1C1814 50%, #0B0D0E 100%);
   --scene-comms: linear-gradient(165deg, #0E2233 0%, #1D4466 45%, #10283C 75%, #08141F 100%);
+  --scene-boot: linear-gradient(170deg, #3A332B 0%, #5C5244 45%, #1E1A16 100%);
 
   --dur: 160ms;
   color-scheme: dark;

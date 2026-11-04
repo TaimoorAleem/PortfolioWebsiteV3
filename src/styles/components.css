@@ -217,9 +217,9 @@
 
 /* ---------- CutCornerButton ---------- */
 .cc-btn {
-  --b: rgba(255, 255, 255, 0.55);
-  --f: #1E1915;
-  --fg: #FFFFFF;
+  --b: var(--c-btn-border);
+  --f: var(--c-btn-fill);
+  --fg: var(--c-text);
   display: inline-flex;
   min-width: 200px;
   height: 34px;
@@ -241,10 +241,10 @@
   white-space: nowrap;
   transition: background var(--dur) ease, color var(--dur) ease;
 }
-.cc-btn[data-state='hover'], .cc-btn:focus-visible { --b: #FFFFFF; --f: #38322C; }
-@media (hover: hover) { .cc-btn:not([aria-disabled='true']):hover { --b: #FFFFFF; --f: #38322C; } }
+.cc-btn[data-state='hover'], .cc-btn:focus-visible { --b: var(--c-text); --f: var(--c-btn-fill-hover); }
+@media (hover: hover) { .cc-btn:not([aria-disabled='true']):hover { --b: var(--c-text); --f: var(--c-btn-fill-hover); } }
 .cc-btn[data-state='pressed'], .cc-btn:not([aria-disabled='true']):active { --b: var(--c-selected); --f: var(--c-selected); --fg: var(--c-on-selected); }
-.cc-btn[aria-disabled='true'] { --b: rgba(255, 255, 255, 0.2); --f: #1A1612; --fg: rgba(255, 255, 255, 0.35); cursor: default; }
+.cc-btn[aria-disabled='true'] { --b: rgba(255, 255, 255, 0.2); --f: var(--c-btn-fill-disabled); --fg: rgba(255, 255, 255, 0.35); cursor: default; }
 .cc-btn:focus-visible { outline: none; }
 
 /* ---------- MediaButton ---------- */
@@ -254,7 +254,7 @@
   max-width: 100%;
   height: 130px;
   border: 3px solid var(--c-text);
-  background: var(--hatch), #2A241D;
+  background: var(--hatch), var(--c-media);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -338,8 +338,8 @@
 /* ---------- ResultCard ---------- */
 .result-card { display: flex; gap: 13px; align-items: flex-start; flex: none; }
 .result-card__frame {
-  width: 200px; height: 120px; border: 2px solid #183D63; box-shadow: 0 0 10px rgba(60, 140, 220, 0.45);
-  background: repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0 1px, rgba(0, 0, 0, 0) 1px 9px), #121A22;
+  width: 200px; height: 120px; border: 2px solid var(--c-result-border); box-shadow: 0 0 10px var(--c-result-glow);
+  background: repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0 1px, rgba(0, 0, 0, 0) 1px 9px), var(--c-result-bg);
 }
 .result-card__title { height: 20px; background: rgba(10, 30, 50, 0.9); display: flex; align-items: center; justify-content: center; font-size: 13px; }
 .result-card__place { font-size: 13px; font-weight: 600; max-width: 64px; }
@@ -356,7 +356,7 @@
 .transmission__meter.is-live > span { animation: ta-meter var(--d) ease-in-out infinite alternate; }
 .transmission__portrait {
   position: relative; flex: 1;
-  background: repeating-linear-gradient(135deg, rgba(220, 80, 80, 0.12) 0 1px, rgba(0, 0, 0, 0) 1px 8px), #2A0E10;
+  background: repeating-linear-gradient(135deg, rgba(220, 80, 80, 0.12) 0 1px, rgba(0, 0, 0, 0) 1px 8px), var(--c-portrait-bg);
   display: flex; align-items: center; justify-content: center; overflow: hidden;
 }
 .transmission__portrait img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: grayscale(1) sepia(1) hue-rotate(-30deg) saturate(3) brightness(0.7); }
