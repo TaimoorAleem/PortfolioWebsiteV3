@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { LoadingBar, PlayerBlock, PromptBar, type Prompt } from '../components';
+import { desktopGlows } from '../theme/glowLayout';
 import { CATS, EMAIL, EXPERIENCE, LINKS, NETWORKS, ABOUT, AWARDS, RESUME_HREF, allIds, catIds } from '../data';
 import {
   DAbout, DArchive, DAwards, DBriefing, DContact, DExperience, DHome, DNetworks, DProjects, DSkills, FIELDS,
@@ -217,7 +218,7 @@ export function DesktopApp({ grain = true, bootScreen = true }: { grain?: boolea
 
   return (
     <div className="d-root">
-      <div className="d-stage" style={{ transform: `scale(${scale})` }} data-phase={phase}>
+      <div className="d-stage" style={{ transform: `scale(${scale})`, ...desktopGlows(s.screen) }} data-phase={phase}>
         <div className="d-scene d-scene--a" style={{ opacity: scene === 'A' ? 1 : 0 }} />
         <div className="d-scene d-scene--b" style={{ opacity: scene === 'B' ? 1 : 0 }} />
         <div className="d-scene d-scene--c" style={{ opacity: scene === 'C' ? 1 : 0 }} />

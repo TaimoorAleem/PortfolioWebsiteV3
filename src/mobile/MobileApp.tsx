@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { LoadingScreen, MobilePromptBar, PlayerTag } from '../components';
+import { mobileGlows } from '../theme/glowLayout';
 import { INITIAL, PARENT, fromHash, toHash, type AppState, type ScreenId } from './state';
 import {
   AboutScreen, BriefingScreen, ContactScreen, ExperienceScreen, HomeScreen, MENU, ProjectsScreen, SkillsScreen,
@@ -141,7 +142,7 @@ export function MobileApp({ routing = true, boot = routing, initial }: MobileApp
   const Screen = SCREENS[s.screen];
 
   return (
-    <div className="m-app">
+    <div className="m-app" style={mobileGlows(s.screen)}>
       {(['home', 'haze', 'dark', 'comms'] as const).map((k) => (
         <div key={k} className={`scene scene--${k}`} style={{ opacity: scene === k ? 1 : 0 }} aria-hidden />
       ))}
