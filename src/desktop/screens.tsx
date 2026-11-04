@@ -4,7 +4,7 @@ import {
   SubOptionRow, TransmissionWindow,
 } from '../components';
 import {
-  ABOUT, AWARDS, CATS, EXPERIENCE, LINKS, NETWORKS, RESULT_CARDS, SKILLS, catIds, projectById, skillUse, techCode,
+  ABOUT, AWARDS, CATS, EXPERIENCE, LINKS, MEDIA, NETWORKS, RESULT_CARDS, SKILLS, catIds, projectById, skillUse, techCode,
 } from '../data';
 import { D_MENU, curList, skillRows, titleCase, type DState } from './state';
 
@@ -127,9 +127,10 @@ export function DHome({ s, set, activate, go }: DCtx) {
 
       <div className="d-latest">
         <button type="button" className="btn-reset d-latest__hero" onClick={() => go({ screen: 'briefing', list: null, listName: 'Featured', projIdx: 0, from: 'projects' })}>
+          {MEDIA.latest && <img className="d-img" src={MEDIA.latest} alt="Ember team" />}
           <span className="d-latest__word">LATEST</span>
           <span className="d-latest__scan" />
-          <span className="d-latest__cap">ember team photo</span>
+          {!MEDIA.latest && <span className="d-latest__cap">ember team photo</span>}
         </button>
         <div className="d-latest__body">
           <span className="d-latest__title">IgnisXR: Ember, an XR helmet system for firefighters</span>
@@ -137,9 +138,11 @@ export function DHome({ s, set, activate, go }: DCtx) {
         </div>
         <div className="d-latest__tiles">
           <button type="button" className="btn-reset d-latest__tile" onClick={() => go({ screen: 'networks', netIdx: 0 })}>
+            {MEDIA.bearhacks && <img className="d-img" src={MEDIA.bearhacks} alt="" />}
             <span>BearHacks 2026: Mississauga's largest hackathon</span>
           </button>
           <button type="button" className="btn-reset d-latest__tile" onClick={() => go({ screen: 'briefing', list: null, listName: 'Featured', projIdx: 6, from: 'projects' })}>
+            {MEDIA.cricket && <img className="d-img" src={MEDIA.cricket} alt="" />}
             <span>AI Cricket Coach: first place capstone</span>
           </button>
         </div>
@@ -213,7 +216,11 @@ export function DProjects({ s, set, go }: DCtx) {
         )}
       </div>
       <div className="d-proj-media">
-        <div className="d-proj-media__frame"><span>{p.media}</span></div>
+        <div className="d-proj-media__frame">
+          {p.cutout || p.image
+            ? <img className={p.cutout ? 'd-img d-img--contain' : 'd-img'} src={p.cutout ?? p.image} alt={p.media} />
+            : <span>{p.media}</span>}
+        </div>
         <div className="d-proj-media__shadow" />
       </div>
     </div>
@@ -243,7 +250,7 @@ export function DArchive({ s, set, go }: DCtx) {
           return (
             <button key={id} type="button" className="btn-reset d-tile" onClick={() => open(j)}>
               <span className="d-tile__media">
-                <span>{p.short} screenshot</span>
+                {p.image ? <img className="d-img" src={p.image} alt="" /> : <span>{p.short} screenshot</span>}
                 {p.isNew && <span className="d-tile__new" />}
               </span>
               <span className="d-tile__body">
@@ -280,7 +287,9 @@ export function DBriefing({ s, set }: DCtx) {
         <div className="d-brief__top">
           <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
             <span className="d-h30">{p.short}</span>
-            <div className="d-brief__hero"><span>{p.short} hero media, 16:9</span></div>
+            <div className="d-brief__hero">
+              {p.image ? <img className="d-img" src={p.image} alt={p.media} /> : <span>{p.short} hero media, 16:9</span>}
+            </div>
           </div>
           <div className="d-brief__info">
             <span className="d-gold d-gold--24">{p.gold}</span>
@@ -538,7 +547,7 @@ export function DContact({ s, set, send, form, setField }: DCtx) {
       </div>
       <div className="d-contact-side">
         <div className="d-transmission">
-          <TransmissionWindow height={150} />
+          <TransmissionWindow height={150} portrait={MEDIA.portrait || undefined} />
           <span className="d-corner d-corner--tl" />
           <span className="d-corner d-corner--br" />
         </div>

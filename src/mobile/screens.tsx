@@ -4,7 +4,7 @@ import {
   ResultCard, SectionHeader, SettingsRow, StatTile, SubOptionRow, TransmissionWindow,
 } from '../components';
 import {
-  ABOUT, AWARDS, CATS, EMAIL, EXPERIENCE, LINKS, NETWORKS, NEWS, RESULT_CARDS, RESUME_HREF, SKILLS,
+  ABOUT, AWARDS, CATS, EMAIL, EXPERIENCE, LINKS, MEDIA, NETWORKS, NEWS, RESULT_CARDS, RESUME_HREF, SKILLS,
   catIds, projectById, skillUse, techCode,
 } from '../data';
 import { ABOUT_TABS, listIds, type AppState } from './state';
@@ -160,7 +160,7 @@ export function ProjectsScreen({ s, set, go }: Ctx) {
         </Strip>
       </div>
       <div className="m-body" key={projId}>
-        <MediaPlaceholder label={p.media} tone="warm" />
+        <MediaPlaceholder label={p.media} src={p.image} tone="warm" />
         <div className="m-stack2">
           <span className="m-gold">{p.gold}</span>
           <span className="m-blue">{p.blue}</span>
@@ -194,7 +194,7 @@ export function BriefingScreen({ s, go }: Ctx) {
       <Head title="BRIEFING" />
       <div className="m-body m-body--tight" key={p.id}>
         <span className="m-name">{p.short}</span>
-        <MediaPlaceholder label={p.media} />
+        <MediaPlaceholder label={p.media} src={p.image} />
         <div className="m-stack6">
           <span className="m-gold m-gold--lg">{p.gold}</span>
           <span className="m-blue">{p.blue}</span>
@@ -372,7 +372,7 @@ export function ContactScreen({ s, set }: Ctx) {
     <>
       <Head title="COMMS" />
       <div className="m-body" style={{ gap: 0, paddingTop: 4 }}>
-        <TransmissionWindow height={104} />
+        <TransmissionWindow height={104} portrait={MEDIA.portrait || undefined} />
         <SectionHeader style={{ margin: '22px 0 4px' }}>CHANNELS</SectionHeader>
         {LINKS.map((l, i) => (
           <SettingsRow

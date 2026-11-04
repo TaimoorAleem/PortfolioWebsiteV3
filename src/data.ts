@@ -35,7 +35,12 @@ export interface Project {
   awards?: string[];
   perks?: string[];
   btns: ActionLink[];
+  /** Placeholder caption, and alt text once an image is set. */
   media: string;
+  /** Landscape screenshot/photo, e.g. '/media/projects/ember.jpg'. Used on mobile, the briefing hero and archive tiles. */
+  image?: string;
+  /** Optional tall or transparent PNG for the desktop Projects screen (300 × 540 frame). Falls back to `image`. */
+  cutout?: string;
   /** Indexes into CATS. */
   cats: number[];
 }
@@ -43,6 +48,21 @@ export interface Project {
 export const GH = 'https://github.com/TaimoorAleem';
 export const EMAIL = 'taimooraleem01@gmail.com';
 export const RESUME_HREF = '/resume.pdf';
+
+/**
+ * Site-wide images. Drop files in /public/media and set the path here ('' = show the placeholder).
+ * Paths are from the site root, e.g. '/media/portrait.jpg'.
+ */
+export const MEDIA = {
+  /** Contact "INCOMING TRANSMISSION" portrait. Rendered with a red duotone filter. */
+  portrait: '',
+  /** Desktop home "LATEST" card (Ember team photo). */
+  latest: '',
+  /** Desktop home tile: BearHacks 2026. */
+  bearhacks: '',
+  /** Desktop home tile: AI Cricket Coach. */
+  cricket: '',
+};
 
 export const CODE: Record<string, string> = {
   Coral: 'TPU', OpenCV: 'CV', Linux: 'LNX', 'C++': 'C++', Python: 'PY', Kotlin: 'KT', 'Wear OS': 'WOS',
