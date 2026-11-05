@@ -19,12 +19,14 @@ npm run build      # type-check + production build
 | Route | Screen |
 | --- | --- |
 | `#/` | Home menu |
+| `#/profile` | Profile |
+| `#/experience`, `#/experience/leadership` | Service record: Professional, Leadership |
 | `#/projects`, `#/projects/<id>` | Project list, project briefing |
 | `#/archive` | All projects by category (desktop grid; the mobile list with category filter) |
-| `#/experience` | Service record |
-| `#/about`, `#/about/awards`, `#/about/networks` | Profile tabs |
 | `#/skills` | Loadout config |
+| `#/about` | Awards (rows expand on hover/tap) |
 | `#/contact` | Comms |
+| `#/resume`, `#/resume/<variant id>` | Résumé viewer with download. Variants live in `RESUMES` in `src/data.ts`; the first is the main one |
 | `#/components` | Component sheet: live mobile frames + every component state |
 
 ## Colours and theming

@@ -3,8 +3,8 @@ import { LoadingScreen, MobilePromptBar, PlayerTag } from '../components';
 import { mobileGlows } from '../theme/glowLayout';
 import { INITIAL, PARENT, fromHash, toHash, type AppState, type ScreenId } from './state';
 import {
-  AboutScreen, BriefingScreen, ContactScreen, ExperienceScreen, HomeScreen, MENU, ProjectsScreen, SkillsScreen,
-  activateMenu, type Ctx,
+  AboutScreen, BriefingScreen, ContactScreen, ExperienceScreen, HomeScreen, MENU, ProfileScreen, ProjectsScreen,
+  ResumeScreen, SkillsScreen, activateMenu, type Ctx,
 } from './screens';
 
 type Phase = 'in' | 'out' | 'pre';
@@ -13,8 +13,8 @@ type Scene = 'home' | 'haze' | 'dark' | 'comms';
 const sceneFor = (s: AppState): Scene => {
   switch (s.screen) {
     case 'home': return 'home';
-    case 'projects': return 'haze';
-    case 'about': return s.aboutTab === 0 ? 'dark' : 'haze';
+    case 'projects':
+    case 'about': return 'haze';
     case 'skills':
     case 'contact': return 'comms';
     default: return 'dark';
@@ -22,8 +22,8 @@ const sceneFor = (s: AppState): Scene => {
 };
 
 const SCREENS: Record<ScreenId, (ctx: Ctx) => JSX.Element> = {
-  home: HomeScreen, projects: ProjectsScreen, briefing: BriefingScreen, experience: ExperienceScreen,
-  about: AboutScreen, skills: SkillsScreen, contact: ContactScreen,
+  home: HomeScreen, profile: ProfileScreen, experience: ExperienceScreen, projects: ProjectsScreen,
+  briefing: BriefingScreen, skills: SkillsScreen, about: AboutScreen, contact: ContactScreen, resume: ResumeScreen,
 };
 
 const reducedMotion = () => typeof window !== 'undefined' && !!window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;

@@ -1,13 +1,14 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import {
   AbilityCard, ChapterCard, CutCornerButton, InfoBox, ListBar, MediaPlaceholder, MenuItem, NewsTicker,
-  ResultCard, SectionHeader, SettingsRow, StatTile, SubOptionRow, TransmissionWindow,
+  SectionHeader, SettingsRow, StatTile, SubOptionRow, TransmissionWindow,
 } from '../components';
 import {
-  ABOUT, AWARDS, CATS, EMAIL, EXPERIENCE, LINKS, MEDIA, NETWORKS, NEWS, RESULT_CARDS, RESUME_HREF, SKILLS,
+  AWARDS, CATS, EMAIL, EXPERIENCE, LEADERSHIP, LINKS, MEDIA, NEWS, PROFILE, RESUMES, SKILLS,
   catIds, projectById, skillUse, techCode,
 } from '../data';
-import { ABOUT_TABS, listIds, type AppState } from './state';
+import { useFileExists } from '../theme/useFileExists';
+import { EXP_TABS, listIds, type AppState } from './state';
 
 export interface Ctx {
   s: AppState;
@@ -47,10 +48,11 @@ function Strip({ selected, children, className }: { selected: number; children: 
 /* ------------------------------------------------------------------ home */
 
 export const MENU = [
+  { id: 'profile', label: 'PROFILE' },
+  { id: 'experience', label: 'EXPERIENCE', subs: EXP_TABS },
   { id: 'projects', label: 'PROJECTS', subs: ['Featured', 'Hackathons', 'All Projects'], isNew: true },
-  { id: 'experience', label: 'EXPERIENCE' },
-  { id: 'about', label: 'ABOUT', subs: ABOUT_TABS },
   { id: 'skills', label: 'SKILLS' },
+  { id: 'about', label: 'ABOUT' },
   { id: 'contact', label: 'CONTACT' },
   { id: 'resume', label: 'RÉSUMÉ', special: true },
 ] as const satisfies readonly { id: string; label: string; subs?: readonly string[]; isNew?: boolean; special?: boolean }[];
@@ -65,8 +67,9 @@ export function activateMenu({ go, set }: Ctx, i: number, j: number) {
       go({ screen: 'projects', listKey, catIdx: 0, projId: ids[0] });
       break;
     }
-    case 'about': go({ screen: 'about', aboutTab: j }); break;
-    case 'resume': window.open(RESUME_HREF, '_blank', 'noopener'); break;
+    case 'experience': go({ screen: 'experience', expTab: j }); break;
+    case 'about': go({ screen: 'about', awardIdx: -1 }); break;
+    case 'resume': go({ screen: 'resume', resumeIdx: 0 }); break;
     default: go({ screen: m.id });
   }
 }
@@ -233,18 +236,22 @@ export function BriefingScreen({ s, go }: Ctx) {
 /* ------------------------------------------------------------ experience */
 
 export function ExperienceScreen({ s, set }: Ctx) {
-  const e = EXPERIENCE[s.expIdx];
+  const list = s.expTab === 1 ? LEADERSHIP : EXPERIENCE;
+  const idx = Math.min(s.expTab === 1 ? s.leadIdx : s.expIdx, list.length - 1);
+  const e = list[idx];
+  const pick = (i: number) => set(s.expTab === 1 ? { leadIdx: i } : { expIdx: i });
   return (
     <>
-      <Head title="SERVICE RECORD" />
+      <Head title={s.expTab === 1 ? 'LEADERSHIP' : 'SERVICE RECORD'} />
       <div className="m-fixed">
-        <Strip selected={s.expIdx}>
-          {EXPERIENCE.map((x, i) => (
-            <ListBar key={x.name} label={x.name} selected={i === s.expIdx} onClick={() => set({ expIdx: i })} />
+        <SubOptionRow className="m-filter" label="Experience type" options={EXP_TABS} selected={s.expTab} onSelect={(i) => set({ expTab: i })} />
+        <Strip selected={idx} key={s.expTab}>
+          {list.map((x, i) => (
+            <ListBar key={x.name} label={x.name} selected={i === idx} onClick={() => pick(i)} />
           ))}
         </Strip>
       </div>
-      <div className="m-body m-body--tight" key={s.expIdx}>
+      <div className="m-body m-body--tight" key={`${s.expTab}-${idx}`}>
         <ChapterCard compact num={e.num} company={e.company} meta={e.meta} />
         <SectionHeader style={{ marginTop: 6 }}>{e.section}</SectionHeader>
         {e.cards.map(([t, d], k) => <AbilityCard key={t} index={k + 1} title={t} desc={d} core={k === 3} />)}
@@ -261,44 +268,92 @@ export function ExperienceScreen({ s, set }: Ctx) {
 
 /* ----------------------------------------------------------------- about */
 
-export function AboutScreen({ s, set }: Ctx) {
-  const title = ['PROFILE', 'AWARDS', 'NETWORKS'][s.aboutTab];
+export function AboutScreen({ s, set, go }: Ctx) {
   return (
     <>
-      <Head title={title} />
-      <div className="m-fixed">
-        <SubOptionRow className="m-filter" label="About sections" options={ABOUT_TABS} selected={s.aboutTab} onSelect={(i) => set({ aboutTab: i })} />
-      </div>
-      <div className="m-body" key={s.aboutTab}>
-        {s.aboutTab === 0 && ABOUT.map((a) => (
-          <section key={a.label} className="m-stack6">
-            <SectionHeader>{a.label}</SectionHeader>
-            {a.pending ? <p className="m-para">Coming soon.</p> : a.paras.map((t) => <p key={t} className="m-para">{t}</p>)}
-          </section>
-        ))}
-        {s.aboutTab === 1 && (
-          <>
-            <Strip selected={0} className="m-strip--cards">
-              {RESULT_CARDS.map((r) => <ResultCard key={r.label} label={r.label} place={r.place} />)}
-            </Strip>
-            <div className="m-stack6">
-              {AWARDS.map((a) => (
-                <div key={a.event} className="m-award">
-                  <span className="m-award__event">{a.event}</span>
-                  <span className="m-award__result">{a.result}</span>
-                  <span className="m-award__meta">{a.team} · {a.year}</span>
+      <Head title="AWARDS" />
+      <div className="m-body" style={{ gap: 6 }}>
+        <span className="m-award-note">{AWARDS.length} on record · tap a row for the story</span>
+        {AWARDS.map((a, i) => {
+          const open = i === s.awardIdx;
+          return (
+            <div key={a.event} className={`m-award${open ? ' is-open' : ''}${i === 0 ? ' is-first' : ''}`}>
+              <button type="button" className="btn-reset m-award__main" aria-expanded={open} onClick={() => set({ awardIdx: open ? -1 : i })}>
+                <span className="m-award__event">{a.event}</span>
+                <span className="m-award__result">{a.result}</span>
+                <span className="m-award__meta">{a.team} · {a.year}</span>
+              </button>
+              <div className="m-award__more">
+                <div className="m-award__more-inner">
+                  <div className="m-award__img">
+                    {a.image ? <img src={a.image} alt={a.event} /> : <span>event photo</span>}
+                  </div>
+                  <p className="m-para">{a.details}</p>
+                  {a.project && (
+                    <CutCornerButton onClick={() => go({ screen: 'briefing', listKey: 'featured', projId: a.project! })}>
+                      VIEW {projectById(a.project)?.short.toUpperCase()}
+                    </CutCornerButton>
+                  )}
                 </div>
-              ))}
+              </div>
             </div>
-          </>
-        )}
-        {s.aboutTab === 2 && NETWORKS.map((n) => (
-          <section key={n.name} className="m-net">
-            <span className="m-net__name">{n.name}</span>
-            <span className="m-net__role">{n.role}{n.dates ? ` · ${n.dates}` : ''}</span>
-            {n.text && <p className="m-para">{n.text}</p>}
-          </section>
-        ))}
+          );
+        })}
+      </div>
+    </>
+  );
+}
+
+/* --------------------------------------------------------------- profile */
+
+export function ProfileScreen({ go }: Ctx) {
+  const p = PROFILE;
+  return (
+    <>
+      <Head title="PROFILE" />
+      <div className="m-body">
+        <div className="m-id">
+          <div className="m-id__portrait">
+            {MEDIA.portrait ? <img src={MEDIA.portrait} alt={p.name} /> : <span>portrait</span>}
+          </div>
+          <div className="m-id__text">
+            <span className="m-id__name">{p.name}</span>
+            <span className="m-blue">{p.role}</span>
+            <span className="m-id__status"><span className="m-id__dot" />{p.status}</span>
+          </div>
+        </div>
+        <p className="m-bio">{p.bio}</p>
+        <div className="m-pstats">
+          {p.stats.map((st) => (
+            <div key={st.label} className="m-pstat">
+              <span className="m-pstat__value">{st.value}</span>
+              <span className="m-pstat__label">{st.label}</span>
+              <span className="m-pstat__caption">{st.caption}</span>
+            </div>
+          ))}
+        </div>
+        <div className="m-stack6">
+          <SectionHeader>CURRENT MISSION</SectionHeader>
+          <div className="m-mission">
+            <span className="m-gold">{p.now.title}</span>
+            <p className="m-para">{p.now.text}</p>
+            <CutCornerButton onClick={() => go({ screen: 'briefing', listKey: 'featured', projId: 'ember' })}>VIEW EMBER</CutCornerButton>
+          </div>
+        </div>
+        <div className="m-stack6">
+          <SectionHeader>SEEKING</SectionHeader>
+          <p className="m-para">{p.seeking}</p>
+        </div>
+        <div className="m-stack6">
+          <SectionHeader>FILE</SectionHeader>
+          <div>{p.facts.map(([k, v]) => <SettingsRow key={k} label={k} value={v} className="m-fact" />)}</div>
+        </div>
+        <div className="m-stack6">
+          <SectionHeader>OFF DUTY</SectionHeader>
+          {p.offDuty.length
+            ? <div className="m-chips">{p.offDuty.map((t) => <span key={t} className="m-chip">{t}</span>)}</div>
+            : <p className="m-para">Coming soon.</p>}
+        </div>
       </div>
     </>
   );
@@ -411,6 +466,47 @@ export function ContactScreen({ s, set }: Ctx) {
           <InfoBox>Transmission ready. Your mail app should open with the message filled in. Tap to close.</InfoBox>
         </div>
       )}
+    </>
+  );
+}
+
+/* ---------------------------------------------------------------- résumé */
+
+export function ResumeScreen({ s, set }: Ctx) {
+  const r = RESUMES[s.resumeIdx] ?? RESUMES[0];
+  const exists = useFileExists(r.file);
+  const fileName = `Taimoor-Aleem-Resume${r.id === 'main' ? '' : `-${r.id}`}.pdf`;
+  return (
+    <>
+      <Head title="RÉSUMÉ" />
+      {RESUMES.length > 1 && (
+        <div className="m-fixed">
+          <SubOptionRow
+            className="m-strip m-filter"
+            label="Résumé variant"
+            options={RESUMES.map((x, i) => (i === 0 ? `${x.label} · main` : x.label))}
+            selected={s.resumeIdx}
+            onSelect={(i) => set({ resumeIdx: i })}
+          />
+        </div>
+      )}
+      <div className="m-body" key={r.id}>
+        <div className="m-resume">
+          <div className="m-resume__doc" aria-hidden>
+            <span /><span /><span /><span /><span />
+          </div>
+          <div className="m-stack6">
+            <span className="m-name" style={{ fontSize: 24, lineHeight: '30px' }}>{r.label}</span>
+            {r.note && <p className="m-para">{r.note}</p>}
+            {r.updated && <span className="m-award__meta">UPDATED {r.updated.toUpperCase()}</span>}
+          </div>
+        </div>
+        {exists === false && <InfoBox>PDF not uploaded yet. Add it at public{r.file}.</InfoBox>}
+        <div className="m-btns">
+          <CutCornerButton href={r.file} download={fileName} disabled={exists === false}>DOWNLOAD PDF</CutCornerButton>
+          <CutCornerButton href={r.file} newTab disabled={exists === false}>OPEN PDF</CutCornerButton>
+        </div>
+      </div>
     </>
   );
 }

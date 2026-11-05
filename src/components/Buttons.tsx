@@ -5,15 +5,26 @@ interface CutCornerButtonProps {
   href?: string;
   disabled?: boolean;
   state?: 'hover' | 'pressed';
+  /** Download the linked file instead of navigating; a string sets the saved file name. */
+  download?: boolean | string;
+  /** Open the link in a new tab. External links always do. */
+  newTab?: boolean;
   onClick?: () => void;
 }
 
-export function CutCornerButton({ children, href, disabled, state, onClick }: CutCornerButtonProps) {
+export function CutCornerButton({ children, href, disabled, state, download, newTab, onClick }: CutCornerButtonProps) {
   const inner = <span className="cc-btn__inner">{children}</span>;
   if (href && !disabled) {
-    const external = /^https?:/.test(href);
+    const tab = newTab || /^https?:/.test(href);
     return (
-      <a className="cc-btn" href={href} data-state={state} target={external ? '_blank' : undefined} rel={external ? 'noreferrer' : undefined}>
+      <a
+        className="cc-btn"
+        href={href}
+        data-state={state}
+        download={download === true ? '' : download || undefined}
+        target={tab ? '_blank' : undefined}
+        rel={tab ? 'noreferrer' : undefined}
+      >
         {inner}
       </a>
     );

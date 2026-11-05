@@ -1,12 +1,14 @@
 import { useEffect, useRef, type ReactNode } from 'react';
 import {
-  AbilityCard, CutCornerButton, InfoBox, ListBar, ListGroupHeader, MenuItem, ResultCard, SettingsRow, StatTile,
+  AbilityCard, CutCornerButton, InfoBox, ListBar, ListGroupHeader, MenuItem, SettingsRow, StatTile,
   SubOptionRow, TransmissionWindow,
 } from '../components';
 import {
-  ABOUT, AWARDS, CATS, EXPERIENCE, LINKS, MEDIA, NETWORKS, RESULT_CARDS, SKILLS, catIds, projectById, skillUse, techCode,
+  AWARDS, CATS, EXPERIENCE, LEADERSHIP, LINKS, MEDIA, PROFILE, RESUMES, SKILLS, allIds, catIds, projectById, skillUse,
+  techCode, type Chapter,
 } from '../data';
-import { D_MENU, curList, skillRows, titleCase, type DState } from './state';
+import { useFileExists } from '../theme/useFileExists';
+import { D_MENU, EXP_TABS, curList, skillRows, titleCase, type DState } from './state';
 
 export interface DCtx {
   s: DState;
@@ -137,7 +139,7 @@ export function DHome({ s, set, activate, go }: DCtx) {
           <span className="d-latest__sub">Top 3 in North America at the Google Solution Challenge.</span>
         </div>
         <div className="d-latest__tiles">
-          <button type="button" className="btn-reset d-latest__tile" onClick={() => go({ screen: 'networks', netIdx: 0 })}>
+          <button type="button" className="btn-reset d-latest__tile" onClick={() => go({ screen: 'leadership', leadIdx: 0 })}>
             {MEDIA.bearhacks && <img className="d-img" src={MEDIA.bearhacks} alt="" />}
             <span>BearHacks 2026: Mississauga's largest hackathon</span>
           </button>
@@ -313,28 +315,39 @@ export function DBriefing({ s, set }: DCtx) {
   );
 }
 
-/* ------------------------------------------------------------ experience */
+/* ----------------------------------------------- experience / leadership */
 
-export function DExperience({ s, set }: DCtx) {
-  const e = EXPERIENCE[s.expIdx];
+function DChapters({ set, go, list, idx, tab }: DCtx & { list: Chapter[]; idx: number; tab: 0 | 1 }) {
+  const e = list[idx];
+  const pick = (i: number) => set(tab === 0 ? { expIdx: i } : { leadIdx: i });
   return (
     <div className="d-screen">
+      <div className="d-tabs">
+        <SubOptionRow
+          label="Experience type"
+          options={EXP_TABS}
+          selected={tab}
+          onSelect={(i) => { if (i !== tab) go({ screen: i === 0 ? 'experience' : 'leadership' }); }}
+        />
+      </div>
       <div style={{ position: 'absolute', left: 80, top: 200 }}>
-        <SlideList width={220} sel={s.expIdx} items={EXPERIENCE.map((x) => ({ key: x.name, label: x.name }))} onHover={(i) => set({ expIdx: i })} />
+        <SlideList width={220} sel={idx} items={list.map((x) => ({ key: x.name, label: x.name }))} onHover={pick} />
       </div>
       <Rule left={324} />
-      <div className="d-chapter" key={`c${s.expIdx}`}>
+      <div className="d-chapter" key={`c${tab}${idx}`}>
         <span className="d-chapter__num">{e.num}</span>
         <div className="d-chapter__text">
           <span className="d-chapter__company">{e.company}</span>
           <span className="d-chapter__meta">{e.meta}</span>
         </div>
       </div>
-      <div className="d-exp" key={`b${s.expIdx}`}>
+      <div className="d-exp" key={`b${tab}${idx}`}>
         <span className="section-header">{e.section}</span>
-        <div className="d-cards d-cards--panel">
-          {e.cards.map(([t, d], k) => <AbilityCard key={t} icon index={k + 1} title={t} desc={d} core={k === 3} />)}
-        </div>
+        {e.cards.length > 0 && (
+          <div className="d-cards d-cards--panel">
+            {e.cards.map(([t, d], k) => <AbilityCard key={t} icon index={k + 1} title={t} desc={d} core={k === 3} />)}
+          </div>
+        )}
         {e.extra && <span className="d-para">{e.extra}</span>}
         {e.btn && <div><CutCornerButton href={e.btn.href} disabled={!e.btn.href}>{e.btn.label}</CutCornerButton></div>}
       </div>
@@ -342,71 +355,53 @@ export function DExperience({ s, set }: DCtx) {
   );
 }
 
+export const DExperience = (c: DCtx) => <DChapters {...c} list={EXPERIENCE} idx={c.s.expIdx} tab={0} />;
+export const DLeadership = (c: DCtx) => <DChapters {...c} list={LEADERSHIP} idx={c.s.leadIdx} tab={1} />;
+
 /* ---------------------------------------------------------------- awards */
 
-export function DAwards({ s, set }: DCtx) {
+export function DAwards({ s, set, go }: DCtx) {
+  const openProject = (id: string) => go({ screen: 'briefing', list: allIds(), listName: 'Featured', projIdx: allIds().indexOf(id), from: 'projects' });
   return (
     <div className="d-screen">
-      <div className="d-results">
-        {RESULT_CARDS.map((r) => <ResultCard key={r.label} label={r.label} place={r.place} />)}
-      </div>
       <div className="d-awards">
-        <div className="d-awards__tab-row"><div className="d-awards__tab">ON RECORD · {AWARDS.length}</div></div>
-        <div className="d-awards__grid d-awards__head"><span>Event</span><span>Result</span><span>Built with</span><span style={{ textAlign: 'right' }}>Year</span></div>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-          {AWARDS.map((a, i) => (
-            <div
-              key={a.event}
-              className={`d-awards__grid d-award-row${i === s.awardIdx ? ' is-selected' : ''}${i === 0 ? ' is-first' : ''}`}
-              onMouseEnter={() => set({ awardIdx: i })}
-            >
-              <span style={{ fontWeight: 600 }}>{a.event}</span>
-              <span>{a.result}</span>
-              <span style={{ opacity: 0.85 }}>{a.team}</span>
-              <span className="d-award-row__year">{a.year}</span>
-            </div>
-          ))}
-          <div className="d-award-row d-award-row--empty" />
-          <div className="d-award-row d-award-row--empty" />
+        <div className="d-awards__top">
+          <div className="d-awards__tab">ON RECORD · {AWARDS.length}</div>
+          <span className="d-note">Every one of these was a team effort. Hover a row for the story.</span>
         </div>
-        <span className="d-note">Every one of these was a team effort.</span>
-      </div>
-    </div>
-  );
-}
-
-/* -------------------------------------------------------------- networks */
-
-export function DNetworks({ s, set }: DCtx) {
-  const n = NETWORKS[s.netIdx];
-  return (
-    <div className="d-screen">
-      <div className="d-nets">
-        <div className="d-nets__head">
-          <span className="d-nets__title">NETWORK <span className="d-dim">|</span> <span style={{ fontWeight: 400, letterSpacing: 0 }}>Communities I've helped run</span></span>
-          <span className="d-amber" style={{ fontWeight: 600 }}>300+ hackers hosted at BearHacks</span>
-        </div>
-        <div className="d-nets__cols">
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-            {NETWORKS.map((x, i) => (
-              <button
-                key={x.name}
-                type="button"
-                className={`btn-reset d-net${i === s.netIdx ? ' is-selected' : ''}`}
-                onMouseEnter={() => set({ netIdx: i })}
-                onClick={() => set({ netIdx: i })}
+        <div className="d-award-list" onMouseLeave={() => set({ awardIdx: -1 })}>
+          {AWARDS.map((a, i) => {
+            const open = i === s.awardIdx;
+            return (
+              <div
+                key={a.event}
+                className={`d-award${open ? ' is-open' : ''}${i === 0 ? ' is-first' : ''}`}
+                tabIndex={0}
+                onMouseEnter={() => set({ awardIdx: i })}
+                onFocus={() => set({ awardIdx: i })}
               >
-                <span style={{ fontSize: 11 }}>◀</span>
-                <span className="d-net__text"><b>{x.name}</b><span>{x.role}</span></span>
-              </button>
-            ))}
-          </div>
-          <div style={{ background: 'rgba(255,255,255,0.85)' }} />
-          <div className="d-net-detail" key={s.netIdx}>
-            <span className="d-h30">{n.name}</span>
-            <span className="d-blue">{n.role}{n.dates ? ` · ${n.dates}` : ''}</span>
-            {n.text ? <p className="d-para" style={{ marginTop: 6 }}>{n.text}</p> : <span className="d-pending">DETAILS COMING SOON</span>}
-          </div>
+                <div className="d-award__main">
+                  <span className="d-award__year">{a.year}</span>
+                  <span className="d-award__event">{a.event}</span>
+                  <span className="d-award__result">{a.result}</span>
+                  <span className="d-award__team">{a.team}</span>
+                </div>
+                <div className="d-award__more" aria-hidden={!open}>
+                  <div className="d-award__more-inner">
+                    <div className="d-award__img">
+                      {a.image ? <img className="d-img" src={a.image} alt={a.event} /> : <span>event photo</span>}
+                    </div>
+                    <div className="d-award__detail">
+                      <p className="d-para">{a.details}</p>
+                      {a.project && (
+                        <CutCornerButton onClick={() => openProject(a.project!)}>VIEW {projectById(a.project)?.short.toUpperCase()}</CutCornerButton>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>
@@ -471,22 +466,107 @@ export function DSkills({ s, set }: DCtx) {
   );
 }
 
-/* ----------------------------------------------------------------- about */
+/* --------------------------------------------------------------- profile */
 
-export function DAbout({ s, set }: DCtx) {
-  const a = ABOUT[s.aboutIdx];
+export function DProfile({ go }: DCtx) {
+  const p = PROFILE;
   return (
     <div className="d-screen">
-      <div className="d-about-list">
-        {ABOUT.map((x, i) => (
-          <MenuItem key={x.label} label={x.label} focused={i === s.aboutIdx} onMouseEnter={() => set({ aboutIdx: i })} onClick={() => set({ aboutIdx: i })} />
-        ))}
+      <div className="d-id">
+        <div className="d-id__portrait">
+          {MEDIA.portrait ? <img className="d-img" src={MEDIA.portrait} alt={p.name} /> : <span>portrait</span>}
+          <span className="d-id__corner d-id__corner--tl" />
+          <span className="d-id__corner d-id__corner--br" />
+        </div>
+        <span className="d-id__name">{p.name}</span>
+        <span className="d-blue">{p.role}</span>
+        <span className="d-id__status"><span className="d-id__dot" />{p.status}</span>
       </div>
-      <div className="d-logbook" key={s.aboutIdx}>
-        <span className="d-logbook__title">LOGBOOK <span className="d-dim">/ {a.label}</span></span>
-        {a.paras.map((p) => <p key={p} className="d-logbook__p">{p}</p>)}
-        {a.pending && <span className="d-pending">ENTRY COMING SOON</span>}
-        <div className="d-logbook__foot"><span className="d-logbook__gem" /><span>21 events organized</span></div>
+
+      <div className="d-prof">
+        <p className="d-prof__bio">{p.bio}</p>
+
+        <div className="d-prof__stats">
+          {p.stats.map((st) => (
+            <div key={st.label} className="d-pstat">
+              <span className="d-pstat__value">{st.value}</span>
+              <span className="d-pstat__label">{st.label}</span>
+              <span className="d-pstat__caption">{st.caption}</span>
+            </div>
+          ))}
+        </div>
+
+        <div className="d-prof__cols">
+          <div className="d-prof__col">
+            <span className="section-header">CURRENT MISSION</span>
+            <div className="d-mission">
+              <span className="d-gold">{p.now.title}</span>
+              <p className="d-para">{p.now.text}</p>
+              <CutCornerButton onClick={() => go({ screen: 'briefing', list: allIds(), listName: 'Featured', projIdx: 0, from: 'projects' })}>
+                VIEW EMBER
+              </CutCornerButton>
+            </div>
+            <span className="section-header" style={{ marginTop: 10 }}>SEEKING</span>
+            <p className="d-para">{p.seeking}</p>
+          </div>
+          <div className="d-prof__col">
+            <span className="section-header">FILE</span>
+            <div>
+              {p.facts.map(([k, v]) => <SettingsRow key={k} label={k} value={v} />)}
+            </div>
+            <span className="section-header" style={{ marginTop: 10 }}>OFF DUTY</span>
+            {p.offDuty.length
+              ? <div className="d-stack-tags">{p.offDuty.map((t) => <span key={t}>{t}</span>)}</div>
+              : <span className="d-pending">ENTRY COMING SOON</span>}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ---------------------------------------------------------------- résumé */
+
+export function DResume({ s, set }: DCtx) {
+  const r = RESUMES[s.resumeIdx] ?? RESUMES[0];
+  const exists = useFileExists(r.file);
+  const fileName = `Taimoor-Aleem-Resume${r.id === 'main' ? '' : `-${r.id}`}.pdf`;
+  return (
+    <div className="d-screen">
+      <div style={{ position: 'absolute', left: 80, top: 200 }}>
+        <ListGroupHeader>Variants</ListGroupHeader>
+        <div style={{ marginTop: 10 }}>
+          <SlideList
+            width={240}
+            sel={s.resumeIdx}
+            items={RESUMES.map((x, i) => ({ key: x.id, label: x.label, trailing: i === 0 ? 'MAIN' : undefined }))}
+            onHover={() => {}}
+            onClick={(i) => set({ resumeIdx: i })}
+          />
+        </div>
+      </div>
+      <Rule left={340} />
+      <div className="d-resume" key={r.id}>
+        <div className="d-resume__head">
+          <div className="d-stack2">
+            <span className="d-h30">{r.label}</span>
+            {r.note && <span className="d-para">{r.note}</span>}
+            {r.updated && <span className="d-pending">UPDATED {r.updated.toUpperCase()}</span>}
+          </div>
+          <div className="d-resume__btns">
+            <CutCornerButton href={r.file} download={fileName} disabled={exists === false}>DOWNLOAD PDF</CutCornerButton>
+            <CutCornerButton href={r.file} newTab disabled={exists === false}>OPEN IN NEW TAB</CutCornerButton>
+          </div>
+        </div>
+        <div className="d-resume__viewer">
+          {exists ? (
+            <iframe title={`${r.label} résumé`} src={`${r.file}#view=FitH`} />
+          ) : (
+            <span className="d-pending">
+              {exists === null ? 'LOADING…' : `PDF NOT FOUND · ADD public${r.file.replace(/\//g, '/')}`}
+            </span>
+          )}
+        </div>
       </div>
     </div>
   );

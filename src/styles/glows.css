@@ -1,5 +1,8 @@
-/* Glow position variables (set per page from src/theme/glowLayout.ts).
-   Registering them lets the browser animate between pages. */
+/* Background glow motion.
+   --sNx/--sNy: where each glow sits on the current page (src/theme/glowLayout.ts).
+     Changing page glides them to the new spots over --glow-move.
+   --dNx/--dNy: a slow, endless drift added on top so the glows never sit still.
+     Scale it with --drift (0 = off); speed with the animation durations below. */
 @property --s1x { syntax: '<percentage>'; inherits: true; initial-value: 70%; }
 @property --s1y { syntax: '<percentage>'; inherits: true; initial-value: 28%; }
 @property --s2x { syntax: '<percentage>'; inherits: true; initial-value: 88%; }
@@ -17,15 +20,50 @@
 @property --b1 { syntax: '<percentage>'; inherits: true; initial-value: 46%; }
 @property --b2 { syntax: '<percentage>'; inherits: true; initial-value: 76%; }
 
+@property --d1x { syntax: '<percentage>'; inherits: true; initial-value: 0%; }
+@property --d1y { syntax: '<percentage>'; inherits: true; initial-value: 0%; }
+@property --d2x { syntax: '<percentage>'; inherits: true; initial-value: 0%; }
+@property --d2y { syntax: '<percentage>'; inherits: true; initial-value: 0%; }
+@property --d3x { syntax: '<percentage>'; inherits: true; initial-value: 0%; }
+@property --d3y { syntax: '<percentage>'; inherits: true; initial-value: 0%; }
+
+:root {
+  --glow-move: 3600ms cubic-bezier(0.45, 0, 0.25, 1);  /* page-to-page glide */
+  --drift: 1;                                          /* drift amount: 0 off, 1 default, 2 wider */
+}
+
 .d-stage, .m-app {
-  --glow-move: 1100ms cubic-bezier(0.4, 0, 0.2, 1);
   transition:
     --s1x var(--glow-move), --s1y var(--glow-move), --s2x var(--glow-move), --s2y var(--glow-move),
     --s3x var(--glow-move), --s3y var(--glow-move), --s4x var(--glow-move), --s4y var(--glow-move),
     --s5x var(--glow-move), --s5y var(--glow-move), --s6x var(--glow-move), --s6y var(--glow-move),
     --s7x var(--glow-move), --s7y var(--glow-move), --b1 var(--glow-move), --b2 var(--glow-move);
+  animation:
+    glow-drift-1 47s ease-in-out infinite alternate,
+    glow-drift-2 61s ease-in-out infinite alternate,
+    glow-drift-3 79s ease-in-out infinite alternate;
+}
+
+/* Each drift traces a slow loop of about ±6% of the screen. */
+@keyframes glow-drift-1 {
+  0%   { --d1x: 0%;  --d1y: 0%; }
+  25%  { --d1x: 5%;  --d1y: -3%; }
+  50%  { --d1x: 2%;  --d1y: 5%; }
+  75%  { --d1x: -4%; --d1y: 2%; }
+  100% { --d1x: -6%; --d1y: -4%; }
+}
+@keyframes glow-drift-2 {
+  0%   { --d2x: 0%;  --d2y: 0%; }
+  33%  { --d2x: -5%; --d2y: 4%; }
+  66%  { --d2x: 3%;  --d2y: 6%; }
+  100% { --d2x: 6%;  --d2y: -3%; }
+}
+@keyframes glow-drift-3 {
+  0%   { --d3x: 0%;  --d3y: 0%; }
+  50%  { --d3x: 4%;  --d3y: -6%; }
+  100% { --d3x: -5%; --d3y: 3%; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .d-stage, .m-app { transition: none; }
+  .d-stage, .m-app { transition: none; animation: none; }
 }

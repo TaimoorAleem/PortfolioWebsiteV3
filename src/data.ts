@@ -269,33 +269,95 @@ export const EXPERIENCE: Chapter[] = [
   },
 ];
 
-export const AWARDS: { event: string; result: string; team: string; year: string }[] = [
-  { event: 'CS Capstone, Sheridan', result: 'First Place', team: 'Capstone team', year: '2025' },
-  { event: 'Google Solution Challenge', result: 'Top 3, North America', team: 'IgnisXR team', year: '2026' },
-  { event: 'Hack Canada', result: 'Google Build With AI and SPUR tracks', team: 'IgnisXR team', year: '2026' },
-  { event: 'DeerHacks, UofT', result: '2nd Place and Best Use of Vultr', team: 'Rocky team', year: '2026' },
-  { event: 'GenAI Genesis, UofT', result: 'Best AI Hack by IBM', team: 'Voxel team', year: '2026' },
-  { event: 'YorkU Hackathon', result: '5th of 60', team: 'Prismarine team', year: '2026' },
-  { event: 'Hackville', result: 'Best UI Design', team: 'Hackville team', year: 'TBC' },
-];
+export interface Award {
+  event: string;
+  result: string;
+  team: string;
+  year: string;
+  /** Shown when the row is expanded. */
+  details: string;
+  /** Project id to link to from the expanded row. */
+  project?: string;
+  /** Event photo, e.g. '/media/awards/capstone.jpg'. Placeholder until set. */
+  image?: string;
+}
 
-export const RESULT_CARDS = [
-  { label: 'CS Capstone', place: '1st' },
-  { label: 'Solution Challenge', place: 'Top 3' },
-  { label: 'GenAI Genesis', place: 'Best AI Hack' },
-];
-
-export const NETWORKS: { name: string; role: string; dates?: string; text: string }[] = [
+export const AWARDS: Award[] = [
   {
-    name: 'BearHacks 2026', role: 'Director', dates: 'Dec 2025 to Apr 2026',
-    text: "Led Mississauga's largest hackathon with 7 teams of 41 organizers, 22 sponsors and $17K in funding, for 300+ participants. Built the event site in React and TypeScript, which reached 12.49k monthly visits across 84 countries. Nominated for the Bruno Team Leadership Award and the Student Leadership Award.",
+    event: 'CS Capstone, Sheridan', result: 'First Place', team: 'Capstone team', year: '2025', project: 'cricket',
+    details: 'Led our capstone team to first place with AI Cricket Coach, a mobile app that tracks ball trajectory and recommends the ideal shot.',
   },
   {
-    name: 'Google Developer Group Sheridan', role: 'Vice President',
-    text: "Helped lead Sheridan's largest tech club (800+ members) through 21 events, including workshops on DSA and LeetCode with 100+ attendees. Selected by Google to attend I/O in Mountain View.",
+    event: 'Google Solution Challenge', result: 'Top 3, North America', team: 'IgnisXR team', year: '2026', project: 'ember',
+    details: 'Ember, our XR firefighter helmet, placed in the top 3 in North America and was presented to Google engineers in New York City.',
   },
-  { name: 'Sheridan Datathon 2025', role: 'Founder', text: '' },
-  { name: 'Hackville 2025', role: 'Organizer', text: '' },
+  {
+    event: 'Hack Canada', result: 'Google Build With AI and SPUR tracks', team: 'IgnisXR team', year: '2026', project: 'ember',
+    details: 'Ember won two prize tracks: Google Build With AI and SPUR.',
+  },
+  {
+    event: 'DeerHacks, UofT', result: '2nd Place and Best Use of Vultr', team: 'Rocky team', year: '2026', project: 'rocky',
+    details: 'Rocky, a real time child safety monitor running Mixtral 8x22B on Vultr, took 2nd place overall and Best Use of Vultr.',
+  },
+  {
+    event: 'GenAI Genesis, UofT', result: 'Best AI Hack by IBM', team: 'Voxel team', year: '2026', project: 'voxel',
+    details: 'Voxel, an agentic 3D research pipeline built on IBM Langflow and watsonx, won Best AI Hack from IBM.',
+  },
+  {
+    event: 'YorkU Hackathon', result: '5th of 60', team: 'Prismarine team', year: '2026', project: 'prismarine',
+    details: 'Prismarine, an AI research discovery tool with a 3D paper graph and audio summaries, placed 5th of 60 teams.',
+  },
+  {
+    event: 'Hackville', result: 'Best UI Design', team: 'Hackville team', year: 'TBC',
+    details: 'Best UI Design award. Details coming soon.',
+  },
+];
+
+/** Experience › Leadership. Same shape and layout as the professional chapters. */
+export const LEADERSHIP: Chapter[] = [
+  {
+    name: 'BearHacks 2026', num: '04', company: 'BEARHACKS 2026', section: 'COMMAND LOG',
+    meta: 'Director · Dec 2025 to Apr 2026 · Mississauga, ON',
+    cards: [
+      ['EVENT', "Led Mississauga's largest hackathon: 7 teams of 41 organizers, 22 sponsors and $17K in funding, for 300+ participants."],
+      ['EVENT SITE', 'Built the event site in React and TypeScript; it reached 12.49k monthly visits across 84 countries.'],
+      ['RECOGNITION', 'Nominated for the Bruno Team Leadership Award and the Student Leadership Award.'],
+    ],
+  },
+  {
+    name: 'GDG Sheridan', num: '03', company: 'GOOGLE DEVELOPER GROUP SHERIDAN', section: 'COMMAND LOG',
+    meta: 'Vice President · Sheridan College',
+    cards: [
+      ['COMMUNITY', "Helped lead Sheridan's largest tech club, 800+ members, through 21 events."],
+      ['WORKSHOPS', 'Ran workshops on DSA and LeetCode with 100+ attendees.'],
+      ['GOOGLE I/O', 'Selected by Google to attend I/O in Mountain View.'],
+    ],
+  },
+  {
+    name: 'Sheridan Datathon 2025', num: '02', company: 'SHERIDAN DATATHON 2025', section: 'COMMAND LOG',
+    meta: 'Founder · 2025', cards: [], extra: 'Details coming soon.',
+  },
+  {
+    name: 'Hackville 2025', num: '01', company: 'HACKVILLE 2025', section: 'COMMAND LOG',
+    meta: 'Organizer · 2025', cards: [], extra: 'Details coming soon.',
+  },
+];
+
+export interface Resume {
+  id: string;
+  label: string;
+  /** Path to the PDF, from the site root. Put the files in /public. */
+  file: string;
+  note?: string;
+  updated?: string;
+}
+
+/** Résumé variants. The first one is the main résumé and opens by default. */
+export const RESUMES: Resume[] = [
+  { id: 'main', label: 'Software and AI', file: RESUME_HREF, note: 'My main résumé, for software and AI engineering roles.' },
+  // Add variants below, e.g.:
+  // { id: 'ml', label: 'ML Engineering', file: '/resumes/ml.pdf', note: 'Focused on ML and MLOps work.' },
+  // { id: 'backend', label: 'Backend Systems', file: '/resumes/backend.pdf' },
 ];
 
 export const USE: Record<string, string> = {
@@ -333,28 +395,37 @@ export const SKILLS: [string, [string, string[]][]][] = [
   ]],
 ];
 
-export const ABOUT: { label: string; paras: string[]; pending?: boolean }[] = [
-  {
-    label: 'OVERVIEW', paras: [
-      'Computer Science grad from Sheridan College, April 2026. Cofounder and AI engineer at IgnisXR, where our team builds Ember.',
-      'I like building systems that run fast on real hardware, and I care more about honest evaluation than impressive numbers.',
-      'Based in the GTA and looking for software and AI engineering roles.',
-    ],
+export const PROFILE = {
+  name: 'TAIMOOR ALEEM',
+  role: 'AI Engineer · Software Developer',
+  status: 'Open to new grad roles',
+  bio: 'I like building systems that run fast on real hardware, and I care more about honest evaluation than impressive numbers.',
+  now: {
+    title: 'Founding Engineer, IgnisXR',
+    text: 'Building Ember, an XR helmet for firefighters: edge inference on a Coral TPU, multi threaded sensor fusion and a wearable biometric stream.',
   },
-  {
-    label: 'RIGHT NOW', paras: [
-      'Founding engineer at IgnisXR, building Ember: edge inference, sensor fusion and a wearable biometric stream.',
-      'Open to new grad roles in AI and software.',
-    ],
-  },
-  { label: 'OFF DUTY', paras: [], pending: true },
-];
+  seeking: 'New grad software and AI engineering roles, in the GTA or remote.',
+  stats: [
+    { value: '7', label: 'Awards', caption: 'mostly hackathons' },
+    { value: '21', label: 'Events run', caption: 'GDG Sheridan' },
+    { value: '300+', label: 'Hackers hosted', caption: 'BearHacks 2026' },
+    { value: '3', label: 'Roles', caption: 'IgnisXR, Dayforce, Skill Squirrel' },
+  ],
+  facts: [
+    ['Based in', 'Toronto, ON (GTA)'],
+    ['Education', "Hon. BCS, Data Analytics · Sheridan '26"],
+    ['Focus', 'Edge ML · sensor fusion · backend systems'],
+    ['Honours', 'Valedictorian Nominee'],
+  ] as [string, string][],
+  /** Leave empty to show "coming soon". */
+  offDuty: [] as string[],
+};
 
 export const LINKS: { label: string; value: string; short: string; href: string; gold?: boolean }[] = [
   { label: 'Email', value: EMAIL, short: EMAIL, href: `mailto:${EMAIL}` },
   { label: 'LinkedIn', value: 'linkedin.com/in/TaimoorAleem', short: 'in/TaimoorAleem', href: 'https://linkedin.com/in/TaimoorAleem' },
   { label: 'GitHub', value: 'github.com/TaimoorAleem', short: 'TaimoorAleem', href: GH },
-  { label: 'Résumé', value: 'Download PDF', short: 'Download PDF', href: RESUME_HREF, gold: true },
+  { label: 'Résumé', value: 'View and download', short: 'View', href: '#/resume', gold: true },
 ];
 
 export const NEWS = { lead: 'Ember presented to ', hl: 'Google engineers in NYC', projectId: 'ember' };

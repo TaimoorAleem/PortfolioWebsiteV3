@@ -1,8 +1,8 @@
-import { CATS, PROJECTS, SKILLS, allIds, catIds } from '../data';
+import { CATS, PROJECTS, RESUMES, SKILLS, allIds, catIds } from '../data';
 
 export type DScreen =
-  | 'home' | 'projects' | 'archive' | 'briefing' | 'experience'
-  | 'awards' | 'networks' | 'skills' | 'about' | 'contact';
+  | 'home' | 'profile' | 'experience' | 'leadership' | 'projects' | 'archive' | 'briefing'
+  | 'skills' | 'awards' | 'contact' | 'resume';
 
 export interface DState {
   screen: DScreen;
@@ -15,28 +15,31 @@ export interface DState {
   from: 'projects' | 'archive';
   catIdx: number;
   expIdx: number;
+  leadIdx: number;
   awardIdx: number;
-  netIdx: number;
   skillIdx: number;
   skillVal: number;
-  aboutIdx: number;
   contactIdx: number;
+  resumeIdx: number;
 }
 
 export const D_INITIAL: DState = {
   screen: 'home', menuIdx: 0, subIdx: 0, list: null, listName: 'Featured', projIdx: 0, from: 'projects',
-  catIdx: 0, expIdx: 0, awardIdx: 0, netIdx: 0, skillIdx: 0, skillVal: 0, aboutIdx: 0, contactIdx: 0,
+  catIdx: 0, expIdx: 0, leadIdx: 0, awardIdx: -1, skillIdx: 0, skillVal: 0, contactIdx: 0, resumeIdx: 0,
 };
 
 export const curList = (s: DState) => s.list ?? allIds();
 
 export const titleCase = (t: string) => t.toLowerCase().replace(/(^|\s)\S/g, (c) => c.toUpperCase());
 
+export const EXP_TABS = ['Professional', 'Leadership'];
+
 export const D_MENU = [
+  { id: 'profile', label: 'PROFILE' },
+  { id: 'experience', label: 'EXPERIENCE', subs: EXP_TABS },
   { id: 'projects', label: 'PROJECTS', subs: ['Featured', 'Hackathons', 'All Projects'], isNew: true },
-  { id: 'experience', label: 'EXPERIENCE' },
-  { id: 'about', label: 'ABOUT', subs: ['Profile', 'Awards', 'Networks'] },
   { id: 'skills', label: 'SKILLS' },
+  { id: 'about', label: 'ABOUT' },
   { id: 'contact', label: 'CONTACT' },
   { id: 'resume', label: 'RÉSUMÉ', special: true },
 ] as const satisfies readonly { id: string; label: string; subs?: readonly string[]; isNew?: boolean; special?: boolean }[];
@@ -48,8 +51,9 @@ export function dToHash(s: DState): string {
   switch (s.screen) {
     case 'home': return '#/';
     case 'briefing': return `#/projects/${curList(s)[s.projIdx] ?? ''}`;
-    case 'awards': return '#/about/awards';
-    case 'networks': return '#/about/networks';
+    case 'leadership': return '#/experience/leadership';
+    case 'awards': return '#/about';
+    case 'resume': return s.resumeIdx > 0 && RESUMES[s.resumeIdx] ? `#/resume/${RESUMES[s.resumeIdx].id}` : '#/resume';
     default: return `#/${s.screen}`;
   }
 }
@@ -64,8 +68,11 @@ export function dFromHash(hash: string, cur: DState): Partial<DState> {
       return { screen: 'briefing', list: allIds(), listName: 'Featured', projIdx: allIds().indexOf(b), from: 'projects' };
     }
     case 'archive': return { screen: 'archive' };
-    case 'about': return { screen: b === 'awards' ? 'awards' : b === 'networks' ? 'networks' : 'about' };
-    case 'experience':
+    case 'experience': return { screen: b === 'leadership' ? 'leadership' : 'experience' };
+    // Older links: #/about/networks moved to Experience › Leadership, #/about/awards is now #/about.
+    case 'about': return b === 'networks' ? { screen: 'leadership' } : { screen: 'awards' };
+    case 'resume': return { screen: 'resume', resumeIdx: Math.max(0, RESUMES.findIndex((r) => r.id === b)) };
+    case 'profile':
     case 'skills':
     case 'contact':
       return { screen: a };
@@ -75,13 +82,15 @@ export function dFromHash(hash: string, cur: DState): Partial<DState> {
 }
 
 export const D_TITLES: Partial<Record<DScreen, string>> = {
-  projects: 'PROJECTS', archive: 'ALL PROJECTS', briefing: 'PROJECT BRIEFING', experience: 'SERVICE RECORD',
-  awards: 'AWARDS', networks: 'NETWORKS', skills: 'LOADOUT CONFIG', about: 'PROFILE', contact: 'COMMS',
+  profile: 'PROFILE', experience: 'SERVICE RECORD', leadership: 'SERVICE RECORD', projects: 'PROJECTS',
+  archive: 'ALL PROJECTS', briefing: 'PROJECT BRIEFING', skills: 'LOADOUT CONFIG', awards: 'AWARDS',
+  contact: 'COMMS', resume: 'RÉSUMÉ',
 };
 
 export const D_SCENE: Record<DScreen, 'A' | 'B' | 'C'> = {
-  home: 'A', projects: 'A', archive: 'A', awards: 'A', networks: 'A',
-  skills: 'B', contact: 'B', briefing: 'C', experience: 'C', about: 'C',
+  home: 'A', projects: 'A', archive: 'A', awards: 'A',
+  skills: 'B', contact: 'B',
+  profile: 'C', experience: 'C', leadership: 'C', briefing: 'C', resume: 'C',
 };
 
 export { CATS, catIds };

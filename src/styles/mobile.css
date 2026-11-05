@@ -19,9 +19,9 @@
   inset: -40px;
   filter: blur(20px);
   background:
-    radial-gradient(circle at var(--s1x) var(--s1y), oklch(var(--glow-warm) / calc(0.55 * var(--glow))) 0, oklch(var(--glow-warm) / 0) 26%),
-    radial-gradient(circle at var(--s2x) var(--s2y), oklch(var(--glow-warm-2) / calc(0.35 * var(--glow))) 0, oklch(var(--glow-warm-2) / 0) 20%),
-    radial-gradient(circle at var(--s3x) var(--s3y), oklch(var(--glow-hot) / calc(0.6 * var(--glow))) 0, oklch(var(--glow-hot) / 0) 4%);
+    radial-gradient(circle at calc(var(--s1x) + var(--d1x) * var(--drift)) calc(var(--s1y) + var(--d1y) * var(--drift)), oklch(var(--glow-warm) / calc(0.55 * var(--glow))) 0, oklch(var(--glow-warm) / 0) 26%),
+    radial-gradient(circle at calc(var(--s2x) + var(--d2x) * var(--drift)) calc(var(--s2y) + var(--d2y) * var(--drift)), oklch(var(--glow-warm-2) / calc(0.35 * var(--glow))) 0, oklch(var(--glow-warm-2) / 0) 20%),
+    radial-gradient(circle at calc(var(--s3x) + var(--d3x) * var(--drift)) calc(var(--s3y) + var(--d3y) * var(--drift)), oklch(var(--glow-hot) / calc(0.6 * var(--glow))) 0, oklch(var(--glow-hot) / 0) 4%);
 }
 .scene--home::after {
   inset: 0;
@@ -30,19 +30,19 @@
 .scene--haze { background: var(--scene-haze); }
 .scene--haze::after {
   inset: 0;
-  background: radial-gradient(ellipse at var(--s1x) var(--s1y), oklch(var(--glow-warm) / calc(0.35 * var(--glow))) 0, oklch(var(--glow-warm) / 0) 45%), radial-gradient(circle at var(--s3x) var(--s3y), oklch(var(--glow-hot) / calc(0.45 * var(--glow))) 0, oklch(var(--glow-hot) / 0) 4%), radial-gradient(ellipse at 50% 50%, rgba(0, 0, 0, 0) 30%, rgba(0, 0, 0, 0.6) 100%);
+  background: radial-gradient(ellipse at calc(var(--s1x) + var(--d1x) * var(--drift)) calc(var(--s1y) + var(--d1y) * var(--drift)), oklch(var(--glow-warm) / calc(0.35 * var(--glow))) 0, oklch(var(--glow-warm) / 0) 45%), radial-gradient(circle at calc(var(--s3x) + var(--d3x) * var(--drift)) calc(var(--s3y) + var(--d3y) * var(--drift)), oklch(var(--glow-hot) / calc(0.45 * var(--glow))) 0, oklch(var(--glow-hot) / 0) 4%), radial-gradient(ellipse at 50% 50%, rgba(0, 0, 0, 0) 30%, rgba(0, 0, 0, 0.6) 100%);
 }
 .scene--dark { background: var(--scene-dark); }
 .scene--dark::after {
   inset: 0;
   background:
-    radial-gradient(ellipse at var(--s1x) var(--s1y), oklch(var(--glow-dark) / calc(0.3 * var(--glow))) 0, oklch(var(--glow-dark) / 0) 50%),
-    radial-gradient(circle at var(--s2x) var(--s2y), oklch(var(--glow-hot) / calc(0.25 * var(--glow))) 0, oklch(var(--glow-hot) / 0) 5%);
+    radial-gradient(ellipse at calc(var(--s1x) + var(--d1x) * var(--drift)) calc(var(--s1y) + var(--d1y) * var(--drift)), oklch(var(--glow-dark) / calc(0.3 * var(--glow))) 0, oklch(var(--glow-dark) / 0) 50%),
+    radial-gradient(circle at calc(var(--s2x) + var(--d2x) * var(--drift)) calc(var(--s2y) + var(--d2y) * var(--drift)), oklch(var(--glow-hot) / calc(0.25 * var(--glow))) 0, oklch(var(--glow-hot) / 0) 5%);
 }
 .scene--comms { background: var(--scene-comms); }
 .scene--comms::after {
   inset: 0;
-  background: radial-gradient(circle at var(--s1x) var(--s1y), oklch(var(--glow-spark) / calc(0.5 * var(--glow))) 0, oklch(var(--glow-spark) / 0) 3%), radial-gradient(ellipse at var(--s2x) var(--s2y), oklch(var(--glow-comms) / calc(0.35 * var(--glow))) 0, oklch(var(--glow-comms) / 0) 40%), radial-gradient(ellipse at 50% 50%, rgba(0, 0, 0, 0) 30%, rgba(0, 0, 0, 0.6) 100%);
+  background: radial-gradient(circle at calc(var(--s1x) + var(--d1x) * var(--drift)) calc(var(--s1y) + var(--d1y) * var(--drift)), oklch(var(--glow-spark) / calc(0.5 * var(--glow))) 0, oklch(var(--glow-spark) / 0) 3%), radial-gradient(ellipse at calc(var(--s2x) + var(--d2x) * var(--drift)) calc(var(--s2y) + var(--d2y) * var(--drift)), oklch(var(--glow-comms) / calc(0.35 * var(--glow))) 0, oklch(var(--glow-comms) / 0) 40%), radial-gradient(ellipse at 50% 50%, rgba(0, 0, 0, 0) 30%, rgba(0, 0, 0, 0.6) 100%);
 }
 
 .m-player { position: absolute; right: 20px; top: 24px; z-index: 3; }
@@ -189,15 +189,64 @@
 .m-skill-use { padding: 8px 12px 12px; font-size: 13px; line-height: 18px; color: var(--c-muted); background: var(--c-card); }
 .m-skill-use b { color: var(--c-text); font-weight: 600; }
 
-/* ---------- about ---------- */
-.m-award { display: flex; flex-direction: column; gap: 2px; padding: 10px 12px; background: color-mix(in oklch, var(--c-award-row) 55%, transparent); }
-.m-award:first-child .m-award__event { color: var(--c-highlight); }
-.m-award__event { font-size: 15px; font-weight: 600; }
+/* ---------- about (awards) ---------- */
+.m-award-note { font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.08em; color: var(--c-faint); margin-bottom: 4px; }
+.m-award { position: relative; background: color-mix(in oklch, var(--c-award-row) 60%, transparent); transition: background 220ms ease; }
+.m-award::before {
+  content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+  background: var(--c-amber); transform: scaleY(0); transform-origin: top; transition: transform 220ms ease;
+}
+.m-award.is-open { background: color-mix(in oklch, var(--c-award-row) 90%, white 8%); }
+.m-award.is-open::before { transform: scaleY(1); }
+.m-award__main { width: 100%; display: flex; flex-direction: column; gap: 2px; padding: 14px 14px 12px; }
+.m-award.is-first .m-award__event { color: var(--c-highlight); }
+.m-award__event { font-size: 17px; line-height: 22px; font-weight: 600; }
 .m-award__result { font-size: 14px; color: var(--c-blue); }
-.m-award__meta { font-family: var(--f-mono); font-size: 11px; color: var(--c-faint); }
-.m-net { display: flex; flex-direction: column; gap: 4px; }
-.m-net__name { font-size: 18px; font-weight: 600; color: var(--c-highlight); }
-.m-net__role { font-size: 14px; color: var(--c-blue); }
+.m-award__meta { font-family: var(--f-mono); font-size: 11px; color: var(--c-faint); margin-top: 2px; }
+.m-award__more { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 260ms ease; }
+.m-award.is-open .m-award__more { grid-template-rows: 1fr; }
+.m-award__more-inner { overflow: hidden; display: flex; flex-direction: column; align-items: flex-start; gap: 12px; padding: 0 14px; }
+.m-award.is-open .m-award__more-inner { padding-bottom: 14px; }
+.m-award__img {
+  position: relative; width: 100%; aspect-ratio: 16 / 9; overflow: hidden;
+  background: var(--hatch), var(--c-media); display: flex; align-items: center; justify-content: center;
+}
+.m-award__img span { font-family: var(--f-mono); font-size: 10px; color: var(--c-faint); text-shadow: none; }
+.m-award__img img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+
+/* ---------- profile ---------- */
+.m-id { display: flex; gap: 14px; align-items: center; }
+.m-id__portrait {
+  position: relative; width: 104px; height: 124px; flex: none; overflow: hidden;
+  background: var(--hatch), var(--c-media); display: flex; align-items: center; justify-content: center;
+  outline: 1px solid var(--c-hair); outline-offset: 3px;
+}
+.m-id__portrait span { font-family: var(--f-mono); font-size: 10px; color: var(--c-faint); text-shadow: none; }
+.m-id__portrait img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.m-id__text { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.m-id__name { font-family: var(--f-display); font-weight: 700; font-size: 24px; line-height: 28px; letter-spacing: 0.04em; }
+.m-id__status { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--c-new); }
+.m-id__dot { width: 7px; height: 7px; border-radius: 50%; background: var(--c-new); box-shadow: 0 0 6px var(--c-new); }
+.m-bio { margin: 0; font-size: 18px; line-height: 26px; color: var(--c-title); }
+.m-pstats { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.m-pstat { position: relative; padding: 10px 12px; background: var(--c-stat); display: flex; flex-direction: column; }
+.m-pstat::before { content: ''; position: absolute; left: 0; top: 0; width: 20px; height: 2px; background: var(--c-amber); }
+.m-pstat__value { font-family: var(--f-display); font-weight: 700; font-size: 28px; line-height: 32px; }
+.m-pstat__label { font-size: 13px; font-weight: 600; }
+.m-pstat__caption { font-size: 11px; color: var(--c-amber); }
+.m-mission { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; padding: 12px; background: var(--c-panel-soft); }
+.m-fact { height: auto; min-height: 36px; padding: 6px 0; cursor: default; }
+.m-fact .settings-row__value { white-space: normal; font-size: 13px; }
+.m-fact:hover { background: none; }
+
+/* ---------- résumé ---------- */
+.m-resume { display: flex; gap: 16px; align-items: flex-start; }
+.m-resume__doc {
+  width: 84px; height: 110px; flex: none; padding: 14px 10px; background: var(--c-selected);
+  display: flex; flex-direction: column; gap: 7px; clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 0 100%);
+}
+.m-resume__doc span { height: 3px; background: color-mix(in oklch, var(--c-on-selected) 35%, transparent); }
+.m-resume__doc span:first-child { width: 60%; height: 5px; background: var(--c-on-selected); }
 
 /* ---------- page frame ---------- */
 .app-root {

@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { LoadingBar, PlayerBlock, PromptBar, type Prompt } from '../components';
 import { desktopGlows } from '../theme/glowLayout';
-import { CATS, EMAIL, EXPERIENCE, LINKS, NETWORKS, ABOUT, AWARDS, RESUME_HREF, allIds, catIds } from '../data';
+import { AWARDS, CATS, EMAIL, EXPERIENCE, LEADERSHIP, LINKS, RESUMES, allIds, catIds } from '../data';
 import {
-  DAbout, DArchive, DAwards, DBriefing, DContact, DExperience, DHome, DNetworks, DProjects, DSkills, FIELDS,
+  DArchive, DAwards, DBriefing, DContact, DExperience, DHome, DLeadership, DProfile, DProjects, DResume, DSkills, FIELDS,
   type DCtx, type FormKey,
 } from './screens';
 import {
@@ -13,8 +13,8 @@ import {
 type Phase = 'in' | 'out' | 'pre';
 
 const SCREENS: Record<DScreen, (c: DCtx) => JSX.Element> = {
-  home: DHome, projects: DProjects, archive: DArchive, briefing: DBriefing, experience: DExperience,
-  awards: DAwards, networks: DNetworks, skills: DSkills, about: DAbout, contact: DContact,
+  home: DHome, profile: DProfile, experience: DExperience, leadership: DLeadership, projects: DProjects,
+  archive: DArchive, briefing: DBriefing, skills: DSkills, awards: DAwards, contact: DContact, resume: DResume,
 };
 
 const reducedMotion = () => !!window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
@@ -84,15 +84,16 @@ export function DesktopApp({ grain = true, bootScreen = true }: { grain?: boolea
         else if (si === 1) go({ screen: 'projects', list: catIds(2), listName: 'Hackathons', projIdx: 0, from: 'projects' });
         else go({ screen: 'archive', catIdx: 0 });
         break;
-      case 'about': go({ screen: (['about', 'awards', 'networks'] as const)[si] ?? 'about' }); break;
-      case 'resume': window.open(RESUME_HREF, '_blank', 'noopener'); break;
+      case 'experience': go({ screen: si === 1 ? 'leadership' : 'experience' }); break;
+      case 'about': go({ screen: 'awards', awardIdx: -1 }); break;
+      case 'resume': go({ screen: 'resume', resumeIdx: 0 }); break;
       default: go({ screen: m.id });
     }
   }, [go, set]);
 
   const openLink = useCallback((i: number) => {
     const l = LINKS[i];
-    if (l.href.startsWith('mailto')) window.location.href = l.href;
+    if (l.href.startsWith('mailto') || l.href.startsWith('#')) window.location.href = l.href;
     else window.open(l.href, '_blank', 'noopener');
   }, []);
 
@@ -170,10 +171,18 @@ export function DesktopApp({ grain = true, bootScreen = true }: { grain?: boolea
           if (dir) L.set({ catIdx: wrap(st.catIdx + dir, CATS.length) });
           if (enter) L.go({ screen: 'briefing', list: catIds(st.catIdx), listName: titleCase(CATS[st.catIdx]), projIdx: 0, from: 'archive' });
           break;
-        case 'experience': if (dir) L.set({ expIdx: wrap(st.expIdx + dir, EXPERIENCE.length) }); break;
-        case 'awards': if (dir) L.set({ awardIdx: wrap(st.awardIdx + dir, AWARDS.length) }); break;
-        case 'networks': if (dir) L.set({ netIdx: wrap(st.netIdx + dir, NETWORKS.length) }); break;
-        case 'about': if (dir) L.set({ aboutIdx: wrap(st.aboutIdx + dir, ABOUT.length) }); break;
+        case 'experience':
+          if (dir) L.set({ expIdx: wrap(st.expIdx + dir, EXPERIENCE.length) });
+          if (h) L.go({ screen: 'leadership' });
+          break;
+        case 'leadership':
+          if (dir) L.set({ leadIdx: wrap(st.leadIdx + dir, LEADERSHIP.length) });
+          if (h) L.go({ screen: 'experience' });
+          break;
+        case 'awards': if (dir) L.set({ awardIdx: wrap(Math.max(st.awardIdx, dir > 0 ? -1 : 0) + dir, AWARDS.length) }); break;
+        case 'resume':
+          if (dir) L.set({ resumeIdx: wrap(st.resumeIdx + dir, RESUMES.length) });
+          break;
         case 'skills': {
           const rows = skillRows();
           if (dir) L.set({ skillIdx: wrap(st.skillIdx + dir, rows.length), skillVal: 0 });
@@ -203,12 +212,13 @@ export function DesktopApp({ grain = true, bootScreen = true }: { grain?: boolea
     projects: [{ k: '↵', label: 'Open', onClick: () => go({ screen: 'briefing', from: 'projects' }) }, esc, { k: '↑↓', label: 'Browse' }],
     archive: [{ k: '↵', label: 'Open' }, esc, { k: '↑↓', label: 'Category' }],
     briefing: [{ k: '↑↓', label: 'Switch project' }, esc],
-    experience: [{ k: '↑↓', label: 'Chapter' }, esc],
+    profile: [esc],
+    experience: [{ k: '↑↓', label: 'Chapter' }, { k: '←→', label: 'Leadership', onClick: () => go({ screen: 'leadership' }) }, esc],
+    leadership: [{ k: '↑↓', label: 'Chapter' }, { k: '←→', label: 'Professional', onClick: () => go({ screen: 'experience' }) }, esc],
     awards: [{ k: '↑↓', label: 'Browse' }, esc],
-    networks: [{ k: '↑↓', label: 'Browse' }, esc],
     skills: [{ k: '↵', label: 'Select' }, esc, { k: '←→', label: 'Switch project' }],
-    about: [{ k: '↑↓', label: 'Section' }, esc],
     contact: [{ k: '↵', label: 'Select' }, esc, { k: '↑↓', label: 'Navigate' }],
+    resume: RESUMES.length > 1 ? [{ k: '↑↓', label: 'Variant' }, esc] : [esc],
   };
 
   const scene = D_SCENE[s.screen];
