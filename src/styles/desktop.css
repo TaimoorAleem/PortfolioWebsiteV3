@@ -1,25 +1,26 @@
-/* Desktop — fixed 1440 × 900 canvas scaled to fit the window (Portfolio.dc.html). */
+/* Desktop — the 1440 × 900 design (Portfolio.dc.html), scaled to fit the window.
+   .d-stage fills the whole window (size set inline); .d-frame is the 1440 × 900 layout
+   centred inside it. --gx / --gy are the leftover margins on each side, so pieces that
+   should touch the screen edge can reach past the frame. */
 .d-root {
   position: fixed;
   inset: 0;
   background: var(--c-page);
   overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 .d-stage {
-  width: 1440px;
-  height: 900px;
-  flex: none;
-  position: relative;
+  position: absolute;
+  left: 0;
+  top: 0;
   overflow: hidden;
-  transform-origin: center center;
+  transform-origin: 0 0;
   font-family: var(--f-ui);
   color: var(--c-text);
   text-shadow: var(--ts);
   --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
 }
+
+.d-frame { position: absolute; width: 1440px; height: 900px; }
 
 /* scenes */
 .d-scene { position: absolute; inset: -60px; filter: blur(24px); transition: opacity 400ms ease; }
@@ -67,7 +68,7 @@
   font-size: 42px; line-height: 48px; font-weight: 600; letter-spacing: 0.02em; color: var(--c-title); white-space: nowrap;
   transition: opacity 220ms var(--ease), transform 260ms var(--ease);
 }
-.d-title-hair { position: absolute; left: 0; top: 166px; height: 1px; width: 560px; background: var(--c-hair); transition: width 260ms var(--ease); }
+.d-title-hair { position: absolute; left: calc(-1 * var(--gx)); top: 166px; height: 1px; width: calc(var(--gx) + 560px); background: var(--c-hair); transition: width 260ms var(--ease); }
 .d-content { position: absolute; inset: 0; transition: opacity 220ms var(--ease), transform 260ms var(--ease); }
 .d-stage[data-phase='out'] .d-content { opacity: 0; transform: translateX(-12px); }
 .d-stage[data-phase='pre'] .d-content { opacity: 0; transition: none; }
@@ -112,14 +113,16 @@
 .d-bar--bold { font-weight: 600; letter-spacing: 0.03em; padding-right: 12px; }
 
 /* ---------- home ---------- */
+/* "Currently working on" — pinned to the left edge of the screen. */
 .d-news {
-  position: absolute; left: 560px; top: 96px; width: 560px; padding: 14px 20px 14px 56px;
-  background: linear-gradient(90deg, oklch(var(--sf) / 0) 0%, oklch(var(--sf) / 0.5) 22%);
-  display: flex; gap: 16px; align-items: flex-start;
+  position: absolute; left: calc(-1 * var(--gx)); top: 84px; padding: 14px 64px 14px 24px;
+  background: linear-gradient(90deg, oklch(var(--sf) / 0.6) 0%, oklch(var(--sf) / 0.6) 70%, oklch(var(--sf) / 0) 100%);
+  display: flex; flex-direction: column; gap: 6px;
 }
-.d-news__tag { display: flex; align-items: center; gap: 10px; font-size: 22px; line-height: 26px; font-weight: 600; color: var(--c-gold); }
-.d-news__chev { width: 14px; height: 14px; border-right: 2px solid var(--c-gold); border-bottom: 2px solid var(--c-gold); transform: rotate(45deg); margin-top: -6px; }
-.d-news__lines { display: flex; flex-direction: column; align-items: flex-start; gap: 3px; font-size: 13px; line-height: 18px; }
+.d-news::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--c-gold); }
+.d-news__tag { font-size: 13px; line-height: 16px; font-weight: 600; letter-spacing: 0.08em; color: var(--c-gold); }
+.d-news__lines { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; align-items: flex-start; gap: 2px; font-size: 15px; line-height: 20px; }
+.d-news__lines li::before { content: '–'; margin-right: 8px; color: var(--c-gold); }
 .d-news__lines button:hover { color: var(--c-amber); }
 
 .d-hero { position: absolute; left: 80px; top: 236px; display: flex; align-items: center; }
@@ -132,7 +135,8 @@
 .d-menu__item { display: flex; flex-direction: column; }
 .d-menu__row { height: 48px; align-self: flex-start; }
 /* The -8px pull-left lives on the clipping box, so the pill's own left padding isn't cut off. */
-.d-menu__subs { overflow: hidden; margin: -8px 0 0 -8px; transition: height 160ms var(--ease); }
+/* Option pills start flush with the first letter of the menu word above. */
+.d-menu__subs { overflow: hidden; margin-top: -8px; transition: height 160ms var(--ease); }
 .d-menu__subs .sub-row { height: 24px; align-items: center; flex-wrap: nowrap; }
 
 .d-latest { position: absolute; left: 880px; top: 420px; width: 440px; display: flex; flex-direction: column; background: oklch(var(--sf) / 0.55); }
@@ -218,7 +222,7 @@
 .d-cards .ability__title { white-space: nowrap; }
 
 /* ---------- experience ---------- */
-.d-chapter { position: absolute; left: 325px; right: 0; top: 200px; height: 132px; background: var(--c-panel-soft); display: flex; align-items: center; overflow: hidden; }
+.d-chapter { position: absolute; left: 325px; right: calc(-1 * var(--gx)); top: 200px; height: 132px; background: var(--c-panel-soft); display: flex; align-items: center; overflow: hidden; }
 .d-chapter__num { font-family: var(--f-display); font-weight: 700; font-size: 120px; line-height: 110px; color: var(--c-ghost); margin-left: 24px; width: 170px; flex: none; text-shadow: none; }
 .d-chapter__text { display: flex; flex-direction: column; gap: 4px; margin-left: 12px; }
 .d-chapter__company { font-family: var(--f-display); font-weight: 700; font-size: 44px; line-height: 48px; letter-spacing: 0.02em; }
@@ -340,7 +344,7 @@
 
 /* ---------- overlays ---------- */
 .d-sent { position: absolute; inset: 0; z-index: 20; display: flex; align-items: center; }
-.d-sent__band { width: 100%; height: 180px; background: rgba(0,0,0,0.72); display: flex; flex-direction: column; justify-content: center; gap: 8px; padding-left: 80px; }
+.d-sent__band { width: 100%; height: 180px; background: rgba(0,0,0,0.72); display: flex; flex-direction: column; justify-content: center; gap: 8px; padding-left: calc(var(--gx) + 80px); }
 .d-sent__title { font-size: 18px; line-height: 22px; font-weight: 600; letter-spacing: 0.04em; }
 .d-sent__text { font-size: 15px; line-height: 20px; color: var(--c-muted); }
 .d-sent .prompt-bar { margin-top: 10px; }
@@ -348,7 +352,7 @@
 .d-boot { position: absolute; inset: 0; z-index: 30; cursor: pointer; background: var(--scene-boot); }
 .d-boot::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 55% 45%, rgba(0,0,0,0) 30%, rgba(0,0,0,0.6) 100%); }
 .d-boot__title { position: absolute; left: 80px; top: 106px; font-size: 42px; line-height: 48px; font-weight: 600; letter-spacing: 0.02em; color: var(--c-title); }
-.d-boot__hair { position: absolute; left: 0; top: 166px; width: 560px; height: 1px; background: var(--c-hair); }
+.d-boot__hair { position: absolute; left: calc(-1 * var(--gx)); top: 166px; width: calc(var(--gx) + 560px); height: 1px; background: var(--c-hair); }
 .d-boot__bar { position: absolute; left: 80px; bottom: 92px; }
 .d-boot__tip { position: absolute; right: 70px; bottom: 92px; max-width: 520px; font-size: 15px; line-height: 22px; color: var(--c-muted); text-align: right; }
 .d-boot__tip span { color: var(--c-amber); font-weight: 600; }

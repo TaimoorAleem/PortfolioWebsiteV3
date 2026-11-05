@@ -11,4 +11,5 @@ export * from './PromptBar';
 export * from './ResultCard';
 export * from './TransmissionWindow';
 export * from './ChapterCard';
+export * from './Slideshow';
 export { cls } from './cls';

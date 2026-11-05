@@ -20,12 +20,17 @@ export interface ActionLink {
   href?: string;
 }
 
+export type ProjectGroup = 'personal' | 'academic' | 'hackathons';
+
 export interface Project {
   id: string;
   name: string;
   short: string;
+  /** Shows in the Featured tab and gets the gold corner. */
   featured?: boolean;
   isNew?: boolean;
+  /** Which of the Personal / Academic / Hackathons tabs it appears in. */
+  groups: ProjectGroup[];
   gold: string;
   blue: string;
   desc: Seg[];
@@ -34,15 +39,12 @@ export interface Project {
   stack: string[];
   awards?: string[];
   perks?: string[];
-  btns: ActionLink[];
-  /** Placeholder caption, and alt text once an image is set. */
+  /** Buttons appear only for links that are set. */
+  links: { github?: string; devpost?: string; article?: string };
+  /** Placeholder caption, and alt text for the images. */
   media: string;
-  /** Landscape screenshot/photo, e.g. '/media/projects/ember.jpg'. Used on mobile, the briefing hero and archive tiles. */
-  image?: string;
-  /** Optional tall or transparent PNG for the desktop Projects screen (300 × 540 frame). Falls back to `image`. */
-  cutout?: string;
-  /** Indexes into CATS. */
-  cats: number[];
+  /** Slideshow images, e.g. ['/media/projects/ember-1.jpg', '/media/projects/ember-2.jpg']. Landscape, 16:9 works best. */
+  images?: string[];
 }
 
 export const GH = 'https://github.com/TaimoorAleem';
@@ -75,8 +77,6 @@ export const CODE: Record<string, string> = {
 
 export const techCode = (n: string) => CODE[n] ?? n.slice(0, 3).toUpperCase();
 
-const gh = (label = 'VIEW ON GITHUB'): ActionLink => ({ label, href: GH });
-
 export const PROJECTS: Project[] = [
   {
     id: 'ember', name: 'Ember (IgnisXR)', short: 'Ember', featured: true,
@@ -101,10 +101,11 @@ export const PROJECTS: Project[] = [
     ],
     stack: ['C++', 'Python', 'OpenCV', 'Coral', 'Linux', 'Kotlin', 'Wear OS'],
     awards: ['Google Build With AI', 'SPUR'], perks: ['Hack Canada', 'Google Solution Challenge', 'NYC Demo'],
-    btns: [{ label: 'READ ARTICLE' }, gh()], media: 'Ember prototype photo', cats: [1, 2, 3],
+    links: { github: GH },
+    media: 'Ember prototype photo', groups: ['hackathons'], images: [],
   },
   {
-    id: 'proprio', name: 'Proprio', short: 'Proprio', isNew: true,
+    id: 'proprio', name: 'Proprio', short: 'Proprio', isNew: true, featured: true,
     gold: 'ML PIPELINE, HONEST EVALUATION', blue: 'MLOps and sensor ML',
     desc: [{ t: 'Grew out of my AI Workout Detector project. Rebuilt the evaluation of a model that claimed 99.9% accuracy.' }],
     cards: [
@@ -119,7 +120,8 @@ export const PROJECTS: Project[] = [
       { label: 'Robustness', value: '7×', caption: 'misalignment tolerance', tech: ['PyTorch'] },
     ],
     stack: ['Python', 'PyTorch', 'scikit learn', 'MLflow', 'Spring Boot', 'RabbitMQ', 'PostgreSQL', 'Docker'],
-    btns: [gh()], media: 'Proprio sensor rig photo', cats: [1, 3, 4],
+    links: { github: GH },
+    media: 'Proprio sensor rig photo', groups: ['personal'], images: [],
   },
   {
     id: 'mercato', name: 'Mercato', short: 'Mercato',
@@ -137,7 +139,8 @@ export const PROJECTS: Project[] = [
       { label: 'Signals', value: '4', caption: 'metrics, logs, traces', tech: ['Prometheus', 'Kubernetes'] },
     ],
     stack: ['Java', 'Spring Boot', 'Kafka', 'Angular', 'MySQL', 'MongoDB'],
-    btns: [gh()], media: 'Mercato storefront screenshot', cats: [4, 5],
+    links: { github: GH },
+    media: 'Mercato storefront screenshot', groups: ['personal'], images: [],
   },
   {
     id: 'rocky', name: 'Rocky', short: 'Rocky',
@@ -155,7 +158,8 @@ export const PROJECTS: Project[] = [
       { label: 'Model', value: '8x22B', caption: 'Mixtral on Vultr', tech: ['Ollama', 'Vultr'] },
     ],
     stack: ['Next.js', 'TypeScript', 'Kotlin', 'Supabase', 'PostgreSQL', 'Gemini API'],
-    btns: [gh()], media: 'Rocky dashboard screenshot', cats: [2, 3, 5],
+    links: { github: GH },
+    media: 'Rocky dashboard screenshot', groups: ['hackathons'], images: [],
   },
   {
     id: 'prismarine', name: 'Prismarine', short: 'Prismarine',
@@ -172,7 +176,8 @@ export const PROJECTS: Project[] = [
       { label: 'Sources', value: '3', caption: 'papers in a 3D graph', tech: ['Snowflake', 'ElevenLabs'] },
     ],
     stack: ['Python', 'FastAPI', 'Next.js', 'Gemini API', 'Snowflake', 'ElevenLabs'],
-    btns: [gh()], media: 'Prismarine 3D graph screenshot', cats: [2, 3, 5],
+    links: { github: GH },
+    media: 'Prismarine 3D graph screenshot', groups: ['hackathons'], images: [],
   },
   {
     id: 'voxel', name: 'Voxel', short: 'Voxel',
@@ -189,7 +194,8 @@ export const PROJECTS: Project[] = [
       { label: 'Agents', value: 'Langflow', caption: 'watsonx prompting', tech: ['Langflow', 'Db2'] },
     ],
     stack: ['Langflow', 'watsonx', 'Db2'],
-    btns: [gh()], media: 'Voxel render output', cats: [2, 3],
+    links: { github: GH },
+    media: 'Voxel render output', groups: ['hackathons'], images: [],
   },
   {
     id: 'cricket', name: 'AI Cricket Coach', short: 'AI Cricket Coach', featured: true,
@@ -207,15 +213,47 @@ export const PROJECTS: Project[] = [
       { label: 'Latency', value: '<10 s', caption: 'end to end', tech: ['Flutter', 'GCP'] },
     ],
     stack: ['Python', 'OpenCV', 'Flutter', 'GCP', 'Terraform'],
-    btns: [gh()], media: 'AI Cricket Coach app screens', cats: [2, 3],
+    links: { github: GH },
+    media: 'AI Cricket Coach app screens', groups: ['academic'], images: [],
   },
 ];
 
-export const CATS = ['ALL PROJECTS', 'NEW RELEASES', 'HACKATHON WINS', 'ML AND AI', 'BACKEND SYSTEMS', 'FULL STACK'];
+/** Tabs on the Projects page and under PROJECTS on the home menu. */
+export const PROJECT_TABS = [
+  { id: 'featured', label: 'Featured' },
+  { id: 'personal', label: 'Personal' },
+  { id: 'academic', label: 'Academic' },
+  { id: 'hackathons', label: 'Hackathons' },
+] as const;
 
 export const allIds = () => PROJECTS.map((p) => p.id);
-export const catIds = (i: number) => (i === 0 ? allIds() : PROJECTS.filter((p) => p.cats.includes(i)).map((p) => p.id));
 export const projectById = (id: string) => PROJECTS.find((p) => p.id === id);
+
+/** Project ids in a tab (index into PROJECT_TABS). */
+export function tabIds(tab: number): string[] {
+  const id = PROJECT_TABS[tab]?.id ?? 'featured';
+  return PROJECTS.filter((p) => (id === 'featured' ? p.featured : p.groups.includes(id))).map((p) => p.id);
+}
+
+/** Best tab for a project: the current one if it's there, otherwise the first that has it. */
+export function tabFor(id: string, current = 0): number {
+  if (tabIds(current).includes(id)) return current;
+  const i = PROJECT_TABS.findIndex((_, t) => tabIds(t).includes(id));
+  return i < 0 ? 0 : i;
+}
+
+/** Link buttons for a project, in display order; only links that are set. */
+export function projectLinks(p: Project): { label: string; href: string }[] {
+  const out: { label: string; href: string }[] = [];
+  if (p.links.github) out.push({ label: 'VIEW ON GITHUB', href: p.links.github });
+  if (p.links.devpost) out.push({ label: 'DEVPOST', href: p.links.devpost });
+  if (p.links.article) out.push({ label: 'READ ARTICLE', href: p.links.article });
+  return out;
+}
+
+/** Slides for a project: its images, or one placeholder until images are added. */
+export const projectSlides = (p: Project) =>
+  p.images?.length ? p.images.map((src, i) => ({ src, label: `${p.media} ${i + 1}` })) : [{ label: p.media }];
 
 export interface Chapter {
   name: string;
@@ -404,7 +442,6 @@ export const PROFILE = {
     title: 'Founding Engineer, IgnisXR',
     text: 'Building Ember, an XR helmet for firefighters: edge inference on a Coral TPU, multi threaded sensor fusion and a wearable biometric stream.',
   },
-  seeking: 'New grad software and AI engineering roles, in the GTA or remote.',
   stats: [
     { value: '7', label: 'Awards', caption: 'mostly hackathons' },
     { value: '21', label: 'Events run', caption: 'GDG Sheridan' },
@@ -417,9 +454,40 @@ export const PROFILE = {
     ['Focus', 'Edge ML · sensor fusion · backend systems'],
     ['Honours', 'Valedictorian Nominee'],
   ] as [string, string][],
-  /** Leave empty to show "coming soon". */
-  offDuty: [] as string[],
 };
+
+/** Your profiles for the hobby links. Leave '' until you have the URL; the tile shows "link coming soon". */
+export const SOCIAL = {
+  spotify: '',   // e.g. 'https://open.spotify.com/user/…'
+  youtube: '',   // e.g. 'https://www.youtube.com/@…'
+};
+
+export interface Hobby {
+  label: string;
+  /** Small line under the label. */
+  detail?: string;
+  /** Photos for the overlay slideshow. Placeholders show until you add some. */
+  images?: string[];
+  /** Opens this link instead of a slideshow. */
+  href?: string;
+  /** Name of the site the link goes to, e.g. 'Spotify'. */
+  site?: string;
+}
+
+/** Profile › Hobbies & interests. */
+export const HOBBIES: Hobby[] = [
+  { label: 'Piano', images: [] },
+  { label: 'Cooking', images: [] },
+  { label: 'Running', images: [] },
+  { label: 'Music', detail: 'Metal rock · Indie rock', href: SOCIAL.spotify, site: 'Spotify' },
+  { label: 'Titanfall 2', href: SOCIAL.youtube, site: 'YouTube' },
+  { label: 'Cricket & Squash', images: [] },
+];
+
+export const hobbySlides = (h: Hobby) =>
+  h.images?.length
+    ? h.images.map((src, i) => ({ src, label: `${h.label} ${i + 1}` }))
+    : [1, 2, 3].map((n) => ({ label: `${h.label} photo ${n}` }));
 
 export const LINKS: { label: string; value: string; short: string; href: string; gold?: boolean }[] = [
   { label: 'Email', value: EMAIL, short: EMAIL, href: `mailto:${EMAIL}` },
@@ -428,4 +496,9 @@ export const LINKS: { label: string; value: string; short: string; href: string;
   { label: 'Résumé', value: 'View and download', short: 'View', href: '#/resume', gold: true },
 ];
 
-export const NEWS = { lead: 'Ember presented to ', hl: 'Google engineers in NYC', projectId: 'ember' };
+/** Home page "Currently working on" list. `project` opens that project; `leadership` opens that Leadership chapter. */
+export const NOW_WORKING: { label: string; project?: string; leadership?: number }[] = [
+  { label: 'Scaling Ember', project: 'ember' },
+  { label: 'Shipping Proprio', project: 'proprio' },
+  { label: 'Advisor at BearHacks 2027', leadership: 0 },
+];

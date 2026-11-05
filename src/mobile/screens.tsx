@@ -1,14 +1,15 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import {
-  AbilityCard, ChapterCard, CutCornerButton, InfoBox, ListBar, MediaPlaceholder, MenuItem, NewsTicker,
-  SectionHeader, SettingsRow, StatTile, SubOptionRow, TransmissionWindow,
+  AbilityCard, ChapterCard, CutCornerButton, InfoBox, ListBar, MenuItem,
+  SectionHeader, SettingsRow, Slideshow, SubOptionRow, TransmissionWindow,
 } from '../components';
 import {
-  AWARDS, CATS, EMAIL, EXPERIENCE, LEADERSHIP, LINKS, MEDIA, NEWS, PROFILE, RESUMES, SKILLS,
-  catIds, projectById, skillUse, techCode,
+  AWARDS, EMAIL, EXPERIENCE, LEADERSHIP, LINKS, MEDIA, NOW_WORKING, PROFILE, PROJECT_TABS, RESUMES, SKILLS,
+  projectById, projectLinks, projectSlides, skillUse, tabIds, techCode,
 } from '../data';
+import { Hobbies } from '../shared/Hobbies';
 import { useFileExists } from '../theme/useFileExists';
-import { EXP_TABS, listIds, type AppState } from './state';
+import { EXP_TABS, currentProjectId, openProject, type AppState } from './state';
 
 export interface Ctx {
   s: AppState;
@@ -17,8 +18,6 @@ export interface Ctx {
   /** Navigate (animated, pushes history). */
   go: (patch: Partial<AppState>) => void;
 }
-
-const titleCase = (t: string) => t.toLowerCase().replace(/(^|\s)\S/g, (c) => c.toUpperCase());
 
 function Head({ title }: { title: string }) {
   return (
@@ -50,7 +49,7 @@ function Strip({ selected, children, className }: { selected: number; children: 
 export const MENU = [
   { id: 'profile', label: 'PROFILE' },
   { id: 'experience', label: 'EXPERIENCE', subs: EXP_TABS },
-  { id: 'projects', label: 'PROJECTS', subs: ['Featured', 'Hackathons', 'All Projects'], isNew: true },
+  { id: 'projects', label: 'PROJECTS', subs: PROJECT_TABS.map((t) => t.label), isNew: true },
   { id: 'skills', label: 'SKILLS' },
   { id: 'about', label: 'ABOUT' },
   { id: 'contact', label: 'CONTACT' },
@@ -61,12 +60,7 @@ export function activateMenu({ go, set }: Ctx, i: number, j: number) {
   const m = MENU[i];
   set({ menuIdx: i, subIdx: j });
   switch (m.id) {
-    case 'projects': {
-      const listKey = (['featured', 'hackathons', 'all'] as const)[j] ?? 'featured';
-      const ids = listIds({ listKey, catIdx: 0 });
-      go({ screen: 'projects', listKey, catIdx: 0, projId: ids[0] });
-      break;
-    }
+    case 'projects': go({ screen: 'projects', projTab: j, projId: tabIds(j)[0] ?? '' }); break;
     case 'experience': go({ screen: 'experience', expTab: j }); break;
     case 'about': go({ screen: 'about', awardIdx: -1 }); break;
     case 'resume': go({ screen: 'resume', resumeIdx: 0 }); break;
@@ -118,7 +112,22 @@ export function HomeScreen(ctx: Ctx) {
         })}
       </nav>
       <div className="m-home__news">
-        <NewsTicker lead={NEWS.lead} hl={NEWS.hl} onClick={() => go({ screen: 'briefing', listKey: 'featured', projId: NEWS.projectId })} />
+        <div className="m-now">
+          <span className="m-now__tag">CURRENTLY WORKING ON:</span>
+          <ul className="m-now__list">
+            {NOW_WORKING.map((n) => (
+              <li key={n.label}>
+                <button
+                  type="button"
+                  className="btn-reset"
+                  onClick={() => go(n.project ? openProject(n.project, s.projTab) : { screen: 'experience', expTab: 1, leadIdx: n.leadership ?? 0 })}
+                >
+                  {n.label}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </div>
   );
@@ -126,109 +135,65 @@ export function HomeScreen(ctx: Ctx) {
 
 /* -------------------------------------------------------------- projects */
 
-export function ProjectsScreen({ s, set, go }: Ctx) {
-  const ids = listIds(s);
-  const projId = ids.includes(s.projId) ? s.projId : ids[0];
-  const p = projectById(projId)!;
-  const idx = ids.indexOf(projId);
-  const title = { featured: 'PROJECTS', hackathons: 'HACKATHONS', all: 'ALL PROJECTS' }[s.listKey];
+export function ProjectsScreen({ s, set }: Ctx) {
+  const ids = tabIds(s.projTab);
+  const projId = currentProjectId(s);
+  const p = projId ? projectById(projId) : undefined;
+  const idx = projId ? ids.indexOf(projId) : 0;
+  const links = p ? projectLinks(p) : [];
   return (
     <>
-      <Head title={title} />
+      <Head title="PROJECTS" />
       <div className="m-fixed">
-        {s.listKey === 'all' && (
-          <SubOptionRow
-            className="m-strip m-filter"
-            label="Category"
-            options={CATS.map((c) => `${titleCase(c)} ${catIds(CATS.indexOf(c)).length}`)}
-            selected={s.catIdx}
-            onSelect={(i) => set({ catIdx: i, projId: catIds(i)[0] })}
-          />
-        )}
-        <Strip selected={idx}>
+        <SubOptionRow
+          className="m-strip m-filter"
+          label="Project type"
+          options={PROJECT_TABS.map((t, i) => `${t.label} ${tabIds(i).length}`)}
+          selected={s.projTab}
+          onSelect={(i) => set({ projTab: i, projId: tabIds(i)[0] ?? '' })}
+        />
+        <Strip selected={idx} key={s.projTab}>
           {ids.map((id) => {
             const q = projectById(id)!;
-            const sel = id === projId;
             return (
-              <ListBar
-                key={id}
-                label={q.name}
-                selected={sel}
-                isNew={q.isNew}
-                featured={q.featured}
-                onClick={() => (sel ? go({ screen: 'briefing', projId: id }) : set({ projId: id }))}
-              />
+              <ListBar key={id} label={q.name} selected={id === projId} isNew={q.isNew} featured={q.featured} onClick={() => set({ projId: id })} />
             );
           })}
         </Strip>
       </div>
-      <div className="m-body" key={projId}>
-        <MediaPlaceholder label={p.media} src={p.image} tone="warm" />
-        <div className="m-stack2">
-          <span className="m-gold">{p.gold}</span>
-          <span className="m-blue">{p.blue}</span>
-        </div>
-        {p.stats.map((st) => (
-          <StatTile
-            key={st.label}
-            label={st.label}
-            value={st.value}
-            caption={st.caption}
-            slots={st.tech.map((t) => ({ code: techCode(t), name: t }))}
-          />
-        ))}
-        <button type="button" className="btn-reset m-hint" onClick={() => go({ screen: 'briefing', projId })}>
-          Tap the selected project to open the full briefing
-        </button>
-      </div>
-    </>
-  );
-}
-
-/* -------------------------------------------------------------- briefing */
-
-export function BriefingScreen({ s, go }: Ctx) {
-  const ids = listIds(s);
-  const p = projectById(s.projId) ?? projectById(ids[0])!;
-  const i = Math.max(0, ids.indexOf(p.id));
-  const step = (d: number) => go({ screen: 'briefing', projId: ids[(i + d + ids.length) % ids.length] });
-  return (
-    <>
-      <Head title="BRIEFING" />
-      <div className="m-body m-body--tight" key={p.id}>
-        <span className="m-name">{p.short}</span>
-        <MediaPlaceholder label={p.media} src={p.image} />
-        <div className="m-stack6">
-          <span className="m-gold m-gold--lg">{p.gold}</span>
-          <span className="m-blue">{p.blue}</span>
-          <p className="m-para m-para--first">
-            {p.desc.map((d, k) => (d.hl ? <span key={k} className="m-hl">{d.t}</span> : d.t))}
-          </p>
-        </div>
-        {p.cards.map(([t, d], k) => (
-          <AbilityCard key={t} index={k + 1} title={t} desc={d} core={k === 3} />
-        ))}
-        {(p.awards || p.perks) && (
+      {p ? (
+        <div className="m-body m-body--tight" key={p.id}>
+          <span className="m-name">{p.short}</span>
+          <Slideshow slides={projectSlides(p)} />
+          <div className="m-stack6">
+            <span className="m-gold m-gold--lg">{p.gold}</span>
+            <span className="m-blue">{p.blue}</span>
+            <p className="m-para m-para--first">
+              {p.desc.map((d, k) => (d.hl ? <span key={k} className="m-hl">{d.t}</span> : d.t))}
+            </p>
+          </div>
+          {links.length > 0 && (
+            <div className="m-btns">
+              {links.map((b) => <CutCornerButton key={b.label} href={b.href}>{b.label}</CutCornerButton>)}
+            </div>
+          )}
+          {p.cards.map(([t, d], k) => (
+            <AbilityCard key={t} index={k + 1} title={t} desc={d} core={k === 3} />
+          ))}
+          {(p.awards || p.perks) && (
+            <div className="m-chips">
+              {p.awards?.map((a) => <span key={a} className="m-chip m-chip--gold">{a}</span>)}
+              {p.perks?.map((a) => <span key={a} className="m-chip">{a}</span>)}
+            </div>
+          )}
+          <SectionHeader style={{ marginTop: 6 }}>STACK</SectionHeader>
           <div className="m-chips">
-            {p.awards?.map((a) => <span key={a} className="m-chip m-chip--gold">{a}</span>)}
-            {p.perks?.map((a) => <span key={a} className="m-chip">{a}</span>)}
+            {p.stack.map((t) => <span key={t} className="m-chip">{techCode(t)} · {t}</span>)}
           </div>
-        )}
-        <SectionHeader style={{ marginTop: 6 }}>STACK</SectionHeader>
-        <div className="m-chips">
-          {p.stack.map((t) => <span key={t} className="m-chip">{techCode(t)} · {t}</span>)}
         </div>
-        <div className="m-btns">
-          {p.btns.map((b) => <CutCornerButton key={b.label} href={b.href} disabled={!b.href}>{b.label}</CutCornerButton>)}
-        </div>
-        {ids.length > 1 && (
-          <div className="m-pager">
-            <button type="button" className="btn-reset" onClick={() => step(-1)}>◀ PREV</button>
-            <span>{String(i + 1).padStart(2, '0')} / {String(ids.length).padStart(2, '0')}</span>
-            <button type="button" className="btn-reset" onClick={() => step(1)}>NEXT ▶</button>
-          </div>
-        )}
-      </div>
+      ) : (
+        <div className="m-body"><p className="m-para">No projects in this tab yet.</p></div>
+      )}
     </>
   );
 }
@@ -290,7 +255,7 @@ export function AboutScreen({ s, set, go }: Ctx) {
                   </div>
                   <p className="m-para">{a.details}</p>
                   {a.project && (
-                    <CutCornerButton onClick={() => go({ screen: 'briefing', listKey: 'featured', projId: a.project! })}>
+                    <CutCornerButton onClick={() => go(openProject(a.project!, s.projTab))}>
                       VIEW {projectById(a.project)?.short.toUpperCase()}
                     </CutCornerButton>
                   )}
@@ -306,7 +271,7 @@ export function AboutScreen({ s, set, go }: Ctx) {
 
 /* --------------------------------------------------------------- profile */
 
-export function ProfileScreen({ go }: Ctx) {
+export function ProfileScreen({ s, go }: Ctx) {
   const p = PROFILE;
   return (
     <>
@@ -337,22 +302,16 @@ export function ProfileScreen({ go }: Ctx) {
           <div className="m-mission">
             <span className="m-gold">{p.now.title}</span>
             <p className="m-para">{p.now.text}</p>
-            <CutCornerButton onClick={() => go({ screen: 'briefing', listKey: 'featured', projId: 'ember' })}>VIEW EMBER</CutCornerButton>
+            <CutCornerButton onClick={() => go(openProject('ember', s.projTab))}>VIEW EMBER</CutCornerButton>
           </div>
-        </div>
-        <div className="m-stack6">
-          <SectionHeader>SEEKING</SectionHeader>
-          <p className="m-para">{p.seeking}</p>
         </div>
         <div className="m-stack6">
           <SectionHeader>FILE</SectionHeader>
           <div>{p.facts.map(([k, v]) => <SettingsRow key={k} label={k} value={v} className="m-fact" />)}</div>
         </div>
         <div className="m-stack6">
-          <SectionHeader>OFF DUTY</SectionHeader>
-          {p.offDuty.length
-            ? <div className="m-chips">{p.offDuty.map((t) => <span key={t} className="m-chip">{t}</span>)}</div>
-            : <p className="m-para">Coming soon.</p>}
+          <SectionHeader>HOBBIES &amp; INTERESTS</SectionHeader>
+          <Hobbies />
         </div>
       </div>
     </>

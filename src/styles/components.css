@@ -401,3 +401,66 @@
 .news__tag { font-size: 15px; font-weight: 600; color: var(--c-gold); line-height: 20px; }
 .news__text { font-size: 13px; line-height: 20px; }
 .news__hl { color: var(--c-amber); }
+
+/* ---------- PlayerTag / PlayerBlock as links ---------- */
+.player-tag--link, .player-block--link { cursor: pointer; text-align: right; }
+.player-tag--link:hover .player-tag__name,
+.player-block--link:hover .player-block__name { color: var(--c-amber); }
+.player-block--link:hover .player-block__avatar { border-color: var(--c-amber); color: var(--c-amber); }
+
+/* ---------- Slideshow ---------- */
+.ss { position: relative; width: 100%; overflow: hidden; background: var(--hatch), var(--c-media); flex: none; }
+.ss__track { display: flex; height: 100%; transition: transform 420ms cubic-bezier(0.2, 0.8, 0.2, 1); }
+.ss__slide { position: relative; flex: 0 0 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+.ss__slide img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.ss--contain .ss__slide img { object-fit: contain; }
+.ss__label { font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.06em; color: var(--c-muted); text-shadow: none; padding: 0 16px; text-align: center; }
+.ss__arrow {
+  position: absolute; top: 50%; width: 34px; height: 44px; margin-top: -22px;
+  display: flex; align-items: center; justify-content: center; font-size: 12px;
+  background: rgba(0, 0, 0, 0.45); color: var(--c-text); opacity: 0.75; transition: opacity 140ms, background 140ms;
+}
+.ss__arrow:hover, .ss__arrow:focus-visible { opacity: 1; background: rgba(0, 0, 0, 0.7); }
+.ss__arrow--prev { left: 0; }
+.ss__arrow--next { right: 0; }
+.ss__count {
+  position: absolute; right: 8px; top: 8px; padding: 2px 6px; background: rgba(0, 0, 0, 0.55);
+  font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.08em; text-shadow: none;
+}
+.ss__dots { position: absolute; left: 0; right: 0; bottom: 8px; display: flex; justify-content: center; gap: 6px; }
+.ss__dot { width: 18px; height: 3px; background: rgba(255, 255, 255, 0.35); }
+.ss__dot.is-on { background: var(--c-amber); }
+@media (prefers-reduced-motion: reduce) { .ss__track { transition: none; } }
+
+/* ---------- SlideshowOverlay ---------- */
+.ss-overlay {
+  position: absolute; inset: 0; z-index: 40; background: rgba(0, 0, 0, 0.88);
+  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+  display: flex; align-items: center; justify-content: center; padding: 24px;
+  animation: ss-in 200ms ease;
+}
+.ss-overlay__box { width: min(960px, 100%); display: flex; flex-direction: column; gap: 12px; }
+.ss-overlay__head { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; }
+.ss-overlay__titles { display: flex; flex-direction: column; }
+.ss-overlay__title { font-size: 28px; line-height: 34px; font-weight: 600; }
+.ss-overlay__sub { font-size: 14px; color: var(--c-blue); }
+.ss-overlay__close { display: flex; align-items: center; gap: 8px; font-size: 14px; color: var(--c-muted); min-height: 36px; }
+.ss-overlay__close:hover { color: var(--c-text); }
+@keyframes ss-in { from { opacity: 0; } to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .ss-overlay { animation: none; } }
+
+/* ---------- Hobbies (Profile) ---------- */
+.hobbies { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 8px; }
+.hobby {
+  position: relative; min-height: 72px; padding: 10px 12px; display: flex; flex-direction: column; justify-content: flex-start; gap: 2px;
+  background: var(--c-stat); color: var(--c-text); text-align: left; cursor: pointer;
+  outline: 1px solid transparent; transition: outline-color 140ms, background 140ms;
+}
+.hobby::before { content: ''; position: absolute; left: 0; top: 0; width: 20px; height: 2px; background: var(--c-amber); }
+.hobby:hover, .hobby:focus-visible { outline-color: rgba(255, 255, 255, 0.85); background: color-mix(in oklch, var(--c-stat), white 6%); }
+.hobby__label { font-size: 16px; line-height: 20px; font-weight: 600; }
+.hobby__detail { font-size: 12px; line-height: 16px; color: var(--c-blue); }
+.hobby__kind { margin-top: auto; padding-top: 6px; font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.06em; color: var(--c-amber); text-transform: uppercase; }
+.hobby.is-disabled { cursor: default; }
+.hobby.is-disabled:hover { outline-color: transparent; background: var(--c-stat); }
+.hobby.is-disabled .hobby__kind { color: var(--c-faint); }

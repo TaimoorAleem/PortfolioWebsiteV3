@@ -25,7 +25,7 @@ const SWATCHES = [
 const FRAMES: { label: string; initial: Partial<AppState> }[] = [
   { label: 'M1 · HOME', initial: { screen: 'home' } },
   { label: 'M2 · PROJECTS', initial: { screen: 'projects' } },
-  { label: 'M3 · PROJECT DETAIL', initial: { screen: 'briefing', projId: 'ember' } },
+  { label: 'M3 · PROFILE', initial: { screen: 'profile' } },
   { label: 'M4 · CONTACT', initial: { screen: 'contact' } },
 ];
 

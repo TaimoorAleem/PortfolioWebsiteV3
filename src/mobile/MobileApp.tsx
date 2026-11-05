@@ -3,7 +3,7 @@ import { LoadingScreen, MobilePromptBar, PlayerTag } from '../components';
 import { mobileGlows } from '../theme/glowLayout';
 import { INITIAL, PARENT, fromHash, toHash, type AppState, type ScreenId } from './state';
 import {
-  AboutScreen, BriefingScreen, ContactScreen, ExperienceScreen, HomeScreen, MENU, ProfileScreen, ProjectsScreen,
+  AboutScreen, ContactScreen, ExperienceScreen, HomeScreen, MENU, ProfileScreen, ProjectsScreen,
   ResumeScreen, SkillsScreen, activateMenu, type Ctx,
 } from './screens';
 
@@ -13,7 +13,6 @@ type Scene = 'home' | 'haze' | 'dark' | 'comms';
 const sceneFor = (s: AppState): Scene => {
   switch (s.screen) {
     case 'home': return 'home';
-    case 'projects':
     case 'about': return 'haze';
     case 'skills':
     case 'contact': return 'comms';
@@ -23,7 +22,7 @@ const sceneFor = (s: AppState): Scene => {
 
 const SCREENS: Record<ScreenId, (ctx: Ctx) => JSX.Element> = {
   home: HomeScreen, profile: ProfileScreen, experience: ExperienceScreen, projects: ProjectsScreen,
-  briefing: BriefingScreen, skills: SkillsScreen, about: AboutScreen, contact: ContactScreen, resume: ResumeScreen,
+  skills: SkillsScreen, about: AboutScreen, contact: ContactScreen, resume: ResumeScreen,
 };
 
 const reducedMotion = () => typeof window !== 'undefined' && !!window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
@@ -69,7 +68,7 @@ export function MobileApp({ routing = true, boot = routing, initial }: MobileApp
       const hash = toHash(next);
       if (hash !== window.location.hash) window.history.pushState(null, '', hash);
     }
-    if (next.screen === stateRef.current.screen && next.projId === stateRef.current.projId) {
+    if (next.screen === stateRef.current.screen) {
       setS(next);
       return;
     }
@@ -146,7 +145,7 @@ export function MobileApp({ routing = true, boot = routing, initial }: MobileApp
       {(['home', 'haze', 'dark', 'comms'] as const).map((k) => (
         <div key={k} className={`scene scene--${k}`} style={{ opacity: scene === k ? 1 : 0 }} aria-hidden />
       ))}
-      <div className="m-player"><PlayerTag /></div>
+      <div className="m-player"><PlayerTag onClick={() => go({ screen: 'profile' })} /></div>
       <div className="m-screen">
         <main className="m-stage" data-phase={phase} key={s.screen}>
           <Screen {...ctx} />

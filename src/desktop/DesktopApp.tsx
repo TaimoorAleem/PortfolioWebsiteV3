@@ -1,31 +1,35 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState, type CSSProperties } from 'react';
 import { LoadingBar, PlayerBlock, PromptBar, type Prompt } from '../components';
 import { desktopGlows } from '../theme/glowLayout';
-import { AWARDS, CATS, EMAIL, EXPERIENCE, LEADERSHIP, LINKS, RESUMES, allIds, catIds } from '../data';
+import { AWARDS, EMAIL, EXPERIENCE, LEADERSHIP, LINKS, RESUMES, projectById, projectSlides, tabIds } from '../data';
 import {
-  DArchive, DAwards, DBriefing, DContact, DExperience, DHome, DLeadership, DProfile, DProjects, DResume, DSkills, FIELDS,
+  DAwards, DContact, DExperience, DHome, DLeadership, DProfile, DProjects, DResume, DSkills, FIELDS,
   type DCtx, type FormKey,
 } from './screens';
 import {
-  D_INITIAL, D_MENU, D_SCENE, D_TITLES, curList, dFromHash, dToHash, skillRows, titleCase, type DScreen, type DState,
+  D_INITIAL, D_MENU, D_SCENE, D_TITLES, dFromHash, dToHash, skillRows, type DScreen, type DState,
 } from './state';
 
 type Phase = 'in' | 'out' | 'pre';
 
 const SCREENS: Record<DScreen, (c: DCtx) => JSX.Element> = {
   home: DHome, profile: DProfile, experience: DExperience, leadership: DLeadership, projects: DProjects,
-  archive: DArchive, briefing: DBriefing, skills: DSkills, awards: DAwards, contact: DContact, resume: DResume,
+  skills: DSkills, awards: DAwards, contact: DContact, resume: DResume,
 };
 
 const reducedMotion = () => !!window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
 const EMPTY_FORM: Record<FormKey, string> = { name: '', email: '', message: '' };
 
-const fitScale = () => Math.min(window.innerWidth / 1440, window.innerHeight / 900);
+/** The design is a 1440 × 900 layout. It's scaled so it fits the window, and the stage
+ *  around it is stretched to fill the rest so backgrounds reach every edge. */
+const DESIGN_W = 1440;
+const DESIGN_H = 900;
+const viewport = () => ({ w: window.innerWidth, h: window.innerHeight });
 
 export function DesktopApp({ grain = true, bootScreen = true }: { grain?: boolean; bootScreen?: boolean }) {
   const [s, setS] = useState<DState>(() => ({ ...D_INITIAL, ...dFromHash(window.location.hash, D_INITIAL) }));
   const [phase, setPhase] = useState<Phase>('in');
-  const [scale, setScale] = useState(fitScale);
+  const [vp, setVp] = useState(viewport);
   const [form, setForm] = useState(EMPTY_FORM);
   const [sent, setSent] = useState(false);
   const [loading, setLoading] = useState(() => {
@@ -42,7 +46,7 @@ export function DesktopApp({ grain = true, bootScreen = true }: { grain?: boolea
   const timer = useRef<number>();
 
   useEffect(() => {
-    const fit = () => setScale(fitScale());
+    const fit = () => setVp(viewport());
     window.addEventListener('resize', fit);
     return () => window.removeEventListener('resize', fit);
   }, []);
@@ -59,6 +63,7 @@ export function DesktopApp({ grain = true, bootScreen = true }: { grain?: boolea
     const next = { ...ref.current, ...patch };
     const hash = dToHash(next);
     if (hash !== window.location.hash) window.history.pushState(null, '', hash);
+    if (next.screen === ref.current.screen) { setS(next); return; }
     if (reducedMotion()) { setS(next); return; }
     window.clearTimeout(timer.current);
     setPhase('out');
@@ -70,20 +75,14 @@ export function DesktopApp({ grain = true, bootScreen = true }: { grain?: boolea
   }, []);
 
   const back = useCallback(() => {
-    const cur = ref.current;
-    if (cur.screen === 'home') return;
-    go({ screen: cur.screen === 'briefing' ? cur.from : 'home' });
+    if (ref.current.screen !== 'home') go({ screen: 'home' });
   }, [go]);
 
   const activate = useCallback((mi: number, si: number) => {
     const m = D_MENU[mi];
     set({ menuIdx: mi, subIdx: si });
     switch (m.id) {
-      case 'projects':
-        if (si === 0) go({ screen: 'projects', list: allIds(), listName: 'Featured', projIdx: 0, from: 'projects' });
-        else if (si === 1) go({ screen: 'projects', list: catIds(2), listName: 'Hackathons', projIdx: 0, from: 'projects' });
-        else go({ screen: 'archive', catIdx: 0 });
-        break;
+      case 'projects': go({ screen: 'projects', projTab: si, projIdx: 0, slideIdx: 0 }); break;
       case 'experience': go({ screen: si === 1 ? 'leadership' : 'experience' }); break;
       case 'about': go({ screen: 'awards', awardIdx: -1 }); break;
       case 'resume': go({ screen: 'resume', resumeIdx: 0 }); break;
@@ -160,17 +159,16 @@ export function DesktopApp({ grain = true, bootScreen = true }: { grain?: boolea
           if (enter) L.activate(st.menuIdx, st.subIdx);
           break;
         }
-        case 'projects':
-          if (dir) L.set({ projIdx: wrap(st.projIdx + dir, curList(st).length) });
-          if (enter) L.go({ screen: 'briefing', from: 'projects' });
+        case 'projects': {
+          const ids = tabIds(st.projTab);
+          if (!ids.length) break;
+          if (dir) L.set({ projIdx: wrap(st.projIdx + dir, ids.length), slideIdx: 0 });
+          if (h) {
+            const p = projectById(ids[Math.min(st.projIdx, ids.length - 1)]);
+            if (p) L.set({ slideIdx: wrap(st.slideIdx + h, projectSlides(p).length) });
+          }
           break;
-        case 'briefing':
-          if (dir) L.set({ projIdx: wrap(st.projIdx + dir, curList(st).length) });
-          break;
-        case 'archive':
-          if (dir) L.set({ catIdx: wrap(st.catIdx + dir, CATS.length) });
-          if (enter) L.go({ screen: 'briefing', list: catIds(st.catIdx), listName: titleCase(CATS[st.catIdx]), projIdx: 0, from: 'archive' });
-          break;
+        }
         case 'experience':
           if (dir) L.set({ expIdx: wrap(st.expIdx + dir, EXPERIENCE.length) });
           if (h) L.go({ screen: 'leadership' });
@@ -209,9 +207,7 @@ export function DesktopApp({ grain = true, bootScreen = true }: { grain?: boolea
   const esc: Prompt = { k: 'Esc', label: 'Back', onClick: back };
   const prompts: Record<DScreen, Prompt[]> = {
     home: [{ k: '↵', label: 'Select', onClick: () => activate(s.menuIdx, s.subIdx) }, { k: '↑↓', label: 'Navigate' }, { k: '←→', label: 'Options' }],
-    projects: [{ k: '↵', label: 'Open', onClick: () => go({ screen: 'briefing', from: 'projects' }) }, esc, { k: '↑↓', label: 'Browse' }],
-    archive: [{ k: '↵', label: 'Open' }, esc, { k: '↑↓', label: 'Category' }],
-    briefing: [{ k: '↑↓', label: 'Switch project' }, esc],
+    projects: [{ k: '↑↓', label: 'Project' }, { k: '←→', label: 'Images' }, esc],
     profile: [esc],
     experience: [{ k: '↑↓', label: 'Chapter' }, { k: '←→', label: 'Leadership', onClick: () => go({ screen: 'leadership' }) }, esc],
     leadership: [{ k: '↑↓', label: 'Chapter' }, { k: '←→', label: 'Professional', onClick: () => go({ screen: 'experience' }) }, esc],
@@ -226,29 +222,43 @@ export function DesktopApp({ grain = true, bootScreen = true }: { grain?: boolea
   const Screen = SCREENS[s.screen];
   const ctx: DCtx = { s, set, go, activate, openLink, send, form, setField: (k, v) => setForm((f) => ({ ...f, [k]: v })) };
 
+  // Fill the window: scale to fit, then grow the stage to cover the leftover space.
+  const scale = Math.min(vp.w / DESIGN_W, vp.h / DESIGN_H);
+  const stageW = vp.w / scale;
+  const stageH = vp.h / scale;
+  const gx = (stageW - DESIGN_W) / 2;
+  const gy = (stageH - DESIGN_H) / 2;
+  const stageStyle = {
+    width: stageW, height: stageH, transform: `scale(${scale})`,
+    '--gx': `${gx}px`, '--gy': `${gy}px`, ...desktopGlows(s.screen),
+  } as CSSProperties;
+  const frameStyle: CSSProperties = { left: gx, top: gy };
+
   return (
     <div className="d-root">
-      <div className="d-stage" style={{ transform: `scale(${scale})`, ...desktopGlows(s.screen) }} data-phase={phase}>
+      <div className="d-stage" style={stageStyle} data-phase={phase}>
         <div className="d-scene d-scene--a" style={{ opacity: scene === 'A' ? 1 : 0 }} />
         <div className="d-scene d-scene--b" style={{ opacity: scene === 'B' ? 1 : 0 }} />
         <div className="d-scene d-scene--c" style={{ opacity: scene === 'C' ? 1 : 0 }} />
         <div className="d-vignette" />
         {grain && <div className="d-grain" />}
 
-        {title && (
-          <>
-            <h1 className="d-title">{title}</h1>
-            <div className="d-title-hair" />
-          </>
-        )}
+        <div className="d-frame" style={frameStyle}>
+          {title && (
+            <>
+              <h1 className="d-title">{title}</h1>
+              <div className="d-title-hair" />
+            </>
+          )}
 
-        <div className="d-player"><PlayerBlock levelSuffix="Awards" /></div>
+          <div className="d-player"><PlayerBlock onClick={() => go({ screen: 'profile' })} /></div>
 
-        <main className="d-content" key={s.screen}>
-          <Screen {...ctx} />
-        </main>
+          <main className="d-content" key={s.screen}>
+            <Screen {...ctx} />
+          </main>
 
-        <div className="d-prompts"><PromptBar prompts={prompts[s.screen]} /></div>
+          <div className="d-prompts"><PromptBar prompts={prompts[s.screen]} /></div>
+        </div>
 
         {sent && (
           <div className="d-sent" onClick={closeSent}>
@@ -262,10 +272,12 @@ export function DesktopApp({ grain = true, bootScreen = true }: { grain?: boolea
 
         {loading && (
           <div className="d-boot" onClick={() => setLoading(false)}>
-            <div className="d-boot__title">BOOTING PROFILE</div>
-            <div className="d-boot__hair" />
-            <div className="d-boot__bar"><LoadingBar /></div>
-            <div className="d-boot__tip"><span>TIP:</span> Use the arrow keys and Enter to navigate, just like the menus.</div>
+            <div className="d-frame" style={frameStyle}>
+              <div className="d-boot__title">BOOTING PROFILE</div>
+              <div className="d-boot__hair" />
+              <div className="d-boot__bar"><LoadingBar /></div>
+              <div className="d-boot__tip"><span>TIP:</span> Use the arrow keys and Enter to navigate, just like the menus.</div>
+            </div>
           </div>
         )}
       </div>

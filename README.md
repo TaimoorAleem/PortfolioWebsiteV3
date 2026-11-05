@@ -21,8 +21,7 @@ npm run build      # type-check + production build
 | `#/` | Home menu |
 | `#/profile` | Profile |
 | `#/experience`, `#/experience/leadership` | Service record: Professional, Leadership |
-| `#/projects`, `#/projects/<id>` | Project list, project briefing |
-| `#/archive` | All projects by category (desktop grid; the mobile list with category filter) |
+| `#/projects`, `#/projects/<id>` | Projects: Featured / Personal / Academic / Hackathons tabs, image slideshow, links |
 | `#/skills` | Loadout config |
 | `#/about` | Awards (rows expand on hover/tap) |
 | `#/contact` | Comms |
