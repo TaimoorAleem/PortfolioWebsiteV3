@@ -1,7 +1,7 @@
-import { PROJECTS, RESUMES, tabFor, tabIds } from '../data';
+import { BLOGS, PROJECTS, RESUMES, tabFor, tabIds } from '../data';
 
 export type ScreenId =
-  | 'home' | 'profile' | 'experience' | 'projects' | 'skills' | 'about' | 'contact' | 'resume';
+  | 'home' | 'profile' | 'experience' | 'projects' | 'skills' | 'about' | 'blogs' | 'contact' | 'resume';
 
 export interface AppState {
   screen: ScreenId;
@@ -20,11 +20,12 @@ export interface AppState {
   skillVal: number;
   contactIdx: number;
   resumeIdx: number;
+  blogIdx: number;
 }
 
 export const INITIAL: AppState = {
   screen: 'home', menuIdx: 0, subIdx: 0, projTab: 0, projId: 'ember',
-  expTab: 0, expIdx: 0, leadIdx: 0, awardIdx: -1, skillIdx: 0, skillVal: 0, contactIdx: 0, resumeIdx: 0,
+  expTab: 0, expIdx: 0, leadIdx: 0, awardIdx: -1, skillIdx: 0, skillVal: 0, contactIdx: 0, resumeIdx: 0, blogIdx: 0,
 };
 
 export const EXP_TABS = ['Professional', 'Leadership'];
@@ -49,6 +50,7 @@ export function toHash(s: AppState): string {
     }
     case 'experience': return s.expTab === 1 ? '#/experience/leadership' : '#/experience';
     case 'about': return '#/awards';
+    case 'blogs': return s.blogIdx > 0 && BLOGS[s.blogIdx] ? `#/blogs/${BLOGS[s.blogIdx].id}` : '#/blogs';
     case 'resume': return s.resumeIdx > 0 && RESUMES[s.resumeIdx] ? `#/resume/${RESUMES[s.resumeIdx].id}` : '#/resume';
     default: return `#/${s.screen}`;
   }
@@ -63,6 +65,8 @@ export function fromHash(hash: string, cur: AppState): Partial<AppState> {
       return b && PROJECTS.some((p) => p.id === b) ? openProject(b, cur.projTab) : { screen: 'projects' };
     case 'experience': return { screen: 'experience', expTab: b === 'leadership' ? 1 : 0 };
     case 'awards': return { screen: 'about' };
+    case 'blogs':
+    case 'blog': return { screen: 'blogs', blogIdx: Math.max(0, BLOGS.findIndex((x) => x.id === b)) };
     // Older links: #/about/networks moved to Experience › Leadership; #/about was the awards page.
     case 'about': return b === 'networks' ? { screen: 'experience', expTab: 1 } : { screen: 'about' };
     case 'resume': return { screen: 'resume', resumeIdx: Math.max(0, RESUMES.findIndex((r) => r.id === b)) };
@@ -77,5 +81,5 @@ export function fromHash(hash: string, cur: AppState): Partial<AppState> {
 
 export const PARENT: Record<ScreenId, ScreenId> = {
   home: 'home', profile: 'home', experience: 'home', projects: 'home',
-  skills: 'home', about: 'home', contact: 'home', resume: 'home',
+  skills: 'home', about: 'home', blogs: 'home', contact: 'home', resume: 'home',
 };

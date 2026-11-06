@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useRef, useState, type CSSProperties } from 'react';
 import { LoadingBar, PlayerBlock, PromptBar, type Prompt } from '../components';
 import { desktopGlows } from '../theme/glowLayout';
-import { AWARDS, EMAIL, EXPERIENCE, LEADERSHIP, LINKS, RESUMES, projectById, projectSlides, tabIds } from '../data';
+import { AWARDS, BLOGS, EMAIL, EXPERIENCE, LEADERSHIP, LINKS, RESUMES, projectById, projectSlides, tabIds } from '../data';
 import {
-  DAwards, DContact, DExperience, DHome, DLeadership, DProfile, DProjects, DResume, DSkills, FIELDS,
+  DAwards, DBlogs, DContact, DExperience, DHome, DLeadership, DProfile, DProjects, DResume, DSkills, FIELDS,
   type DCtx, type FormKey,
 } from './screens';
 import {
@@ -14,7 +14,7 @@ type Phase = 'in' | 'out' | 'pre';
 
 const SCREENS: Record<DScreen, (c: DCtx) => JSX.Element> = {
   home: DHome, profile: DProfile, experience: DExperience, leadership: DLeadership, projects: DProjects,
-  skills: DSkills, awards: DAwards, contact: DContact, resume: DResume,
+  skills: DSkills, awards: DAwards, blogs: DBlogs, contact: DContact, resume: DResume,
 };
 
 const reducedMotion = () => !!window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
@@ -86,6 +86,7 @@ export function DesktopApp({ grain = true, bootScreen = true }: { grain?: boolea
       case 'experience': go({ screen: si === 1 ? 'leadership' : 'experience' }); break;
       case 'about': go({ screen: 'awards', awardIdx: -1 }); break;
       case 'resume': go({ screen: 'resume', resumeIdx: 0 }); break;
+      case 'blogs': go({ screen: 'blogs', blogIdx: 0 }); break;
       default: go({ screen: m.id });
     }
   }, [go, set]);
@@ -178,6 +179,10 @@ export function DesktopApp({ grain = true, bootScreen = true }: { grain?: boolea
           if (h) L.go({ screen: 'experience' });
           break;
         case 'awards': if (dir) L.set({ awardIdx: wrap(Math.max(st.awardIdx, dir > 0 ? -1 : 0) + dir, AWARDS.length) }); break;
+        case 'blogs':
+          if (dir) L.set({ blogIdx: wrap(st.blogIdx + dir, BLOGS.length) });
+          if (enter) window.open(BLOGS[st.blogIdx].href, '_blank', 'noopener');
+          break;
         case 'resume':
           if (dir) L.set({ resumeIdx: wrap(st.resumeIdx + dir, RESUMES.length) });
           break;
@@ -212,6 +217,7 @@ export function DesktopApp({ grain = true, bootScreen = true }: { grain?: boolea
     experience: [{ k: '↑↓', label: 'Chapter' }, { k: '←→', label: 'Leadership', onClick: () => go({ screen: 'leadership' }) }, esc],
     leadership: [{ k: '↑↓', label: 'Chapter' }, { k: '←→', label: 'Professional', onClick: () => go({ screen: 'experience' }) }, esc],
     awards: [{ k: '↑↓', label: 'Browse' }, esc],
+    blogs: [{ k: '↵', label: 'Read', onClick: () => window.open(BLOGS[s.blogIdx].href, '_blank', 'noopener') }, ...(BLOGS.length > 1 ? [{ k: '↑↓', label: 'Post' }] : []), esc],
     skills: [{ k: '↵', label: 'Select' }, esc, { k: '←→', label: 'Switch project' }],
     contact: [{ k: '↵', label: 'Select' }, esc, { k: '↑↓', label: 'Navigate' }],
     resume: RESUMES.length > 1 ? [{ k: '↑↓', label: 'Variant' }, esc] : [esc],

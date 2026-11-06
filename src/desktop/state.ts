@@ -1,8 +1,8 @@
-import { PROJECTS, PROJECT_TABS, RESUMES, SKILLS, tabFor, tabIds } from '../data';
+import { BLOGS, PROJECTS, PROJECT_TABS, RESUMES, SKILLS, tabFor, tabIds } from '../data';
 
 export type DScreen =
   | 'home' | 'profile' | 'experience' | 'leadership' | 'projects'
-  | 'skills' | 'awards' | 'contact' | 'resume';
+  | 'skills' | 'awards' | 'blogs' | 'contact' | 'resume';
 
 export interface DState {
   screen: DScreen;
@@ -21,11 +21,12 @@ export interface DState {
   skillVal: number;
   contactIdx: number;
   resumeIdx: number;
+  blogIdx: number;
 }
 
 export const D_INITIAL: DState = {
   screen: 'home', menuIdx: 0, subIdx: 0, projTab: 0, projIdx: 0, slideIdx: 0,
-  expIdx: 0, leadIdx: 0, awardIdx: -1, skillIdx: 0, skillVal: 0, contactIdx: 0, resumeIdx: 0,
+  expIdx: 0, leadIdx: 0, awardIdx: -1, skillIdx: 0, skillVal: 0, contactIdx: 0, resumeIdx: 0, blogIdx: 0,
 };
 
 export const titleCase = (t: string) => t.toLowerCase().replace(/(^|\s)\S/g, (c) => c.toUpperCase());
@@ -38,6 +39,7 @@ export const D_MENU = [
   { id: 'projects', label: 'PROJECTS', subs: PROJECT_TABS.map((t) => t.label), isNew: true },
   { id: 'skills', label: 'SKILLS' },
   { id: 'about', label: 'AWARDS' },
+  { id: 'blogs', label: 'BLOGS' },
   { id: 'contact', label: 'CONTACT' },
   { id: 'resume', label: 'RÉSUMÉ', special: true },
 ] as const satisfies readonly { id: string; label: string; subs?: readonly string[]; isNew?: boolean; special?: boolean }[];
@@ -60,6 +62,7 @@ export function dToHash(s: DState): string {
     }
     case 'leadership': return '#/experience/leadership';
     case 'awards': return '#/awards';
+    case 'blogs': return s.blogIdx > 0 && BLOGS[s.blogIdx] ? `#/blogs/${BLOGS[s.blogIdx].id}` : '#/blogs';
     case 'resume': return s.resumeIdx > 0 && RESUMES[s.resumeIdx] ? `#/resume/${RESUMES[s.resumeIdx].id}` : '#/resume';
     default: return `#/${s.screen}`;
   }
@@ -73,6 +76,8 @@ export function dFromHash(hash: string, cur: DState): Partial<DState> {
       return b && PROJECTS.some((p) => p.id === b) ? openProjectPatch(b, cur.projTab) : { screen: 'projects' };
     case 'experience': return { screen: b === 'leadership' ? 'leadership' : 'experience' };
     case 'awards': return { screen: 'awards' };
+    case 'blogs':
+    case 'blog': return { screen: 'blogs', blogIdx: Math.max(0, BLOGS.findIndex((x) => x.id === b)) };
     // Older links: #/about/networks moved to Experience › Leadership; #/about was the awards page.
     case 'about': return b === 'networks' ? { screen: 'leadership' } : { screen: 'awards' };
     case 'resume': return { screen: 'resume', resumeIdx: Math.max(0, RESUMES.findIndex((r) => r.id === b)) };
@@ -87,11 +92,11 @@ export function dFromHash(hash: string, cur: DState): Partial<DState> {
 
 export const D_TITLES: Partial<Record<DScreen, string>> = {
   profile: 'PROFILE', experience: 'CAMPAIGN', leadership: 'MULTIPLAYER', projects: 'PROJECTS',
-  skills: 'LOADOUT CONFIG', awards: 'AWARDS', contact: 'COMMS', resume: 'RÉSUMÉ',
+  skills: 'LOADOUT CONFIG', awards: 'AWARDS', blogs: 'DEV LOGS', contact: 'COMMS', resume: 'RÉSUMÉ',
 };
 
 export const D_SCENE: Record<DScreen, 'A' | 'B' | 'C'> = {
   home: 'A', awards: 'A',
   skills: 'B', contact: 'B',
-  profile: 'C', experience: 'C', leadership: 'C', projects: 'C', resume: 'C',
+  profile: 'C', experience: 'C', leadership: 'C', projects: 'C', resume: 'C', blogs: 'C',
 };

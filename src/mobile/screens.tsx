@@ -4,8 +4,8 @@ import {
   SectionHeader, SettingsRow, Slideshow, SubOptionRow, TransmissionWindow,
 } from '../components';
 import {
-  AWARDS, EMAIL, EXPERIENCE, LEADERSHIP, LINKS, MEDIA, NOW_WORKING, PROFILE, PROJECT_TABS, RESUMES, SKILLS,
-  awardSlides, chapterSlides, projectAwards, projectById, projectLinks, projectSlides, skillUse, tabIds, techCode,
+  AWARDS, BLOGS, EMAIL, EXPERIENCE, LEADERSHIP, LINKS, MEDIA, NOW_WORKING, PROFILE, PROJECT_TABS, RESUMES, SKILLS,
+  awardSlides, blogCover, blogDate, blogSlides, chapterSlides, projectAwards, projectById, projectLinks, projectSlides, skillUse, tabIds, techCode,
 } from '../data';
 import { Gallery, Hobbies } from '../shared/Hobbies';
 import { useLightbox } from '../shared/Lightbox';
@@ -53,6 +53,7 @@ export const MENU = [
   { id: 'projects', label: 'PROJECTS', subs: PROJECT_TABS.map((t) => t.label), isNew: true },
   { id: 'skills', label: 'SKILLS' },
   { id: 'about', label: 'AWARDS' },
+  { id: 'blogs', label: 'BLOGS' },
   { id: 'contact', label: 'CONTACT' },
   { id: 'resume', label: 'RÉSUMÉ', special: true },
 ] as const satisfies readonly { id: string; label: string; subs?: readonly string[]; isNew?: boolean; special?: boolean }[];
@@ -65,6 +66,7 @@ export function activateMenu({ go, set }: Ctx, i: number, j: number) {
     case 'experience': go({ screen: 'experience', expTab: j }); break;
     case 'about': go({ screen: 'about', awardIdx: -1 }); break;
     case 'resume': go({ screen: 'resume', resumeIdx: 0 }); break;
+    case 'blogs': go({ screen: 'blogs', blogIdx: 0 }); break;
     default: go({ screen: m.id });
   }
 }
@@ -285,6 +287,57 @@ export function AboutScreen({ s, set, go }: Ctx) {
         })}
         {lightbox.element}
       </div>
+    </>
+  );
+}
+
+/* ----------------------------------------------------------------- blogs */
+
+export function BlogsScreen({ s, set, go }: Ctx) {
+  const b = BLOGS[s.blogIdx] ?? BLOGS[0];
+  const lightbox = useLightbox();
+  const cover = blogCover(b);
+  const related = b.project ? projectById(b.project) : undefined;
+  return (
+    <>
+      <Head title="DEV LOGS" />
+      {BLOGS.length > 1 && (
+        <div className="m-fixed">
+          <Strip selected={s.blogIdx}>
+            {BLOGS.map((x, i) => (
+              <ListBar key={x.id} label={x.short} selected={i === s.blogIdx} onClick={() => set({ blogIdx: i })} />
+            ))}
+          </Strip>
+        </div>
+      )}
+      <article className="m-body m-body--tight" key={b.id}>
+        <button type="button" className="btn-reset blog-cover" onClick={() => lightbox.open(b.title, blogSlides(b), 0, b.site)}>
+          {cover ? <img src={cover} alt="" /> : <span className="blog-cover__ph">cover image</span>}
+          <span className="ss__open-tag">⤢ VIEW</span>
+        </button>
+        <div className="m-stack6">
+          <span className="blog-meta">{b.site.toUpperCase()} · {blogDate(b.date)}</span>
+          <a className="m-blog__title" href={b.href} target="_blank" rel="noopener noreferrer">{b.title}</a>
+        </div>
+        <div className="m-chips">{b.tags.map((t) => <span key={t} className="m-chip">{t}</span>)}</div>
+        {b.quote && <blockquote className="blog-quote">{b.quote}</blockquote>}
+        <p className="m-para">{b.summary}</p>
+        <div className="m-btns m-btns--row">
+          <CutCornerButton href={b.href}>READ ON {b.site.toUpperCase()}</CutCornerButton>
+          {related && (
+            <CutCornerButton onClick={() => go(openProject(related.id, s.projTab))}>VIEW {related.short.toUpperCase()}</CutCornerButton>
+          )}
+        </div>
+        <SectionHeader style={{ marginTop: 6 }}>IN THIS POST</SectionHeader>
+        <ol className="blog-toc">{b.sections.map((t) => <li key={t}>{t}</li>)}</ol>
+        {b.images && b.images.length > 0 && (
+          <>
+            <SectionHeader style={{ marginTop: 6 }}>FIGURES</SectionHeader>
+            <Gallery title={b.title} slides={b.images} className="gallery m-gallery" />
+          </>
+        )}
+        {lightbox.element}
+      </article>
     </>
   );
 }

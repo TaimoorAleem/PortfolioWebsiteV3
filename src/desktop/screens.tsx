@@ -4,8 +4,8 @@ import {
   SubOptionRow, TransmissionWindow,
 } from '../components';
 import {
-  AWARDS, EXPERIENCE, LEADERSHIP, LINKS, MEDIA, NOW_WORKING, PROFILE, PROJECT_TABS, RESUMES, SKILLS,
-  awardSlides, chapterSlides, projectAwards, projectById, projectLinks, projectSlides, skillUse, tabIds, type Chapter,
+  AWARDS, BLOGS, EXPERIENCE, LEADERSHIP, LINKS, MEDIA, NOW_WORKING, PROFILE, PROJECT_TABS, RESUMES, SKILLS,
+  awardSlides, blogCover, blogDate, blogSlides, chapterSlides, projectAwards, projectById, projectLinks, projectSlides, skillUse, tabIds, type Chapter,
 } from '../data';
 import { Gallery, Hobbies } from '../shared/Hobbies';
 import { useLightbox } from '../shared/Lightbox';
@@ -531,6 +531,65 @@ export function DResume({ s, set }: DCtx) {
           )}
         </div>
       </div>
+    </div>
+  );
+}
+
+/* ----------------------------------------------------------------- blogs */
+
+export function DBlogs({ s, set, go }: DCtx) {
+  const b = BLOGS[s.blogIdx] ?? BLOGS[0];
+  const lightbox = useLightbox();
+  const cover = blogCover(b);
+  const related = b.project ? projectById(b.project) : undefined;
+  return (
+    <div className="d-screen">
+      <div style={{ position: 'absolute', left: 80, top: 200 }}>
+        <ListGroupHeader>Posts {BLOGS.length}</ListGroupHeader>
+        <div style={{ marginTop: 10 }}>
+          <SlideList
+            width={240}
+            sel={s.blogIdx}
+            items={BLOGS.map((x) => ({ key: x.id, label: x.short, trailing: x.date.slice(0, 4) }))}
+            onHover={(i) => { if (i !== s.blogIdx) set({ blogIdx: i }); }}
+          />
+        </div>
+      </div>
+      <Rule left={340} />
+      <article className="d-blog" key={b.id}>
+        <div className="d-blog__col">
+          <button type="button" className="btn-reset blog-cover" onClick={() => lightbox.open(b.title, blogSlides(b), 0, b.site)}>
+            {cover ? <img src={cover} alt="" /> : <span className="blog-cover__ph">cover image</span>}
+            <span className="ss__open-tag">⤢ VIEW</span>
+          </button>
+          <div className="d-stack2">
+            <span className="section-header">IN THIS POST</span>
+            <ol className="blog-toc">
+              {b.sections.map((t) => <li key={t}>{t}</li>)}
+            </ol>
+          </div>
+        </div>
+        <div className="d-blog__col d-blog__info">
+          <span className="blog-meta">{b.site.toUpperCase()} · {blogDate(b.date)} · {b.sections.length} SECTIONS</span>
+          <a className="d-blog__title" href={b.href} target="_blank" rel="noopener noreferrer">{b.title}</a>
+          <div className="d-stack-tags">{b.tags.map((t) => <span key={t}>{t}</span>)}</div>
+          {b.quote && <blockquote className="blog-quote">{b.quote}</blockquote>}
+          <p className="d-para">{b.summary}</p>
+          <div className="d-brief__btns">
+            <CutCornerButton href={b.href}>READ ON {b.site.toUpperCase()}</CutCornerButton>
+            {related && (
+              <CutCornerButton onClick={() => go(openProjectPatch(related.id, s.projTab))}>VIEW {related.short.toUpperCase()}</CutCornerButton>
+            )}
+          </div>
+          {b.images && b.images.length > 0 && (
+            <div className="d-stack2 d-blog__figs">
+              <span className="section-header">FIGURES</span>
+              <Gallery title={b.title} slides={b.images} className="gallery blog-figs" />
+            </div>
+          )}
+        </div>
+        {lightbox.element}
+      </article>
     </div>
   );
 }

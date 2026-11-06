@@ -3,7 +3,7 @@ import { LoadingScreen, MobilePromptBar, PlayerTag } from '../components';
 import { mobileGlows } from '../theme/glowLayout';
 import { INITIAL, PARENT, fromHash, toHash, type AppState, type ScreenId } from './state';
 import {
-  AboutScreen, ContactScreen, ExperienceScreen, HomeScreen, MENU, ProfileScreen, ProjectsScreen,
+  AboutScreen, BlogsScreen, ContactScreen, ExperienceScreen, HomeScreen, MENU, ProfileScreen, ProjectsScreen,
   ResumeScreen, SkillsScreen, activateMenu, type Ctx,
 } from './screens';
 
@@ -22,7 +22,7 @@ const sceneFor = (s: AppState): Scene => {
 
 const SCREENS: Record<ScreenId, (ctx: Ctx) => JSX.Element> = {
   home: HomeScreen, profile: ProfileScreen, experience: ExperienceScreen, projects: ProjectsScreen,
-  skills: SkillsScreen, about: AboutScreen, contact: ContactScreen, resume: ResumeScreen,
+  skills: SkillsScreen, about: AboutScreen, blogs: BlogsScreen, contact: ContactScreen, resume: ResumeScreen,
 };
 
 const reducedMotion = () => typeof window !== 'undefined' && !!window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;

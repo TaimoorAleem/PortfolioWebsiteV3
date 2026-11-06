@@ -27,6 +27,7 @@ const DESKTOP: Record<string, Layout> = {
   leadership: { s: [[60, 96], [92, 30]] },
   profile:    { s: [[58, 2], [90, 40]] },
   resume:     { s: [[10, 96], [30, 70]] },
+  blogs:      { s: [[96, 8], [16, 88]] },
 };
 
 const MOBILE: Record<string, Layout> = {
@@ -38,6 +39,7 @@ const MOBILE: Record<string, Layout> = {
   about:      { s: [[88, 76], [20, 20], [64, 40]] },
   skills:     { s: [[18, 82], [80, 30], [60, 70]] },
   contact:    { s: [[80, 18], [20, 60], [90, 90]] },
+  blogs:      { s: [[92, 88], [10, 40], [70, 8]] },
 };
 
 function toVars({ s, b }: Layout): CSSProperties {

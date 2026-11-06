@@ -78,6 +78,9 @@ export const CODE: Record<string, string> = {
 
 export const techCode = (n: string) => CODE[n] ?? n.slice(0, 3).toUpperCase();
 
+/** Medium post about AI Cricket Coach (also on the Blogs page). */
+export const CAPSTONE_POST = 'https://medium.com/@taimooraleem01/my-capstones-journey-from-eoi-to-the-first-place-award-3cf3036c84ad';
+
 export const PROJECTS: Project[] = [
   {
     id: 'ember', name: 'Ember (IgnisXR)', short: 'Ember', featured: true,
@@ -217,6 +220,7 @@ export const PROJECTS: Project[] = [
     stack: ['Flutter', 'Dart', 'Python', 'OpenCV', 'scikit learn', 'GCP', 'Cloud Run', 'Firestore'],
     links: {
       github: `${GH}/AICricketCoach_CapstoneProject`,
+      article: CAPSTONE_POST,
       video: 'https://www.youtube.com/watch?v=KgE6Eg26K0g',
       report: 'https://drive.google.com/file/d/16nV_F1458UqtXBYLwEqJtoV6RG1xtwq-/view?usp=sharing',
     },
@@ -414,6 +418,71 @@ export const LEADERSHIP: Chapter[] = [
   },
 ];
 
+export interface Blog {
+  id: string;
+  title: string;
+  /** Short name for the post list. */
+  short: string;
+  /** Publish date, YYYY-MM-DD. */
+  date: string;
+  /** Where it's published, shown on the read button. */
+  site: string;
+  href: string;
+  tags: string[];
+  /** One line from the post itself, shown as a pull quote. */
+  quote?: string;
+  summary: string;
+  /** The post's section headings, in order. */
+  sections: string[];
+  /** Cover image. Falls back to the first of `images`, then a placeholder. */
+  cover?: string;
+  /** Figures from the post, shown as a gallery that opens full screen. */
+  images?: SlideData[];
+  /** Related project id: adds a button to it, and the project links back. */
+  project?: string;
+}
+
+/** Blog posts, newest first. Medium images are loaded from Medium's CDN; drop your own in
+ *  public/media/blogs/ and point `cover` / `images` at '/media/blogs/<file>' to host them here. */
+export const BLOGS: Blog[] = [
+  {
+    id: 'capstone-journey',
+    title: 'My Capstone’s Journey from EOI to the First Place Award',
+    short: 'Capstone Journey',
+    date: '2025-09-10',
+    site: 'Medium',
+    href: CAPSTONE_POST,
+    tags: ['Computer Vision', 'Machine Learning', 'Cricket', 'Capstone'],
+    quote: 'Right off the bat, I wanna emphasize that this capstone’s journey wasn’t an easy one.',
+    summary:
+      'How AI Cricket Coach went from an expression of interest (one of 7 approved out of 30) to first place at Sheridan: ' +
+      'swapping a basketball posture hackathon idea for cricket, scoping it around a cloud computing teammate, ' +
+      'dropping posture analysis for ideal shot recommendations from ball speed, line and length, ' +
+      'tracking the ball with perspective and homography transforms, and testing at a real cricket nets facility. ' +
+      'It closes with what I would do differently.',
+    sections: [
+      'Expression of Interest', 'Ideation', 'Domain Research', 'Software Design',
+      'Development', 'Testing', 'Challenges and Areas of Improvement', 'Final Remarks',
+    ],
+    cover: 'https://cdn-images-1.medium.com/max/796/1*Yt9QYGFaLh2eKyN7piY0pw.png',
+    images: [
+      { src: 'https://cdn-images-1.medium.com/max/1024/1*RQnvEcqm2fz9YJa0Qf2EWA.png', label: 'Brainstorming mind map' },
+      { src: 'https://cdn-images-1.medium.com/max/960/1*Oca6dm0OQziUvGY69Gf8UQ.gif', label: 'Speed estimation example' },
+      { src: 'https://cdn-images-1.medium.com/max/796/1*Yt9QYGFaLh2eKyN7piY0pw.png', label: 'Trajectory mapped onto the pitch' },
+      { src: 'https://cdn-images-1.medium.com/max/1024/1*HkrQha-8aOx9ze2uiV8uzA.png', label: 'Ideal shot logic' },
+      { src: 'https://cdn-images-1.medium.com/max/1024/1*MaXlrorzw0CK7haIH4Q0MA.gif', label: 'Testing at the nets' },
+    ],
+    project: 'cricket',
+  },
+];
+
+export const blogCover = (b: Blog) => b.cover ?? b.images?.[0]?.src;
+export const blogSlides = (b: Blog): SlideData[] =>
+  b.images?.length ? b.images : [{ src: blogCover(b), label: b.title }];
+/** '2025-09-10' → 'SEP 10, 2025' */
+export const blogDate = (d: string) =>
+  new Date(`${d}T12:00:00`).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }).toUpperCase();
+
 export interface Resume {
   id: string;
   label: string;
@@ -489,7 +558,6 @@ export const PROFILE = {
   ] as [string, string][],
 };
 
-/** Your profiles for the hobby links. Leave '' until you have the URL; the tile shows "link coming soon". */
 export const SOCIAL = {
   spotify: '',   // e.g. 'https://open.spotify.com/user/…'
   youtube: '',   // e.g. 'https://www.youtube.com/@…'
