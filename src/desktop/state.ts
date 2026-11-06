@@ -1,4 +1,4 @@
-import { BLOGS, PROJECTS, PROJECT_TABS, RESUMES, SKILLS, tabFor, tabIds } from '../data';
+import { BLOGS, PROJECTS, PROJECT_TABS, SKILLS, tabFor, tabIds } from '../data';
 
 export type DScreen =
   | 'home' | 'profile' | 'experience' | 'leadership' | 'projects'
@@ -20,13 +20,12 @@ export interface DState {
   skillIdx: number;
   skillVal: number;
   contactIdx: number;
-  resumeIdx: number;
   blogIdx: number;
 }
 
 export const D_INITIAL: DState = {
   screen: 'home', menuIdx: 0, subIdx: 0, projTab: 0, projIdx: 0, slideIdx: 0,
-  expIdx: 0, leadIdx: 0, awardIdx: -1, skillIdx: 0, skillVal: 0, contactIdx: 0, resumeIdx: 0, blogIdx: 0,
+  expIdx: 0, leadIdx: 0, awardIdx: -1, skillIdx: 0, skillVal: 0, contactIdx: 0, blogIdx: 0,
 };
 
 export const titleCase = (t: string) => t.toLowerCase().replace(/(^|\s)\S/g, (c) => c.toUpperCase());
@@ -63,7 +62,6 @@ export function dToHash(s: DState): string {
     case 'leadership': return '#/experience/leadership';
     case 'awards': return '#/awards';
     case 'blogs': return s.blogIdx > 0 && BLOGS[s.blogIdx] ? `#/blogs/${BLOGS[s.blogIdx].id}` : '#/blogs';
-    case 'resume': return s.resumeIdx > 0 && RESUMES[s.resumeIdx] ? `#/resume/${RESUMES[s.resumeIdx].id}` : '#/resume';
     default: return `#/${s.screen}`;
   }
 }
@@ -80,7 +78,7 @@ export function dFromHash(hash: string, cur: DState): Partial<DState> {
     case 'blog': return { screen: 'blogs', blogIdx: Math.max(0, BLOGS.findIndex((x) => x.id === b)) };
     // Older links: #/about/networks moved to Experience › Leadership; #/about was the awards page.
     case 'about': return b === 'networks' ? { screen: 'leadership' } : { screen: 'awards' };
-    case 'resume': return { screen: 'resume', resumeIdx: Math.max(0, RESUMES.findIndex((r) => r.id === b)) };
+    case 'resume': return { screen: 'resume' };
     case 'profile':
     case 'skills':
     case 'contact':

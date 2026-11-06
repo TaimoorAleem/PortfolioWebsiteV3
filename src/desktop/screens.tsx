@@ -1,10 +1,10 @@
 import { useEffect, useRef, type MouseEvent, type ReactNode } from 'react';
 import {
-  AbilityCard, CutCornerButton, InfoBox, ListBar, ListGroupHeader, MenuItem, SettingsRow, Slideshow,
-  SubOptionRow, TransmissionWindow,
+  AbilityCard, CutCornerButton, ListBar, Meter, ListGroupHeader, MenuItem, SettingsRow, Slideshow,
+  SubOptionRow,
 } from '../components';
 import {
-  AWARDS, BLOGS, EXPERIENCE, LEADERSHIP, LINKS, MEDIA, NOW_WORKING, PROFILE, PROJECT_TABS, RESUMES, SKILLS,
+  AWARDS, BLOGS, EXPERIENCE, LEADERSHIP, LINKS, MEDIA, NOW_WORKING, PROFILE, PROJECT_TABS, RESUME, SKILLS,
   awardSlides, blogCover, blogDate, blogSlides, chapterSlides, projectAwards, projectById, projectLinks, projectSlides, skillUse, tabIds, type Chapter,
 } from '../data';
 import { Gallery, Hobbies } from '../shared/Hobbies';
@@ -215,6 +215,7 @@ export function DProjects({ s, set, go }: DCtx) {
             <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
               <span className="d-h30">{p.short}</span>
               <Slideshow
+                contain
                 slides={projectSlides(p)}
                 index={s.slideIdx}
                 onIndex={(i) => set({ slideIdx: i })}
@@ -457,6 +458,7 @@ export function DProfile({ s, go }: DCtx) {
               <span className="d-pstat__value">{st.value}</span>
               <span className="d-pstat__label">{st.label}</span>
               <span className="d-pstat__caption">{st.caption}</span>
+              <Meter lit={st.meter} />
             </div>
           ))}
         </div>
@@ -489,26 +491,12 @@ export function DProfile({ s, go }: DCtx) {
 
 /* ---------------------------------------------------------------- résumé */
 
-export function DResume({ s, set }: DCtx) {
-  const r = RESUMES[s.resumeIdx] ?? RESUMES[0];
+export function DResume(_: DCtx) {
+  const r = RESUME;
   const exists = useFileExists(r.file);
-  const fileName = `Taimoor-Aleem-Resume${r.id === 'main' ? '' : `-${r.id}`}.pdf`;
   return (
     <div className="d-screen">
-      <div style={{ position: 'absolute', left: 80, top: 200 }}>
-        <ListGroupHeader>Variants</ListGroupHeader>
-        <div style={{ marginTop: 10 }}>
-          <SlideList
-            width={240}
-            sel={s.resumeIdx}
-            items={RESUMES.map((x, i) => ({ key: x.id, label: x.label, trailing: i === 0 ? 'MAIN' : undefined }))}
-            onHover={() => { }}
-            onClick={(i) => set({ resumeIdx: i })}
-          />
-        </div>
-      </div>
-      <Rule left={340} />
-      <div className="d-resume" key={r.id}>
+      <div className="d-resume">
         <div className="d-resume__head">
           <div className="d-stack2">
             <span className="d-h30">{r.label}</span>
@@ -516,17 +504,15 @@ export function DResume({ s, set }: DCtx) {
             {r.updated && <span className="d-pending">UPDATED {r.updated.toUpperCase()}</span>}
           </div>
           <div className="d-resume__btns">
-            <CutCornerButton href={r.file} download={fileName} disabled={exists === false}>DOWNLOAD PDF</CutCornerButton>
+            <CutCornerButton href={r.file} download="Taimoor-Aleem-Resume.pdf" disabled={exists === false}>DOWNLOAD PDF</CutCornerButton>
             <CutCornerButton href={r.file} newTab disabled={exists === false}>OPEN IN NEW TAB</CutCornerButton>
           </div>
         </div>
         <div className="d-resume__viewer">
           {exists ? (
-            <iframe title={`${r.label} résumé`} src={`${r.file}#view=FitH`} />
+            <iframe title="Résumé" src={`${r.file}#view=FitH`} />
           ) : (
-            <span className="d-pending">
-              {exists === null ? 'LOADING…' : `PDF NOT FOUND · ADD public${r.file.replace(/\//g, '/')}`}
-            </span>
+            <span className="d-pending">{exists === null ? 'LOADING…' : `PDF NOT FOUND · ADD public${r.file}`}</span>
           )}
         </div>
       </div>
@@ -645,16 +631,6 @@ export function DContact({ s, set, send, form, setField }: DCtx) {
             SEND TRANSMISSION
           </button>
         </form>
-      </div>
-      <div className="d-contact-side">
-        <div className="d-transmission">
-          <TransmissionWindow height={150} portrait={MEDIA.portrait || undefined} />
-          <span className="d-corner d-corner--tl" />
-          <span className="d-corner d-corner--br" />
-        </div>
-        <div style={{ marginTop: 18, width: 420 }}>
-          <InfoBox>Based in the GTA. Open to new grad software and AI engineering roles.</InfoBox>
-        </div>
       </div>
     </div>
   );

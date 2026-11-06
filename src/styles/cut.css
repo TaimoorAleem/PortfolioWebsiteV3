@@ -1,0 +1,21 @@
+/* Every clickable button or cell gets the cut-out corner at the bottom right, like CutCornerButton.
+   --cut sets the size per element. clip-path also clips outlines, so hover outlines become inset shadows. */
+.list-bar, .settings-row, .hobby, .proj-award, .gallery__thumb, .blog-cover, .ss,
+.d-latest__hero, .d-latest__tile, .d-tile, .d-award, .d-award__img, .d-send,
+.m-award, .m-award__img, .m-send, .sub-opt {
+  --cut: 10px;
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, 0 100%);
+}
+.sub-opt { --cut: 6px; border-radius: 0; }
+.list-bar, .settings-row, .proj-award, .d-send, .m-send { --cut: 8px; }
+.ss, .blog-cover, .d-latest__hero, .d-award__img, .m-award__img { --cut: 14px; }
+
+.hobby, .gallery__thumb, .blog-cover, .d-tile { outline: none !important; transition: box-shadow 140ms, background 140ms; }
+.hobby:not(.is-disabled):not(.is-plain):hover, .hobby:focus-visible,
+.gallery__thumb:hover, .gallery__thumb:focus-visible,
+.blog-cover:hover, .blog-cover:focus-visible,
+.d-tile:hover, .d-tile:focus-visible { box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.85); }
+
+/* Tiles that aren't clickable keep square corners, so the cut reads as "you can press this". */
+.hobby.is-plain, .hobby.is-disabled { clip-path: none; cursor: default; }
+.hobby.is-plain:hover { background: var(--c-stat); }

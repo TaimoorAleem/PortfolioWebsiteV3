@@ -1,4 +1,4 @@
-import { HOBBIES, hobbySlides } from '../data';
+import { HOBBIES, HOBBY_PHOTOS, hobbySlides } from '../data';
 import { useLightbox } from './Lightbox';
 
 /** Hobby tiles. Photo hobbies open a slideshow overlay; link hobbies open the site in a new tab. */
@@ -12,9 +12,11 @@ export function Hobbies({ className = 'hobbies' }: { className?: string }) {
             <>
               <span className="hobby__label">{h.label}</span>
               {h.detail && <span className="hobby__detail">{h.detail}</span>}
-              <span className="hobby__kind">
-                {h.site ? (h.href ? `${h.site} ↗` : 'link coming soon') : 'photos ▸'}
-              </span>
+              {(h.site || HOBBY_PHOTOS) && (
+                <span className="hobby__kind">
+                  {h.site ? (h.href ? `${h.site} ↗` : 'link coming soon') : 'photos ▸'}
+                </span>
+              )}
             </>
           );
           if (h.site) {
@@ -22,6 +24,7 @@ export function Hobbies({ className = 'hobbies' }: { className?: string }) {
               ? <a key={h.label} className="hobby" href={h.href} target="_blank" rel="noreferrer">{body}</a>
               : <div key={h.label} className="hobby is-disabled">{body}</div>;
           }
+          if (!HOBBY_PHOTOS) return <div key={h.label} className="hobby is-plain">{body}</div>;
           return (
             <button key={h.label} type="button" className="btn-reset hobby" onClick={() => lightbox.open(h.label, hobbySlides(h), 0, h.detail)}>
               {body}

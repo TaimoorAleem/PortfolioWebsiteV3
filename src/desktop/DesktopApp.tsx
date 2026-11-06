@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState, type CSSProperties } from 'react';
 import { LoadingBar, PlayerBlock, PromptBar, type Prompt } from '../components';
 import { desktopGlows } from '../theme/glowLayout';
-import { AWARDS, BLOGS, EMAIL, EXPERIENCE, LEADERSHIP, LINKS, RESUMES, projectById, projectSlides, tabIds } from '../data';
+import { AWARDS, BLOGS, EMAIL, EXPERIENCE, LEADERSHIP, LINKS, projectById, projectSlides, tabIds } from '../data';
 import {
   DAwards, DBlogs, DContact, DExperience, DHome, DLeadership, DProfile, DProjects, DResume, DSkills, FIELDS,
   type DCtx, type FormKey,
@@ -85,7 +85,6 @@ export function DesktopApp({ grain = true, bootScreen = true }: { grain?: boolea
       case 'projects': go({ screen: 'projects', projTab: si, projIdx: 0, slideIdx: 0 }); break;
       case 'experience': go({ screen: si === 1 ? 'leadership' : 'experience' }); break;
       case 'about': go({ screen: 'awards', awardIdx: -1 }); break;
-      case 'resume': go({ screen: 'resume', resumeIdx: 0 }); break;
       case 'blogs': go({ screen: 'blogs', blogIdx: 0 }); break;
       default: go({ screen: m.id });
     }
@@ -183,9 +182,6 @@ export function DesktopApp({ grain = true, bootScreen = true }: { grain?: boolea
           if (dir) L.set({ blogIdx: wrap(st.blogIdx + dir, BLOGS.length) });
           if (enter) window.open(BLOGS[st.blogIdx].href, '_blank', 'noopener');
           break;
-        case 'resume':
-          if (dir) L.set({ resumeIdx: wrap(st.resumeIdx + dir, RESUMES.length) });
-          break;
         case 'skills': {
           const rows = skillRows();
           if (dir) L.set({ skillIdx: wrap(st.skillIdx + dir, rows.length), skillVal: 0 });
@@ -220,7 +216,7 @@ export function DesktopApp({ grain = true, bootScreen = true }: { grain?: boolea
     blogs: [{ k: '↵', label: 'Read', onClick: () => window.open(BLOGS[s.blogIdx].href, '_blank', 'noopener') }, ...(BLOGS.length > 1 ? [{ k: '↑↓', label: 'Post' }] : []), esc],
     skills: [{ k: '↵', label: 'Select' }, esc, { k: '←→', label: 'Switch project' }],
     contact: [{ k: '↵', label: 'Select' }, esc, { k: '↑↓', label: 'Navigate' }],
-    resume: RESUMES.length > 1 ? [{ k: '↑↓', label: 'Variant' }, esc] : [esc],
+    resume: [esc],
   };
 
   const scene = D_SCENE[s.screen];

@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import {
-  AbilityCard, ChapterCard, CutCornerButton, InfoBox, ListBar, MenuItem,
-  SectionHeader, SettingsRow, Slideshow, SubOptionRow, TransmissionWindow,
+  AbilityCard, ChapterCard, CutCornerButton, InfoBox, ListBar, Meter, MenuItem,
+  SectionHeader, SettingsRow, Slideshow, SubOptionRow,
 } from '../components';
 import {
-  AWARDS, BLOGS, EMAIL, EXPERIENCE, LEADERSHIP, LINKS, MEDIA, NOW_WORKING, PROFILE, PROJECT_TABS, RESUMES, SKILLS,
+  AWARDS, BLOGS, EMAIL, EXPERIENCE, LEADERSHIP, LINKS, MEDIA, NOW_WORKING, PROFILE, PROJECT_TABS, RESUME, SKILLS,
   awardSlides, blogCover, blogDate, blogSlides, chapterSlides, projectAwards, projectById, projectLinks, projectSlides, skillUse, tabIds, techCode,
 } from '../data';
 import { Gallery, Hobbies } from '../shared/Hobbies';
@@ -65,7 +65,6 @@ export function activateMenu({ go, set }: Ctx, i: number, j: number) {
     case 'projects': go({ screen: 'projects', projTab: j, projId: tabIds(j)[0] ?? '' }); break;
     case 'experience': go({ screen: 'experience', expTab: j }); break;
     case 'about': go({ screen: 'about', awardIdx: -1 }); break;
-    case 'resume': go({ screen: 'resume', resumeIdx: 0 }); break;
     case 'blogs': go({ screen: 'blogs', blogIdx: 0 }); break;
     default: go({ screen: m.id });
   }
@@ -168,7 +167,7 @@ export function ProjectsScreen({ s, set, go }: Ctx) {
       {p ? (
         <div className="m-body m-body--tight" key={p.id}>
           <span className="m-name">{p.short}</span>
-          <Slideshow slides={projectSlides(p)} onOpen={(i) => lightbox.open(p.short, projectSlides(p), i, p.gold)} />
+          <Slideshow contain slides={projectSlides(p)} onOpen={(i) => lightbox.open(p.short, projectSlides(p), i, p.gold)} />
           <div className="m-stack6">
             <span className="m-gold m-gold--lg">{p.gold}</span>
             <span className="m-blue">{p.blue}</span>
@@ -367,6 +366,7 @@ export function ProfileScreen({ s, go }: Ctx) {
               <span className="m-pstat__value">{st.value}</span>
               <span className="m-pstat__label">{st.label}</span>
               <span className="m-pstat__caption">{st.caption}</span>
+              <Meter lit={st.meter} />
             </div>
           ))}
         </div>
@@ -459,8 +459,7 @@ export function ContactScreen({ s, set }: Ctx) {
     <>
       <Head title="COMMS" />
       <div className="m-body" style={{ gap: 0, paddingTop: 4 }}>
-        <TransmissionWindow height={104} portrait={MEDIA.portrait || undefined} />
-        <SectionHeader style={{ margin: '22px 0 4px' }}>CHANNELS</SectionHeader>
+        <SectionHeader style={{ margin: '0 0 4px' }}>CHANNELS</SectionHeader>
         {LINKS.map((l, i) => (
           <SettingsRow
             key={l.label}
@@ -504,25 +503,13 @@ export function ContactScreen({ s, set }: Ctx) {
 
 /* ---------------------------------------------------------------- résumé */
 
-export function ResumeScreen({ s, set }: Ctx) {
-  const r = RESUMES[s.resumeIdx] ?? RESUMES[0];
+export function ResumeScreen(_: Ctx) {
+  const r = RESUME;
   const exists = useFileExists(r.file);
-  const fileName = `Taimoor-Aleem-Resume${r.id === 'main' ? '' : `-${r.id}`}.pdf`;
   return (
     <>
       <Head title="RÉSUMÉ" />
-      {RESUMES.length > 1 && (
-        <div className="m-fixed">
-          <SubOptionRow
-            className="m-strip m-filter"
-            label="Résumé variant"
-            options={RESUMES.map((x, i) => (i === 0 ? `${x.label} · main` : x.label))}
-            selected={s.resumeIdx}
-            onSelect={(i) => set({ resumeIdx: i })}
-          />
-        </div>
-      )}
-      <div className="m-body" key={r.id}>
+      <div className="m-body">
         <div className="m-resume">
           <div className="m-resume__doc" aria-hidden>
             <span /><span /><span /><span /><span />
@@ -535,7 +522,7 @@ export function ResumeScreen({ s, set }: Ctx) {
         </div>
         {exists === false && <InfoBox>PDF not uploaded yet. Add it at public{r.file}.</InfoBox>}
         <div className="m-btns">
-          <CutCornerButton href={r.file} download={fileName} disabled={exists === false}>DOWNLOAD PDF</CutCornerButton>
+          <CutCornerButton href={r.file} download="Taimoor-Aleem-Resume.pdf" disabled={exists === false}>DOWNLOAD PDF</CutCornerButton>
           <CutCornerButton href={r.file} newTab disabled={exists === false}>OPEN PDF</CutCornerButton>
         </div>
       </div>

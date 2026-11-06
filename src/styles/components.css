@@ -211,8 +211,7 @@
 .ability__rule { flex: 1; height: 1px; background: var(--c-hair); }
 .ability__body { display: flex; gap: 12px; }
 .ability__icon { width: 24px; height: 24px; flex: none; display: flex; align-items: center; justify-content: center; }
-.ability__icon::before { content: ''; width: 14px; height: 14px; border: 2px solid var(--c-text); }
-.ability--core .ability__icon::before { transform: rotate(45deg); }
+.ability__icon::before { content: ''; width: 12px; height: 12px; border: 2px solid var(--c-text); transform: rotate(45deg); }
 .ability__desc { font-size: 13px; line-height: 18px; color: var(--c-muted); }
 
 /* ---------- CutCornerButton ---------- */
@@ -502,3 +501,8 @@
 .proj-award__result { font-weight: 600; color: var(--c-gold); }
 .proj-award__event { color: var(--c-muted); }
 .proj-award__year { margin-left: auto; font-family: var(--f-display); font-weight: 500; color: var(--c-faint); }
+
+/* ---------- Meter (profile stat tiles) ---------- */
+.meter { position: absolute; left: 0; right: 0; bottom: 0; height: 3px; display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 3px; }
+.meter > span { background: rgba(255, 255, 255, 0.14); }
+.meter > span.is-on { background: var(--c-amber); }

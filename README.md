@@ -26,7 +26,7 @@ npm run build      # type-check + production build
 | `#/awards` | Awards, one row per prize; rows expand on hover/tap, photos open full screen |
 | `#/blogs`, `#/blogs/<id>` | Dev logs: blog posts from `BLOGS` in `src/data.ts`, with cover, contents, figures and a link to the full post |
 | `#/contact` | Comms |
-| `#/resume`, `#/resume/<variant id>` | Résumé viewer with download. Variants live in `RESUMES` in `src/data.ts`; the first is the main one |
+| `#/resume` | Résumé viewer with download (`RESUME` in `src/data.ts`) |
 | `#/components` | Component sheet: live mobile frames + every component state |
 
 ## Colours and theming

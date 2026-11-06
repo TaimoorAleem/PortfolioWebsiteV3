@@ -17,8 +17,6 @@
 @property --s6y { syntax: '<percentage>'; inherits: true; initial-value: 36%; }
 @property --s7x { syntax: '<percentage>'; inherits: true; initial-value: 74%; }
 @property --s7y { syntax: '<percentage>'; inherits: true; initial-value: 84%; }
-@property --b1 { syntax: '<percentage>'; inherits: true; initial-value: 46%; }
-@property --b2 { syntax: '<percentage>'; inherits: true; initial-value: 76%; }
 
 @property --d1x { syntax: '<percentage>'; inherits: true; initial-value: 0%; }
 @property --d1y { syntax: '<percentage>'; inherits: true; initial-value: 0%; }
@@ -37,11 +35,11 @@
     --s1x var(--glow-move), --s1y var(--glow-move), --s2x var(--glow-move), --s2y var(--glow-move),
     --s3x var(--glow-move), --s3y var(--glow-move), --s4x var(--glow-move), --s4y var(--glow-move),
     --s5x var(--glow-move), --s5y var(--glow-move), --s6x var(--glow-move), --s6y var(--glow-move),
-    --s7x var(--glow-move), --s7y var(--glow-move), --b1 var(--glow-move), --b2 var(--glow-move);
+    --s7x var(--glow-move), --s7y var(--glow-move);
   animation:
-    glow-drift-1 47s ease-in-out infinite alternate,
-    glow-drift-2 61s ease-in-out infinite alternate,
-    glow-drift-3 79s ease-in-out infinite alternate;
+    glow-drift-1 29s ease-in-out infinite alternate,
+    glow-drift-2 37s ease-in-out infinite alternate,
+    glow-drift-3 47s ease-in-out infinite alternate;
 }
 
 /* Each drift traces a slow loop of about ±6% of the screen. */

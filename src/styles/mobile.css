@@ -243,7 +243,7 @@
 .m-bio { margin: 0; font-size: 18px; line-height: 26px; color: var(--c-title); }
 .m-pstats { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
 .m-pstat { position: relative; padding: 10px 12px; background: var(--c-stat); display: flex; flex-direction: column; }
-.m-pstat::before { content: ''; position: absolute; left: 0; top: 0; width: 20px; height: 2px; background: var(--c-amber); }
+.m-pstat { padding-bottom: 16px; }
 .m-pstat__value { font-family: var(--f-display); font-weight: 700; font-size: 28px; line-height: 32px; }
 .m-pstat__label { font-size: 13px; font-weight: 600; }
 .m-pstat__caption { font-size: 11px; color: var(--c-amber); }

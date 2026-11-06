@@ -1,8 +1,7 @@
 import type { CSSProperties } from 'react';
 
 // Where the background glows sit on each page. Positions are % of the screen.
-// The scene gradients read them as --s1x/--s1y … --s7x/--s7y and the dark vertical
-// bands as --b1/--b2 (left edge of each band; keep b2 at least 8 more than b1).
+// The scene gradients read them as --s1x/--s1y … --s7x/--s7y.
 // They're registered with @property in glows.css, so changing page makes the
 // glows drift to their new spots instead of jumping.
 //
@@ -15,14 +14,14 @@ import type { CSSProperties } from 'react';
 //   mobile uses s1–s3 only.
 
 type P = [number, number];
-interface Layout { s: P[]; b?: [number, number] }
+interface Layout { s: P[] }
 
 const DESKTOP: Record<string, Layout> = {
-  home:       { s: [[70, 28], [88, 62], [56, 76], [80, 14], [64, 46], [93, 36], [74, 84]], b: [46, 76] },
-  projects:   { s: [[84, 44], [60, 80], [92, 16], [66, 10], [88, 62], [54, 32], [78, 92]], b: [52, 84] },
-  awards:     { s: [[88, 74], [64, 18], [96, 34], [58, 90], [80, 42], [70, 6], [91, 95]], b: [60, 88] },
-  skills:     { s: [[72, 32], [90, 70], [66, 22], [84, 48], [58, 64], [94, 18], [0, 0]], b: [54, 82] },
-  contact:    { s: [[86, 74], [62, 22], [92, 40], [72, 88], [88, 12], [56, 56], [0, 0]], b: [46, 76] },
+  home:       { s: [[70, 28], [88, 62], [56, 76], [80, 14], [64, 46], [93, 36], [74, 84]] },
+  projects:   { s: [[84, 44], [60, 80], [92, 16], [66, 10], [88, 62], [54, 32], [78, 92]] },
+  awards:     { s: [[88, 74], [64, 18], [96, 34], [58, 90], [80, 42], [70, 6], [91, 95]] },
+  skills:     { s: [[72, 32], [90, 70], [66, 22], [84, 48], [58, 64], [94, 18], [0, 0]] },
+  contact:    { s: [[86, 74], [62, 22], [92, 40], [72, 88], [88, 12], [56, 56], [0, 0]] },
   experience: { s: [[94, 92], [70, 76]] },
   leadership: { s: [[60, 96], [92, 30]] },
   profile:    { s: [[58, 2], [90, 40]] },
@@ -42,13 +41,12 @@ const MOBILE: Record<string, Layout> = {
   blogs:      { s: [[92, 88], [10, 40], [70, 8]] },
 };
 
-function toVars({ s, b }: Layout): CSSProperties {
+function toVars({ s }: Layout): CSSProperties {
   const out: Record<string, string> = {};
   s.forEach(([x, y], i) => {
     out[`--s${i + 1}x`] = `${x}%`;
     out[`--s${i + 1}y`] = `${y}%`;
   });
-  if (b) { out['--b1'] = `${b[0]}%`; out['--b2'] = `${b[1]}%`; }
   return out as CSSProperties;
 }
 

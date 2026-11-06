@@ -57,14 +57,14 @@ export const RESUME_HREF = '/resume.pdf';
  * Paths are from the site root, e.g. '/media/portrait.jpg'.
  */
 export const MEDIA = {
-  /** Contact "INCOMING TRANSMISSION" portrait. Rendered with a red duotone filter. */
-  portrait: '',
+  /** Profile portrait. */
+  portrait: '/media/portrait/avatar.jpg',
   /** Desktop home "LATEST" card (Ember team photo). */
-  latest: '',
+  latest: '/media/projects/ember/demo-headset.jpg',
   /** Desktop home tile: BearHacks 2026. */
   bearhacks: '',
   /** Desktop home tile: AI Cricket Coach. */
-  cricket: '',
+  cricket: '/media/projects/cricket/title-slide.jpg',
 };
 
 export const CODE: Record<string, string> = {
@@ -102,8 +102,8 @@ export const PROJECTS: Project[] = [
       { label: 'Wearable', value: '1 Hz', caption: 'biometric stream', tech: ['Kotlin', 'Wear OS'] },
     ],
     stack: ['Next.js', 'TypeScript', 'FastAPI', 'WebRTC', 'Three.js', 'Kotlin', 'Wear OS', 'Coral'],
-    links: { github: `${GH}/Ember` },
-    media: 'Ember prototype photo', groups: ['hackathons'], images: [],
+    links: { github: `${GH}/Ember`, devpost: 'https://devpost.com/software/ember-xwdyzl' },
+    media: 'Ember', groups: ['hackathons'], images: ['/media/projects/ember/helmet-rig.jpg', '/media/projects/ember/hud-lidar.jpg', '/media/projects/ember/hud-thermal.jpg', '/media/projects/ember/demo-headset.jpg', '/media/projects/ember/demo-laptop.jpg', '/media/projects/ember/wearos-biometrics.jpg', '/media/projects/ember/command-dashboard.jpg'],
   },
   {
     id: 'proprio', name: 'Proprio', short: 'Proprio', isNew: true, featured: true,
@@ -124,7 +124,7 @@ export const PROJECTS: Project[] = [
     ],
     stack: ['Python', 'PyTorch', 'scikit learn', 'MLflow', 'DVC', 'Kotlin', 'Wear OS', 'Spring Boot', 'RabbitMQ', 'PostgreSQL'],
     links: { github: `${GH}/Proprio` },
-    media: 'Proprio sensor rig photo', groups: ['personal'], images: [],
+    media: 'Proprio', groups: ['personal'], images: ['/media/projects/proprio/exercises.jpg', '/media/projects/proprio/rotation-sensitivity.png'],
   },
   {
     id: 'mercato', name: 'Mercato', short: 'Mercato',
@@ -143,7 +143,7 @@ export const PROJECTS: Project[] = [
     ],
     stack: ['Java', 'Spring Boot', 'Kafka', 'Keycloak', 'Angular', 'MySQL', 'MongoDB', 'Docker'],
     links: { github: `${GH}/Mercato` },
-    media: 'Mercato storefront screenshot', groups: ['personal'], images: [],
+    media: 'Mercato', groups: ['personal'], images: ['/media/projects/mercato/architecture.png'],
   },
   {
     id: 'rocky', name: 'Rocky', short: 'Rocky',
@@ -161,8 +161,8 @@ export const PROJECTS: Project[] = [
       { label: 'Model', value: '8x22B', caption: 'Mixtral on Vultr', tech: ['Ollama', 'Vultr'] },
     ],
     stack: ['Next.js', 'TypeScript', 'Supabase', 'ElevenLabs', 'Ollama', 'Vultr', 'Gemini API'],
-    links: { github: `${GH}/Rocky` },
-    media: 'Rocky dashboard screenshot', groups: ['hackathons'], images: [],
+    links: { github: `${GH}/Rocky`, devpost: 'https://devpost.com/software/lumo-2hd6ka' },
+    media: 'Rocky', groups: ['hackathons'], images: ['/media/projects/rocky/dashboard.jpg', '/media/projects/rocky/watch-home.jpg', '/media/projects/rocky/watch-vitals.jpg', '/media/projects/rocky/alerts.jpg', '/media/projects/rocky/analytics.jpg', '/media/projects/rocky/simulation-studio.jpg', '/media/projects/rocky/landing.jpg', '/media/projects/rocky/wearable-concept.jpg'],
   },
   {
     id: 'prismarine', name: 'Prismarine', short: 'Prismarine',
@@ -179,8 +179,8 @@ export const PROJECTS: Project[] = [
       { label: 'Sources', value: '3', caption: 'arXiv, PMC, Semantic Scholar', tech: ['Gemini API', 'Snowflake'] },
     ],
     stack: ['Python', 'FastAPI', 'Next.js', 'Three.js', 'Gemini API', 'Snowflake', 'ElevenLabs', 'MongoDB'],
-    links: { github: `${GH}/Prismarine`, demo: 'https://prismarine.yvesdonato.com/' },
-    media: 'Prismarine 3D graph screenshot', groups: ['hackathons'], images: [],
+    links: { github: `${GH}/Prismarine`, devpost: 'https://devpost.com/software/prismarine', demo: 'https://prismarine.yvesdonato.com/' },
+    media: 'Prismarine', groups: ['hackathons'], images: ['/media/projects/prismarine/graph-3d.png', '/media/projects/prismarine/graph-2d.png', '/media/projects/prismarine/expanding.png', '/media/projects/prismarine/after-expansion.png', '/media/projects/prismarine/pdf-viewer.png', '/media/projects/prismarine/landing.png'],
   },
   {
     id: 'voxel', name: 'Voxel', short: 'Voxel',
@@ -197,8 +197,8 @@ export const PROJECTS: Project[] = [
       { label: 'Modes', value: '3', caption: 'generate, explore, diagram', tech: ['Flutter', 'Dart'] },
     ],
     stack: ['Flutter', 'Dart', 'ARCore', 'ARKit', 'Meshy API'],
-    links: { github: `${GH}/Voxel` },
-    media: 'Voxel AR screenshot', groups: ['hackathons'], images: [],
+    links: { github: `${GH}/Voxel`, devpost: 'https://devpost.com/software/voxel-pnxmlc' },
+    media: 'Voxel', groups: ['hackathons'], images: ['/media/projects/voxel/saturn-v-labels.jpg', '/media/projects/voxel/saturn-v-diagram.jpg', '/media/projects/voxel/plane-detection.jpg', '/media/projects/voxel/rocket-launch.jpg', '/media/projects/voxel/rocket-launch-2.jpg', '/media/projects/voxel/landing.png'],
   },
   {
     id: 'cricket', name: 'AI Cricket Coach', short: 'AI Cricket Coach', featured: true,
@@ -222,7 +222,7 @@ export const PROJECTS: Project[] = [
       video: 'https://www.youtube.com/watch?v=KgE6Eg26K0g',
       report: 'https://drive.google.com/file/d/16nV_F1458UqtXBYLwEqJtoV6RG1xtwq-/view?usp=sharing',
     },
-    media: 'AI Cricket Coach app screens', groups: ['academic'], images: [],
+    media: 'AI Cricket Coach', groups: ['academic'], images: ['/media/projects/cricket/title-slide.jpg', '/media/projects/cricket/delivery-details.jpg', '/media/projects/cricket/session-details.jpg', '/media/projects/cricket/performance-analytics.jpg', '/media/projects/cricket/upload-video.jpg', '/media/projects/cricket/user-profile.jpg', '/media/projects/cricket/trajectory-mapping.png', '/media/projects/cricket/yolo-training-batch.jpg'],
   },
 ];
 
@@ -344,38 +344,47 @@ export const AWARDS: Award[] = [
   {
     event: 'CS Capstone, Sheridan', result: 'First Place', team: 'Capstone team', year: '2025', project: 'cricket',
     details: 'AI Cricket Coach ranked first among all 2025 CS capstones at Sheridan, across Data Analytics, Cloud Computing and Game Engineering.',
+    images: ['/media/projects/cricket/title-slide.jpg', '/media/projects/cricket/delivery-details.jpg'],
   },
   {
     event: 'Google Solution Challenge', result: 'Top 3, North America', team: 'IgnisXR team', year: '2026', project: 'ember',
     details: 'Ember, our XR firefighter helmet, placed in the top 3 in North America and was presented to Google engineers in New York City.',
+    images: ['/media/projects/ember/hud-lidar.jpg', '/media/projects/ember/helmet-rig.jpg'],
   },
   {
     event: 'Hack Canada', result: 'Google Build With AI track', team: 'IgnisXR team', year: '2026', project: 'ember',
     details: "Ember won Google's Build With AI prize track.",
+    images: ['/media/projects/ember/demo-headset.jpg', '/media/projects/ember/demo-laptop.jpg', '/media/projects/ember/helmet-rig.jpg'],
   },
   {
     event: 'Hack Canada', result: 'SPUR Innovation track', team: 'IgnisXR team', year: '2026', project: 'ember',
     details: 'Ember also won the SPUR Innovation prize track.',
+    images: ['/media/projects/ember/demo-laptop.jpg', '/media/projects/ember/hud-thermal.jpg'],
   },
   {
     event: 'DeerHacks, UofT', result: '2nd Place', team: 'Rocky team', year: '2026', project: 'rocky',
     details: 'Rocky, a real time child safety monitor, took 2nd place overall.',
+    images: ['/media/awards/deerhacks-2026-team.jpg', '/media/projects/rocky/dashboard.jpg'],
   },
   {
     event: 'DeerHacks, UofT', result: 'Best Use of Vultr', team: 'Rocky team', year: '2026', project: 'rocky',
     details: "Rocky's private AI review runs Mixtral 8x22B on our own Vultr server, which won Best Use of Vultr.",
+    images: ['/media/awards/deerhacks-2026-team.jpg', '/media/projects/rocky/simulation-studio.jpg'],
   },
   {
     event: 'GenAI Genesis, UofT', result: 'Best AI Hack using IBM Tech', team: 'Voxel team', year: '2026', project: 'voxel',
     details: 'Voxel, an AR learning headset concept with generative 3D models, won Best AI Hack using IBM Tech.',
+    images: ['/media/projects/voxel/saturn-v-labels.jpg', '/media/projects/voxel/plane-detection.jpg'],
   },
   {
     event: 'YorkU Hackathon', result: '5th of 60', team: 'Prismarine team', year: '2026', project: 'prismarine',
     details: 'Prismarine, a 3D visual search engine for research papers, placed 5th of 60 teams.',
+    images: ['/media/projects/prismarine/graph-3d.png', '/media/projects/prismarine/graph-2d.png'],
   },
   {
-    event: 'Hackville', result: 'Best UI Design', team: 'Hackville team', year: 'TBC',
-    details: 'Best UI Design award. Details coming soon.',
+    event: 'Hackville', result: 'Best UI Design', team: 'BuddyFinder team', year: '2024',
+    details: 'Won Best UI (sponsored by Tempo Labs) with BuddyFinder.',
+    images: ['/media/awards/hackville-2024-team.jpg', '/media/projects/buddyfinder/welcome.jpg', '/media/projects/buddyfinder/home.jpg', '/media/projects/buddyfinder/edit-profile.jpg'],
   },
 ];
 
@@ -462,7 +471,7 @@ export const BLOGS: Blog[] = [
       'Expression of Interest', 'Ideation', 'Domain Research', 'Software Design',
       'Development', 'Testing', 'Challenges and Areas of Improvement', 'Final Remarks',
     ],
-    cover: 'https://cdn-images-1.medium.com/max/796/1*Yt9QYGFaLh2eKyN7piY0pw.png',
+    cover: '/media/projects/cricket/trajectory-mapping.png',
     images: [
       { src: 'https://cdn-images-1.medium.com/max/1024/1*RQnvEcqm2fz9YJa0Qf2EWA.png', label: 'Brainstorming mind map' },
       { src: 'https://cdn-images-1.medium.com/max/960/1*Oca6dm0OQziUvGY69Gf8UQ.gif', label: 'Speed estimation example' },
@@ -481,22 +490,10 @@ export const blogSlides = (b: Blog): SlideData[] =>
 export const blogDate = (d: string) =>
   new Date(`${d}T12:00:00`).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }).toUpperCase();
 
-export interface Resume {
-  id: string;
-  label: string;
-  /** Path to the PDF, from the site root. Put the files in /public. */
-  file: string;
-  note?: string;
-  updated?: string;
-}
-
-/** Résumé variants. The first one is the main résumé and opens by default. */
-export const RESUMES: Resume[] = [
-  { id: 'main', label: 'Software and AI', file: RESUME_HREF, note: 'My main résumé, for software and AI engineering roles.' },
-  // Add variants below, e.g.:
-  // { id: 'ml', label: 'ML Engineering', file: '/resumes/ml.pdf', note: 'Focused on ML and MLOps work.' },
-  // { id: 'backend', label: 'Backend Systems', file: '/resumes/backend.pdf' },
-];
+/** The résumé shown on the Résumé page. Put the PDF in /public. */
+export const RESUME: { label: string; file: string; note?: string; updated?: string } = {
+  label: 'Software and AI', file: RESUME_HREF, note: 'Software and AI engineering roles.',
+};
 
 export const USE: Record<string, string> = {
   Proprio: 'Rebuilt evaluation for a sensor ML model, found 5 data leaks, and built event driven ingestion with S3, RabbitMQ and PostgreSQL tracked in MLflow and DVC.',
@@ -543,10 +540,11 @@ export const PROFILE = {
     text: 'Building Ember, an XR helmet for firefighters: edge AI, multi threaded sensor fusion and a wearable biometric stream.',
   },
   stats: [
-    { value: String(AWARDS.length), label: 'Awards', caption: 'mostly hackathons' },
-    { value: '21', label: 'Events Organized', caption: 'Google Developer Group - Sheridan' },
-    { value: '1000+', label: 'Hackers hosted', caption: 'BearHacks · Datathon · Hackville' },
-    { value: '22', label: 'Sponsors closed', caption: 'BearHacks 2026 ' },
+    // meter: how many of the 10 bar segments under the tile light up.
+    { value: String(AWARDS.length), label: 'Awards', caption: 'mostly hackathons', meter: Math.min(10, AWARDS.length) },
+    { value: '21', label: 'Events Organized', caption: 'Google Developer Group - Sheridan', meter: 8 },
+    { value: '1000+', label: 'Hackers hosted', caption: 'BearHacks · Datathon · Hackville', meter: 10 },
+    { value: '22', label: 'Sponsors closed', caption: 'BearHacks 2026 ', meter: 9 },
   ],
   facts: [
     ['Based in', 'Toronto, ON (GTA)'],
@@ -557,8 +555,8 @@ export const PROFILE = {
 };
 
 export const SOCIAL = {
-  spotify: '',   // e.g. 'https://open.spotify.com/user/…'
-  youtube: '',   // e.g. 'https://www.youtube.com/@…'
+  spotify: 'https://open.spotify.com/user/jrlooyy8uvskrw9b4fqugh32o',
+  youtube: 'https://youtube.com/@taimoorrr',
 };
 
 export interface Hobby {
@@ -574,13 +572,16 @@ export interface Hobby {
 }
 
 /** Profile › Hobbies & interests. */
+/** Photo slideshows on hobby tiles. Off for now: photo hobbies show as plain tiles. */
+export const HOBBY_PHOTOS = false;
+
 export const HOBBIES: Hobby[] = [
   { label: 'Piano', images: [] },
   { label: 'Cooking', images: [] },
   { label: 'Running', images: [] },
   { label: 'Music', detail: 'Metal rock · Indie rock', href: SOCIAL.spotify, site: 'Spotify' },
   { label: 'Titanfall 2', href: SOCIAL.youtube, site: 'YouTube' },
-  { label: 'Cricket & Squash', images: [] },
+  { label: 'Sports', detail: 'Cricket · Squash' },
 ];
 
 export const hobbySlides = (h: Hobby): SlideData[] =>
