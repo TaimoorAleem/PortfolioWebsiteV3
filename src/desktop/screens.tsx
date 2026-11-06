@@ -174,8 +174,7 @@ export function DHome({ s, set, activate, go }: DCtx) {
       </div>
 
       <div className="d-sig">
-        <span>taimooraleem.com</span>
-        <span>© 2026</span>
+        <span>© 2026 Taimoor Aleem</span>
       </div>
     </div>
   );
@@ -503,7 +502,7 @@ export function DResume({ s, set }: DCtx) {
             width={240}
             sel={s.resumeIdx}
             items={RESUMES.map((x, i) => ({ key: x.id, label: x.label, trailing: i === 0 ? 'MAIN' : undefined }))}
-            onHover={() => {}}
+            onHover={() => { }}
             onClick={(i) => set({ resumeIdx: i })}
           />
         </div>

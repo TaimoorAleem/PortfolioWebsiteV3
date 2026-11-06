@@ -107,11 +107,9 @@ export const PROJECTS: Project[] = [
   },
   {
     id: 'proprio', name: 'Proprio', short: 'Proprio', isNew: true, featured: true,
-    gold: 'ML PIPELINE, HONEST EVALUATION', blue: 'MLOps and sensor ML',
+    gold: 'ML PIPELINE', blue: 'MLOps and sensor ML',
     desc: [
-      { t: 'Recognizes barbell exercises and counts reps from a smartwatch on your wrist. It grew out of my 2019 AI Workout Detector, whose ' },
-      { t: '99.9%', hl: true },
-      { t: ' accuracy turned out to come from five data leaks.' },
+      { t: 'Recognizes barbell exercises and counts reps from a smartwatch on your wrist. ' }
     ],
     cards: [
       ['EXERCISE RECOGNITION', 'Tells bench press, squat, deadlift, overhead press and row apart: 96 to 99% of sets right on people it never saw.'],
@@ -452,8 +450,8 @@ export const BLOGS: Blog[] = [
     date: '2025-09-10',
     site: 'Medium',
     href: CAPSTONE_POST,
-    tags: ['Computer Vision', 'Machine Learning', 'Cricket', 'Capstone'],
-    quote: 'Right off the bat, I wanna emphasize that this capstone’s journey wasn’t an easy one.',
+    tags: ['Computer Vision', 'Machine Learning'],
+    quote: '',
     summary:
       'How AI Cricket Coach went from an expression of interest (one of 7 approved out of 30) to first place at Sheridan: ' +
       'swapping a basketball posture hackathon idea for cricket, scoping it around a cloud computing teammate, ' +
@@ -539,21 +537,21 @@ export const PROFILE = {
   name: 'TAIMOOR ALEEM',
   role: 'AI Engineer · Software Developer',
   status: 'Open to new grad roles',
-  bio: 'I like building systems that run fast on real hardware, and I care more about honest evaluation than impressive numbers.',
+  bio: 'I like building systems that run fast on real hardware.',
   now: {
     title: 'Founding Engineer, IgnisXR',
-    text: 'Building Ember, an XR helmet for firefighters: edge inference on a Coral TPU, multi threaded sensor fusion and a wearable biometric stream.',
+    text: 'Building Ember, an XR helmet for firefighters: edge AI, multi threaded sensor fusion and a wearable biometric stream.',
   },
   stats: [
     { value: String(AWARDS.length), label: 'Awards', caption: 'mostly hackathons' },
-    { value: '21', label: 'Events run', caption: 'GDG Sheridan' },
-    { value: '300+', label: 'Hackers hosted', caption: 'BearHacks 2026' },
-    { value: '3', label: 'Roles', caption: 'IgnisXR, Dayforce, Skill Squirrel' },
+    { value: '21', label: 'Events Organized', caption: 'Google Developer Group - Sheridan' },
+    { value: '1000+', label: 'Hackers hosted', caption: 'BearHacks · Datathon · Hackville' },
+    { value: '22', label: 'Sponsors closed', caption: 'BearHacks 2026 ' },
   ],
   facts: [
     ['Based in', 'Toronto, ON (GTA)'],
     ['Education', "Hon. BCS, Data Analytics · Sheridan '26"],
-    ['Focus', 'Edge ML · sensor fusion · backend systems'],
+    ['Focus', 'Backend Systems · ML · CV'],
     ['Honours', 'Valedictorian Nominee'],
   ] as [string, string][],
 };
@@ -599,7 +597,7 @@ export const LINKS: { label: string; value: string; short: string; href: string;
 
 /** Home page "Currently working on" list. `project` opens that project; `leadership` opens that Leadership chapter. */
 export const NOW_WORKING: { label: string; project?: string; leadership?: number }[] = [
-  { label: 'Ember at IgnisXR: edge AI for firefighter helmets', project: 'ember' },
+  { label: 'Ember at IgnisXR: Edge AI for firefighter helmets', project: 'ember' },
   { label: 'Proprio: validating rep counting on a real Galaxy Watch', project: 'proprio' },
   { label: 'BearHacks 2027: advising the organizing team', leadership: 0 },
 ];
