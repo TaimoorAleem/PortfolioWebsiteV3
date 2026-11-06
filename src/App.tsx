@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Analytics } from '@vercel/analytics/react';
 import { DesktopApp } from './desktop/DesktopApp';
 import { MobileApp } from './mobile/MobileApp';
 import { ComponentSheet } from './sheet/ComponentSheet';
@@ -42,6 +43,7 @@ export function App() {
         </div>
       )}
       <ThemePreviewBadge />
+      <Analytics />
     </>
   );
 }
