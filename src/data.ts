@@ -20,6 +20,9 @@ export interface ActionLink {
   href?: string;
 }
 
+/** One image in a slideshow or gallery; without `src` it renders as a labelled placeholder. */
+export interface SlideData { src?: string; label: string }
+
 export type ProjectGroup = 'personal' | 'academic' | 'hackathons';
 
 export interface Project {
@@ -37,10 +40,8 @@ export interface Project {
   cards: [string, string][];
   stats: Stat[];
   stack: string[];
-  awards?: string[];
-  perks?: string[];
-  /** Buttons appear only for links that are set. */
-  links: { github?: string; devpost?: string; article?: string };
+  /** Buttons appear only for links that are set. Awards are listed from AWARDS (by `project`). */
+  links: { github?: string; devpost?: string; article?: string; demo?: string; video?: string; report?: string };
   /** Placeholder caption, and alt text for the images. */
   media: string;
   /** Slideshow images, e.g. ['/media/projects/ember-1.jpg', '/media/projects/ember-2.jpg']. Landscape, 16:9 works best. */
@@ -82,138 +83,143 @@ export const PROJECTS: Project[] = [
     id: 'ember', name: 'Ember (IgnisXR)', short: 'Ember', featured: true,
     gold: 'XR FIREFIGHTER HELMET', blue: 'Edge ML and sensor fusion',
     desc: [
-      { t: 'Built with the IgnisXR team. A helmet system that fuses depth, thermal and vision on device so firefighters can see through smoke. Won the ' },
-      { t: 'Google', hl: true }, { t: ' and ' }, { t: 'SPUR', hl: true },
-      { t: ' prize tracks at Hack Canada, placed Top 3 in North America at the ' },
-      { t: 'Google Solution Challenge', hl: true },
-      { t: ', and was presented to Google engineers in New York City.' },
+      { t: 'A helmet system that lets firefighters see through smoke, and lets their commander see what they see. Built with the ' },
+      { t: 'IgnisXR', hl: true },
+      { t: ' team at Hack Canada; we now run detection on a Coral Edge TPU at 70 FPS.' },
     ],
     cards: [
-      ['EDGE INFERENCE', 'Integrated a Google Coral Edge TPU, taking person detection from 10 to 70 FPS.'],
-      ['SENSOR FUSION', 'Multi threaded Linux pipeline fusing ToF depth, I2C thermal and Coral inference.'],
-      ['HUD COMPOSITING', 'C++ and OpenCV layer compositing three sensor streams in real time.'],
-      ['BIOMETRIC STREAM', 'Kotlin Wear OS app streaming vitals over WebSocket at about 1 Hz.'],
+      ['LIVE HELMET FEED', "A phone on the helmet streams video to the commander's HUD over WebRTC, with stream health on screen."],
+      ['OBJECT DETECTION', 'Detections are drawn over the feed and ranked by priority: people first, then vehicles and obstacles.'],
+      ['VITALS FROM THE WRIST', 'A Kotlin Wear OS app streams heart rate, SpO2, skin temperature and heading to the HUD over WebSocket.'],
+      ['WAY BACK OUT', 'Compass guidance and a Three.js return path help the firefighter retrace their route out of a room.'],
     ],
     stats: [
       { label: 'Inference', value: '7×', caption: '10 to 70 FPS', tech: ['Coral', 'OpenCV', 'Linux'] },
       { label: 'Sensors', value: '3', caption: 'depth, thermal, vision', tech: ['C++', 'Python'] },
       { label: 'Wearable', value: '1 Hz', caption: 'biometric stream', tech: ['Kotlin', 'Wear OS'] },
     ],
-    stack: ['C++', 'Python', 'OpenCV', 'Coral', 'Linux', 'Kotlin', 'Wear OS'],
-    awards: ['Google Build With AI', 'SPUR'], perks: ['Hack Canada', 'Google Solution Challenge', 'NYC Demo'],
-    links: { github: GH },
+    stack: ['Next.js', 'TypeScript', 'FastAPI', 'WebRTC', 'Three.js', 'Kotlin', 'Wear OS', 'Coral'],
+    links: { github: `${GH}/Ember` },
     media: 'Ember prototype photo', groups: ['hackathons'], images: [],
   },
   {
     id: 'proprio', name: 'Proprio', short: 'Proprio', isNew: true, featured: true,
     gold: 'ML PIPELINE, HONEST EVALUATION', blue: 'MLOps and sensor ML',
-    desc: [{ t: 'Grew out of my AI Workout Detector project. Rebuilt the evaluation of a model that claimed 99.9% accuracy.' }],
+    desc: [
+      { t: 'Recognizes barbell exercises and counts reps from a smartwatch on your wrist. It grew out of my 2019 AI Workout Detector, whose ' },
+      { t: '99.9%', hl: true },
+      { t: ' accuracy turned out to come from five data leaks.' },
+    ],
     cards: [
-      ['LEAK HUNT', 'Found 5 data leaks and rebuilt evaluation with LOOCV, correcting 99.9% to 96.3%.'],
-      ['BENCHMARK', 'Raised set accuracy to 98.6% across 20 feature and model combinations on 7,360 windows.'],
-      ['ROBUSTNESS', 'Made the model 7× more tolerant of sensor misalignment, 2° to 15°, with rotation augmentation.'],
-      ['PIPELINE', 'Event driven ingestion with S3, RabbitMQ and PostgreSQL, tracked with MLflow, DVC and GitHub Actions.'],
+      ['EXERCISE RECOGNITION', 'Tells bench press, squat, deadlift, overhead press and row apart: 96 to 99% of sets right on people it never saw.'],
+      ['REP COUNTING', 'Counts reps from the same accelerometer and gyroscope stream the watch records.'],
+      ['WATCH AND PHONE APPS', 'A Wear OS recorder logs whole sessions at 50 Hz with zero gaps; the phone app labels sets and uploads them.'],
+      ['ANY WATCH, ANY ANGLE', "A shared sensor format converts other watches' data with no accuracy loss, and still works with the watch 15° off."],
     ],
     stats: [
       { label: 'Accuracy', value: '96.3%', caption: 'honest LOOCV, from 99.9%', tech: ['scikit learn', 'PyTorch'] },
       { label: 'Benchmark', value: '98.6%', caption: '7,360 windows', tech: ['Python'] },
       { label: 'Robustness', value: '7×', caption: 'misalignment tolerance', tech: ['PyTorch'] },
     ],
-    stack: ['Python', 'PyTorch', 'scikit learn', 'MLflow', 'Spring Boot', 'RabbitMQ', 'PostgreSQL', 'Docker'],
-    links: { github: GH },
+    stack: ['Python', 'PyTorch', 'scikit learn', 'MLflow', 'DVC', 'Kotlin', 'Wear OS', 'Spring Boot', 'RabbitMQ', 'PostgreSQL'],
+    links: { github: `${GH}/Proprio` },
     media: 'Proprio sensor rig photo', groups: ['personal'], images: [],
   },
   {
     id: 'mercato', name: 'Mercato', short: 'Mercato',
     gold: 'DISTRIBUTED COMMERCE PLATFORM', blue: 'Microservices platform',
-    desc: [{ t: 'A full stack store built as Spring Boot microservices with Kafka and an Angular front end.' }],
+    desc: [{ t: 'An online store built as an Angular storefront in front of five Spring Boot services: gateway, products, orders, inventory and notifications.' }],
     cards: [
-      ['RESILIENCE', 'Circuit breakers, bounded retries and request timeouts across service calls.'],
-      ['SECURITY', 'Spring Cloud Gateway with Keycloak JWT validation and OIDC silent token renewal.'],
-      ['ORCHESTRATION', 'Containerized with Docker and orchestrated on Kubernetes.'],
-      ['OBSERVABILITY', 'Prometheus, Grafana, Loki and Tempo for metrics, logs and traces.'],
+      ['SIGN IN ONCE', 'Keycloak login in the storefront; the gateway checks every token, so the services never handle auth themselves.'],
+      ['STOCK-CHECKED ORDERS', 'An order is only accepted after a live inventory check, guarded by a circuit breaker, retries and a time limit.'],
+      ['HONEST FAILURES', 'Out of stock and inventory down come back as different errors (409 vs 503) instead of one misleading "no".'],
+      ['ORDER EMAILS', 'Each order publishes an Avro event on Kafka, which a notification service turns into a confirmation email.'],
     ],
     stats: [
       { label: 'Gateway', value: 'JWT', caption: 'Keycloak and OIDC', tech: ['Spring Boot', 'Keycloak'] },
       { label: 'Events', value: 'Kafka', caption: 'async between services', tech: ['Kafka'] },
-      { label: 'Signals', value: '4', caption: 'metrics, logs, traces', tech: ['Prometheus', 'Kubernetes'] },
+      { label: 'Services', value: '5', caption: 'behind one gateway', tech: ['Spring Boot', 'Docker'] },
     ],
-    stack: ['Java', 'Spring Boot', 'Kafka', 'Angular', 'MySQL', 'MongoDB'],
-    links: { github: GH },
+    stack: ['Java', 'Spring Boot', 'Kafka', 'Keycloak', 'Angular', 'MySQL', 'MongoDB', 'Docker'],
+    links: { github: `${GH}/Mercato` },
     media: 'Mercato storefront screenshot', groups: ['personal'], images: [],
   },
   {
     id: 'rocky', name: 'Rocky', short: 'Rocky',
     gold: 'DEERHACKS, 2ND PLACE', blue: 'Real time child safety monitor',
-    desc: [{ t: 'Built with my DeerHacks team. Also won Best Use of Vultr.' }],
+    desc: [{ t: 'A wearable concept that looks out for kids: it picks up bullying, a fall or a panic spike, and tells the parent what happened and what to do next.' }],
     cards: [
-      ['LLM PIPELINE', 'Multi stage LLM pipeline for real time incident detection.'],
-      ['DASHBOARD', 'Responsive Next.js parent dashboard with sub second alerts.'],
-      ['SELF HOSTED MODEL', 'Mixtral 8x22B served through Ollama on Vultr.'],
-      ['DETECTION', '85% precision on audio based bullying detection.'],
+      ['LISTENS FOR TROUBLE', 'Audio is transcribed in 30 second chunks and screened against 180+ distress phrases; clean audio is thrown away.'],
+      ['PRIVATE AI REVIEW', 'Flagged moments go to a self-hosted Mixtral 8x22B on Vultr, with heart rate, motion and location, for a severity call.'],
+      ['PARENT ALERTS', 'Gemini writes a plain-language report with next steps, pushed to the dashboard and the OS the moment it lands.'],
+      ['SIMULATION STUDIO', "No wearable yet, so a studio uses your laptop's mic and location plus simulated falls to run the whole pipeline."],
     ],
     stats: [
       { label: 'Placement', value: '2nd', caption: 'DeerHacks, UofT', tech: ['Next.js'] },
-      { label: 'Precision', value: '85%', caption: 'audio bullying detection', tech: ['Gemini API'] },
+      { label: 'Phrases', value: '180+', caption: 'distress keyword filter', tech: ['ElevenLabs'] },
       { label: 'Model', value: '8x22B', caption: 'Mixtral on Vultr', tech: ['Ollama', 'Vultr'] },
     ],
-    stack: ['Next.js', 'TypeScript', 'Kotlin', 'Supabase', 'PostgreSQL', 'Gemini API'],
-    links: { github: GH },
+    stack: ['Next.js', 'TypeScript', 'Supabase', 'ElevenLabs', 'Ollama', 'Vultr', 'Gemini API'],
+    links: { github: `${GH}/Rocky` },
     media: 'Rocky dashboard screenshot', groups: ['hackathons'], images: [],
   },
   {
     id: 'prismarine', name: 'Prismarine', short: 'Prismarine',
     gold: 'YORKU HACKATHON, 5TH OF 60', blue: 'AI research discovery tool',
-    desc: [{ t: 'Built with my team to make literature discovery faster and easier to read.' }],
+    desc: [{ t: 'A visual search engine for research: it finds papers related by meaning across arXiv, PubMed Central and Semantic Scholar, and lays them out in 3D.' }],
     cards: [
-      ['3D PAPER GRAPH', 'Maps papers from 3 sources into an interactive 3D graph.'],
-      ['TRANSLATION', 'Snowflake Cortex translation and simplification that keeps technical terms.'],
-      ['AUDIO SUMMARIES', 'ElevenLabs speech synthesis of paper summaries.'],
-      ['STACK', 'FastAPI back end with a Next.js and TypeScript front end.'],
+      ['3D PAPER UNIVERSE', 'Explore related papers as an interactive 3D graph you can zoom, rotate and click through.'],
+      ['RELATED BY MEANING', 'Links papers by Gemini embeddings and nearest neighbours, so it finds connections citations miss.'],
+      ['LISTEN TO PAPERS', 'ElevenLabs reads paper summaries aloud.'],
+      ['PLAIN LANGUAGE', 'Snowflake Cortex rewrites jargon into everyday or code-mixed language, like Hinglish, keeping key terms.'],
     ],
     stats: [
       { label: 'Placement', value: '5th', caption: 'of 60 teams', tech: ['FastAPI'] },
-      { label: 'Sources', value: '3', caption: 'papers in a 3D graph', tech: ['Snowflake', 'ElevenLabs'] },
+      { label: 'Sources', value: '3', caption: 'arXiv, PMC, Semantic Scholar', tech: ['Gemini API', 'Snowflake'] },
     ],
-    stack: ['Python', 'FastAPI', 'Next.js', 'Gemini API', 'Snowflake', 'ElevenLabs'],
-    links: { github: GH },
+    stack: ['Python', 'FastAPI', 'Next.js', 'Three.js', 'Gemini API', 'Snowflake', 'ElevenLabs', 'MongoDB'],
+    links: { github: `${GH}/Prismarine`, demo: 'https://prismarine.yvesdonato.com/' },
     media: 'Prismarine 3D graph screenshot', groups: ['hackathons'], images: [],
   },
   {
     id: 'voxel', name: 'Voxel', short: 'Voxel',
-    gold: 'BEST AI HACK BY IBM', blue: 'Agentic 3D research pipeline',
-    desc: [{ t: 'Built with my team at the GenAI Genesis hackathon at UofT.' }],
+    gold: 'BEST AI HACK USING IBM TECH', blue: 'AR and generative AI for learning',
+    desc: [{ t: 'An AR learning headset concept: students explore 3D models in the room around them instead of on a textbook page. Built with my team at GenAI Genesis, UofT.' }],
     cards: [
-      ['ORCHESTRATION', 'Agent orchestration in IBM Langflow.'],
-      ['PROMPTING', 'Prompt refinement with watsonx.'],
-      ['STORAGE', 'Db2 storage for rendered 3D assets.'],
-      ['RESULT', 'Best AI Hack award from IBM.'],
+      ['TEXT TO 3D', 'Describe an object and the app generates a 3D model you can place on a real surface in AR.'],
+      ['SATURN V EXPLORER', 'Place a full Saturn V in the room, learn what each stage does, then watch it launch.'],
+      ['LABELLED AR DIAGRAM', 'Floating cards point to each part of the rocket, so students learn by walking around it.'],
+      ['KEYS STAY SAFE', "A small Dart server runs the 3D generation steps, so the API key never ships on the phone."],
     ],
     stats: [
-      { label: 'Award', value: 'IBM', caption: 'Best AI Hack', tech: ['watsonx'] },
-      { label: 'Agents', value: 'Langflow', caption: 'watsonx prompting', tech: ['Langflow', 'Db2'] },
+      { label: 'Award', value: 'IBM', caption: 'Best AI Hack', tech: ['Flutter'] },
+      { label: 'Modes', value: '3', caption: 'generate, explore, diagram', tech: ['Flutter', 'Dart'] },
     ],
-    stack: ['Langflow', 'watsonx', 'Db2'],
-    links: { github: GH },
-    media: 'Voxel render output', groups: ['hackathons'], images: [],
+    stack: ['Flutter', 'Dart', 'ARCore', 'ARKit', 'Meshy API'],
+    links: { github: `${GH}/Voxel` },
+    media: 'Voxel AR screenshot', groups: ['hackathons'], images: [],
   },
   {
     id: 'cricket', name: 'AI Cricket Coach', short: 'AI Cricket Coach', featured: true,
     gold: 'CAPSTONE, FIRST PLACE', blue: 'Computer vision coaching app',
-    desc: [{ t: 'Led our capstone team to first place with a mobile app that tracks ball trajectory and recommends the ideal shot.' }],
+    desc: [{ t: 'A mobile app that watches a practice delivery and tells the batter which shot to play. I led our team of four as project lead and lead mobile developer.' }],
     cards: [
-      ['BALL TRACKING', 'YOLOv8 detector at 0.995 precision, 1.0 recall and 0.995 mAP@50.'],
-      ['PITCH MAPPING', 'RANSAC homography onto a top down pitch, classifying 5 lengths and 4 lines.'],
-      ['SHOT MODEL', 'Random Forest at 87.9% accuracy on 10,000 simulated deliveries across 23 shot classes.'],
-      ['FIELD TESTED', '22 test cases with the client and under 10 seconds end to end processing.'],
+      ['VIDEO UPLOAD', "Players record practice deliveries from the umpire's view and upload them straight from the app."],
+      ['BALL TRAJECTORY', 'Computer vision pulls out ball speed, line, length and batter position from each video.'],
+      ['IDEAL SHOT', 'A trained Random Forest model recommends the best shot for each delivery.'],
+      ['PROGRESS AND COACHING', 'Players track shot quality and ball speed across sessions; coaches leave feedback on each delivery.'],
     ],
     stats: [
       { label: 'Ball tracking', value: '0.995', caption: 'YOLOv8 mAP@50', tech: ['Python', 'OpenCV'] },
       { label: 'Shot model', value: '87.9%', caption: '23 shot classes', tech: ['Python'] },
       { label: 'Latency', value: '<10 s', caption: 'end to end', tech: ['Flutter', 'GCP'] },
     ],
-    stack: ['Python', 'OpenCV', 'Flutter', 'GCP', 'Terraform'],
-    links: { github: GH },
+    stack: ['Flutter', 'Dart', 'Python', 'OpenCV', 'scikit learn', 'GCP', 'Cloud Run', 'Firestore'],
+    links: {
+      github: `${GH}/AICricketCoach_CapstoneProject`,
+      video: 'https://www.youtube.com/watch?v=KgE6Eg26K0g',
+      report: 'https://drive.google.com/file/d/16nV_F1458UqtXBYLwEqJtoV6RG1xtwq-/view?usp=sharing',
+    },
     media: 'AI Cricket Coach app screens', groups: ['academic'], images: [],
   },
 ];
@@ -245,14 +251,17 @@ export function tabFor(id: string, current = 0): number {
 /** Link buttons for a project, in display order; only links that are set. */
 export function projectLinks(p: Project): { label: string; href: string }[] {
   const out: { label: string; href: string }[] = [];
-  if (p.links.github) out.push({ label: 'VIEW ON GITHUB', href: p.links.github });
+  if (p.links.github) out.push({ label: 'GITHUB', href: p.links.github });
   if (p.links.devpost) out.push({ label: 'DEVPOST', href: p.links.devpost });
   if (p.links.article) out.push({ label: 'READ ARTICLE', href: p.links.article });
+  if (p.links.demo) out.push({ label: 'LIVE DEMO', href: p.links.demo });
+  if (p.links.video) out.push({ label: 'WATCH DEMO', href: p.links.video });
+  if (p.links.report) out.push({ label: 'PROJECT REPORT', href: p.links.report });
   return out;
 }
 
 /** Slides for a project: its images, or one placeholder until images are added. */
-export const projectSlides = (p: Project) =>
+export const projectSlides = (p: Project): SlideData[] =>
   p.images?.length ? p.images.map((src, i) => ({ src, label: `${p.media} ${i + 1}` })) : [{ label: p.media }];
 
 export interface Chapter {
@@ -264,7 +273,15 @@ export interface Chapter {
   cards: [string, string][];
   extra?: string;
   btn?: ActionLink;
+  /** Gallery photos, e.g. ['/media/experience/dayforce-1.jpg']. Placeholders show until set. */
+  images?: string[];
 }
+
+/** Gallery slides for a chapter (four placeholders until images are added). */
+export const chapterSlides = (c: Chapter): SlideData[] =>
+  c.images?.length
+    ? c.images.map((src, i) => ({ src, label: `${c.name} ${i + 1}` }))
+    : [1, 2, 3, 4].map((n) => ({ label: `${c.company.toLowerCase()} photo ${n}` }));
 
 export const EXPERIENCE: Chapter[] = [
   {
@@ -314,42 +331,58 @@ export interface Award {
   year: string;
   /** Shown when the row is expanded. */
   details: string;
-  /** Project id to link to from the expanded row. */
+  /** Project id: links the row to that project and lists the award on the project. */
   project?: string;
-  /** Event photo, e.g. '/media/awards/capstone.jpg'. Placeholder until set. */
-  image?: string;
+  /** Photos, e.g. ['/media/awards/capstone-1.jpg']. Click to view them in an overlay. Placeholder until set. */
+  images?: string[];
 }
 
+/** One row per award; an event with two prizes gets two rows. */
 export const AWARDS: Award[] = [
   {
     event: 'CS Capstone, Sheridan', result: 'First Place', team: 'Capstone team', year: '2025', project: 'cricket',
-    details: 'Led our capstone team to first place with AI Cricket Coach, a mobile app that tracks ball trajectory and recommends the ideal shot.',
+    details: 'AI Cricket Coach ranked first among all 2025 CS capstones at Sheridan, across Data Analytics, Cloud Computing and Game Engineering.',
   },
   {
     event: 'Google Solution Challenge', result: 'Top 3, North America', team: 'IgnisXR team', year: '2026', project: 'ember',
     details: 'Ember, our XR firefighter helmet, placed in the top 3 in North America and was presented to Google engineers in New York City.',
   },
   {
-    event: 'Hack Canada', result: 'Google Build With AI and SPUR tracks', team: 'IgnisXR team', year: '2026', project: 'ember',
-    details: 'Ember won two prize tracks: Google Build With AI and SPUR.',
+    event: 'Hack Canada', result: 'Google Build With AI track', team: 'IgnisXR team', year: '2026', project: 'ember',
+    details: "Ember won Google's Build With AI prize track.",
   },
   {
-    event: 'DeerHacks, UofT', result: '2nd Place and Best Use of Vultr', team: 'Rocky team', year: '2026', project: 'rocky',
-    details: 'Rocky, a real time child safety monitor running Mixtral 8x22B on Vultr, took 2nd place overall and Best Use of Vultr.',
+    event: 'Hack Canada', result: 'SPUR Innovation track', team: 'IgnisXR team', year: '2026', project: 'ember',
+    details: 'Ember also won the SPUR Innovation prize track.',
   },
   {
-    event: 'GenAI Genesis, UofT', result: 'Best AI Hack by IBM', team: 'Voxel team', year: '2026', project: 'voxel',
-    details: 'Voxel, an agentic 3D research pipeline built on IBM Langflow and watsonx, won Best AI Hack from IBM.',
+    event: 'DeerHacks, UofT', result: '2nd Place', team: 'Rocky team', year: '2026', project: 'rocky',
+    details: 'Rocky, a real time child safety monitor, took 2nd place overall.',
+  },
+  {
+    event: 'DeerHacks, UofT', result: 'Best Use of Vultr', team: 'Rocky team', year: '2026', project: 'rocky',
+    details: "Rocky's private AI review runs Mixtral 8x22B on our own Vultr server, which won Best Use of Vultr.",
+  },
+  {
+    event: 'GenAI Genesis, UofT', result: 'Best AI Hack using IBM Tech', team: 'Voxel team', year: '2026', project: 'voxel',
+    details: 'Voxel, an AR learning headset concept with generative 3D models, won Best AI Hack using IBM Tech.',
   },
   {
     event: 'YorkU Hackathon', result: '5th of 60', team: 'Prismarine team', year: '2026', project: 'prismarine',
-    details: 'Prismarine, an AI research discovery tool with a 3D paper graph and audio summaries, placed 5th of 60 teams.',
+    details: 'Prismarine, a 3D visual search engine for research papers, placed 5th of 60 teams.',
   },
   {
     event: 'Hackville', result: 'Best UI Design', team: 'Hackville team', year: 'TBC',
     details: 'Best UI Design award. Details coming soon.',
   },
 ];
+
+/** Awards won by a project, in AWARDS order. */
+export const projectAwards = (id: string) => AWARDS.filter((a) => a.project === id);
+
+/** Slides for an award's photos (placeholder until images are added). */
+export const awardSlides = (a: Award): SlideData[] =>
+  a.images?.length ? a.images.map((src, i) => ({ src, label: `${a.event} ${i + 1}` })) : [{ label: `${a.event} photo` }];
 
 /** Experience › Leadership. Same shape and layout as the professional chapters. */
 export const LEADERSHIP: Chapter[] = [
@@ -443,7 +476,7 @@ export const PROFILE = {
     text: 'Building Ember, an XR helmet for firefighters: edge inference on a Coral TPU, multi threaded sensor fusion and a wearable biometric stream.',
   },
   stats: [
-    { value: '7', label: 'Awards', caption: 'mostly hackathons' },
+    { value: String(AWARDS.length), label: 'Awards', caption: 'mostly hackathons' },
     { value: '21', label: 'Events run', caption: 'GDG Sheridan' },
     { value: '300+', label: 'Hackers hosted', caption: 'BearHacks 2026' },
     { value: '3', label: 'Roles', caption: 'IgnisXR, Dayforce, Skill Squirrel' },
@@ -484,7 +517,7 @@ export const HOBBIES: Hobby[] = [
   { label: 'Cricket & Squash', images: [] },
 ];
 
-export const hobbySlides = (h: Hobby) =>
+export const hobbySlides = (h: Hobby): SlideData[] =>
   h.images?.length
     ? h.images.map((src, i) => ({ src, label: `${h.label} ${i + 1}` }))
     : [1, 2, 3].map((n) => ({ label: `${h.label} photo ${n}` }));
@@ -498,7 +531,7 @@ export const LINKS: { label: string; value: string; short: string; href: string;
 
 /** Home page "Currently working on" list. `project` opens that project; `leadership` opens that Leadership chapter. */
 export const NOW_WORKING: { label: string; project?: string; leadership?: number }[] = [
-  { label: 'Scaling Ember', project: 'ember' },
-  { label: 'Shipping Proprio', project: 'proprio' },
-  { label: 'Advisor at BearHacks 2027', leadership: 0 },
+  { label: 'Ember at IgnisXR: edge AI for firefighter helmets', project: 'ember' },
+  { label: 'Proprio: validating rep counting on a real Galaxy Watch', project: 'proprio' },
+  { label: 'BearHacks 2027: advising the organizing team', leadership: 0 },
 ];

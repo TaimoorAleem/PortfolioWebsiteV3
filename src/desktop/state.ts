@@ -37,7 +37,7 @@ export const D_MENU = [
   { id: 'experience', label: 'EXPERIENCE', subs: EXP_TABS },
   { id: 'projects', label: 'PROJECTS', subs: PROJECT_TABS.map((t) => t.label), isNew: true },
   { id: 'skills', label: 'SKILLS' },
-  { id: 'about', label: 'ABOUT' },
+  { id: 'about', label: 'AWARDS' },
   { id: 'contact', label: 'CONTACT' },
   { id: 'resume', label: 'RÉSUMÉ', special: true },
 ] as const satisfies readonly { id: string; label: string; subs?: readonly string[]; isNew?: boolean; special?: boolean }[];
@@ -59,7 +59,7 @@ export function dToHash(s: DState): string {
       return id ? `#/projects/${id}` : '#/projects';
     }
     case 'leadership': return '#/experience/leadership';
-    case 'awards': return '#/about';
+    case 'awards': return '#/awards';
     case 'resume': return s.resumeIdx > 0 && RESUMES[s.resumeIdx] ? `#/resume/${RESUMES[s.resumeIdx].id}` : '#/resume';
     default: return `#/${s.screen}`;
   }
@@ -72,7 +72,8 @@ export function dFromHash(hash: string, cur: DState): Partial<DState> {
     case 'archive':
       return b && PROJECTS.some((p) => p.id === b) ? openProjectPatch(b, cur.projTab) : { screen: 'projects' };
     case 'experience': return { screen: b === 'leadership' ? 'leadership' : 'experience' };
-    // Older links: #/about/networks moved to Experience › Leadership, #/about/awards is now #/about.
+    case 'awards': return { screen: 'awards' };
+    // Older links: #/about/networks moved to Experience › Leadership; #/about was the awards page.
     case 'about': return b === 'networks' ? { screen: 'leadership' } : { screen: 'awards' };
     case 'resume': return { screen: 'resume', resumeIdx: Math.max(0, RESUMES.findIndex((r) => r.id === b)) };
     case 'profile':
@@ -85,7 +86,7 @@ export function dFromHash(hash: string, cur: DState): Partial<DState> {
 }
 
 export const D_TITLES: Partial<Record<DScreen, string>> = {
-  profile: 'PROFILE', experience: 'SERVICE RECORD', leadership: 'SERVICE RECORD', projects: 'PROJECTS',
+  profile: 'PROFILE', experience: 'CAMPAIGN', leadership: 'MULTIPLAYER', projects: 'PROJECTS',
   skills: 'LOADOUT CONFIG', awards: 'AWARDS', contact: 'COMMS', resume: 'RÉSUMÉ',
 };
 

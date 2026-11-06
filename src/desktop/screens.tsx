@@ -5,9 +5,10 @@ import {
 } from '../components';
 import {
   AWARDS, EXPERIENCE, LEADERSHIP, LINKS, MEDIA, NOW_WORKING, PROFILE, PROJECT_TABS, RESUMES, SKILLS,
-  projectById, projectLinks, projectSlides, skillUse, tabIds, type Chapter,
+  awardSlides, chapterSlides, projectAwards, projectById, projectLinks, projectSlides, skillUse, tabIds, type Chapter,
 } from '../data';
-import { Hobbies } from '../shared/Hobbies';
+import { Gallery, Hobbies } from '../shared/Hobbies';
+import { useLightbox } from '../shared/Lightbox';
 import { useFileExists } from '../theme/useFileExists';
 import { D_MENU, EXP_TABS, openProjectPatch, skillRows, titleCase, type DState } from './state';
 
@@ -106,10 +107,12 @@ export function DHome({ s, set, activate, go }: DCtx) {
 
       <div className="d-hero">
         <h1 className="d-hero__name">TAIMOOR ALEEM</h1>
-        <div className="d-hero__rule" />
+        <div className="d-hero__divider">
+          <div className="d-hero__rule" />
+          <span className="d-build">build 2026.11</span>
+        </div>
         <div className="d-hero__roles"><span>AI ENGINEER</span><span>SOFTWARE DEVELOPER</span></div>
       </div>
-      <div className="d-build">build 2026.11</div>
 
       <nav className="d-menu" aria-label="Main">
         {D_MENU.map((m, i) => {
@@ -180,10 +183,11 @@ export function DHome({ s, set, activate, go }: DCtx) {
 
 /* -------------------------------------------------------------- projects */
 
-export function DProjects({ s, set }: DCtx) {
+export function DProjects({ s, set, go }: DCtx) {
   const ids = tabIds(s.projTab);
   const pi = Math.min(s.projIdx, Math.max(0, ids.length - 1));
   const p = ids.length ? projectById(ids[pi])! : null;
+  const lightbox = useLightbox();
   return (
     <div className="d-screen">
       <div className="d-tabs">
@@ -211,12 +215,17 @@ export function DProjects({ s, set }: DCtx) {
           <div className="d-brief__top">
             <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
               <span className="d-h30">{p.short}</span>
-              <Slideshow slides={projectSlides(p)} index={s.slideIdx} onIndex={(i) => set({ slideIdx: i })} />
+              <Slideshow
+                slides={projectSlides(p)}
+                index={s.slideIdx}
+                onIndex={(i) => set({ slideIdx: i })}
+                onOpen={(i) => lightbox.open(p.short, projectSlides(p), i, p.gold)}
+              />
             </div>
             <div className="d-brief__info">
               <span className="d-gold d-gold--24">{p.gold}</span>
-              <span className="d-blue" style={{ marginTop: 16 }}>{p.blue}</span>
-              <p className="d-para" style={{ marginTop: 16 }}>
+              <span className="d-blue">{p.blue}</span>
+              <p className="d-para">
                 {p.desc.map((d, k) => (d.hl ? <span key={k} className="d-hl">{d.t}</span> : d.t))}
               </p>
               <div className="d-stack-tags">
@@ -225,15 +234,36 @@ export function DProjects({ s, set }: DCtx) {
               <div className="d-brief__btns">
                 {projectLinks(p).map((b) => <CutCornerButton key={b.label} href={b.href}>{b.label}</CutCornerButton>)}
               </div>
+              <ProjectAwards id={p.id} onOpen={(i) => go({ screen: 'awards', awardIdx: i })} />
             </div>
           </div>
-          <div className="d-cards">
-            {p.cards.map(([t, d], k) => <AbilityCard key={t} icon index={k + 1} title={t} desc={d} core={k === 3} />)}
+          <div className="d-features">
+            <span className="section-header">FEATURES</span>
+            {p.cards.map(([t, d], k) => <AbilityCard key={t} inline index={k + 1} title={t} desc={d} />)}
           </div>
+          {lightbox.element}
         </div>
       ) : (
         <div className="d-brief"><span className="d-pending">NO PROJECTS IN THIS TAB YET</span></div>
       )}
+    </div>
+  );
+}
+
+/** Awards a project won, one row each; a row opens that award on the Awards page. */
+function ProjectAwards({ id, onOpen }: { id: string; onOpen: (awardIdx: number) => void }) {
+  const won = projectAwards(id);
+  if (!won.length) return null;
+  return (
+    <div className="proj-awards">
+      {won.map((a) => (
+        <button key={a.result} type="button" className="btn-reset proj-award" onClick={() => onOpen(AWARDS.indexOf(a))}>
+          <span className="proj-award__gem" aria-hidden />
+          <span className="proj-award__result">{a.result}</span>
+          <span className="proj-award__event">{a.event}</span>
+          <span className="proj-award__year">{a.year}</span>
+        </button>
+      ))}
     </div>
   );
 }
@@ -273,6 +303,8 @@ function DChapters({ set, go, list, idx, tab }: DCtx & { list: Chapter[]; idx: n
         )}
         {e.extra && <span className="d-para">{e.extra}</span>}
         {e.btn && <div><CutCornerButton href={e.btn.href} disabled={!e.btn.href}>{e.btn.label}</CutCornerButton></div>}
+        <span className="section-header d-exp__gallery-head">GALLERY</span>
+        <Gallery title={e.company} slides={chapterSlides(e)} />
       </div>
     </div>
   );
@@ -285,19 +317,21 @@ export const DLeadership = (c: DCtx) => <DChapters {...c} list={LEADERSHIP} idx=
 
 export function DAwards({ s, set, go }: DCtx) {
   const openProject = (id: string) => go(openProjectPatch(id, s.projTab));
+  const lightbox = useLightbox();
   return (
     <div className="d-screen">
+      <div className="d-tabs d-awards__top">
+        <div className="d-awards__tab">ON RECORD · {AWARDS.length}</div>
+        <span className="d-note">Every one of these was a team effort. Hover a row for the story.</span>
+      </div>
       <div className="d-awards">
-        <div className="d-awards__top">
-          <div className="d-awards__tab">ON RECORD · {AWARDS.length}</div>
-          <span className="d-note">Every one of these was a team effort. Hover a row for the story.</span>
-        </div>
         <div className="d-award-list" onMouseLeave={() => set({ awardIdx: -1 })}>
           {AWARDS.map((a, i) => {
             const open = i === s.awardIdx;
+            const slides = awardSlides(a);
             return (
               <div
-                key={a.event}
+                key={`${a.event}-${a.result}`}
                 className={`d-award${open ? ' is-open' : ''}${i === 0 ? ' is-first' : ''}`}
                 tabIndex={0}
                 onMouseEnter={() => set({ awardIdx: i })}
@@ -311,9 +345,17 @@ export function DAwards({ s, set, go }: DCtx) {
                 </div>
                 <div className="d-award__more" aria-hidden={!open}>
                   <div className="d-award__more-inner">
-                    <div className="d-award__img">
-                      {a.image ? <img className="d-img" src={a.image} alt={a.event} /> : <span>event photo</span>}
-                    </div>
+                    <button
+                      type="button"
+                      className="btn-reset d-award__img"
+                      tabIndex={open ? 0 : -1}
+                      aria-label={`View ${a.event} photos`}
+                      onClick={() => lightbox.open(a.event, slides, 0, a.result)}
+                    >
+                      {slides[0].src ? <img className="d-img" src={slides[0].src} alt={a.event} /> : <span>event photo</span>}
+                      {slides.length > 1 && <span className="d-award__count">1 / {slides.length}</span>}
+                      <span className="d-award__zoom">⤢ VIEW</span>
+                    </button>
                     <div className="d-award__detail">
                       <p className="d-para">{a.details}</p>
                       {a.project && (
@@ -327,6 +369,7 @@ export function DAwards({ s, set, go }: DCtx) {
           })}
         </div>
       </div>
+      {lightbox.element}
     </div>
   );
 }

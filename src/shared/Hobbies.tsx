@@ -1,18 +1,12 @@
-import { useRef, useState } from 'react';
-import { createPortal } from 'react-dom';
-import { SlideshowOverlay, type Slide } from '../components';
 import { HOBBIES, hobbySlides } from '../data';
+import { useLightbox } from './Lightbox';
 
 /** Hobby tiles. Photo hobbies open a slideshow overlay; link hobbies open the site in a new tab. */
 export function Hobbies({ className = 'hobbies' }: { className?: string }) {
-  const [open, setOpen] = useState<{ title: string; subtitle?: string; slides: Slide[] } | null>(null);
-  const grid = useRef<HTMLDivElement>(null);  // Render the overlay at the app root (desktop stage / mobile shell) so it covers the whole screen,
-  // not just the panel the tiles sit in.
-  const host = grid.current?.closest<HTMLElement>('.d-stage, .m-app') ?? null;
-
+  const lightbox = useLightbox();
   return (
     <>
-      <div ref={grid} className={className}>
+      <div className={className}>
         {HOBBIES.map((h) => {
           const body = (
             <>
@@ -29,16 +23,30 @@ export function Hobbies({ className = 'hobbies' }: { className?: string }) {
               : <div key={h.label} className="hobby is-disabled">{body}</div>;
           }
           return (
-            <button key={h.label} type="button" className="btn-reset hobby" onClick={() => setOpen({ title: h.label, subtitle: h.detail, slides: hobbySlides(h) })}>
+            <button key={h.label} type="button" className="btn-reset hobby" onClick={() => lightbox.open(h.label, hobbySlides(h), 0, h.detail)}>
               {body}
             </button>
           );
         })}
       </div>
-      {open && host && createPortal(
-        <SlideshowOverlay title={open.title} subtitle={open.subtitle} slides={open.slides} onClose={() => setOpen(null)} />,
-        host,
-      )}
+      {lightbox.element}
+    </>
+  );
+}
+
+/** A row of photo thumbnails; each opens the full-screen viewer at that photo. */
+export function Gallery({ title, slides, className = 'gallery' }: { title: string; slides: { src?: string; label: string }[]; className?: string }) {
+  const lightbox = useLightbox();
+  return (
+    <>
+      <div className={className}>
+        {slides.map((s, i) => (
+          <button key={i} type="button" className="btn-reset gallery__thumb" aria-label={`View ${s.label}`} onClick={() => lightbox.open(title, slides, i)}>
+            {s.src ? <img src={s.src} alt={s.label} loading="lazy" /> : <span>{s.label}</span>}
+          </button>
+        ))}
+      </div>
+      {lightbox.element}
     </>
   );
 }

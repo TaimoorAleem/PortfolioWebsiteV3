@@ -48,6 +48,7 @@ export function toHash(s: AppState): string {
       return id ? `#/projects/${id}` : '#/projects';
     }
     case 'experience': return s.expTab === 1 ? '#/experience/leadership' : '#/experience';
+    case 'about': return '#/awards';
     case 'resume': return s.resumeIdx > 0 && RESUMES[s.resumeIdx] ? `#/resume/${RESUMES[s.resumeIdx].id}` : '#/resume';
     default: return `#/${s.screen}`;
   }
@@ -61,7 +62,8 @@ export function fromHash(hash: string, cur: AppState): Partial<AppState> {
     case 'archive':
       return b && PROJECTS.some((p) => p.id === b) ? openProject(b, cur.projTab) : { screen: 'projects' };
     case 'experience': return { screen: 'experience', expTab: b === 'leadership' ? 1 : 0 };
-    // Older links: #/about/networks moved to Experience › Leadership.
+    case 'awards': return { screen: 'about' };
+    // Older links: #/about/networks moved to Experience › Leadership; #/about was the awards page.
     case 'about': return b === 'networks' ? { screen: 'experience', expTab: 1 } : { screen: 'about' };
     case 'resume': return { screen: 'resume', resumeIdx: Math.max(0, RESUMES.findIndex((r) => r.id === b)) };
     case 'profile':

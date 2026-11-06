@@ -42,7 +42,7 @@ interface PlayerBlockProps {
   onClick?: () => void;
 }
 
-export function PlayerBlock({ name = 'TAIMOOR', initials = 'TA', status = 'Toronto, ON · Open to work', level, xp = 8, levelSuffix, onClick }: PlayerBlockProps) {
+export function PlayerBlock({ name = 'TAIMOOR', initials = 'TA', status = 'Toronto, ON', level, xp = 8, levelSuffix, onClick }: PlayerBlockProps) {
   const inner = (
     <>
       <div className="player-block__row">

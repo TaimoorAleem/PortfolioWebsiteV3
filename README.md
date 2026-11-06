@@ -23,7 +23,7 @@ npm run build      # type-check + production build
 | `#/experience`, `#/experience/leadership` | Service record: Professional, Leadership |
 | `#/projects`, `#/projects/<id>` | Projects: Featured / Personal / Academic / Hackathons tabs, image slideshow, links |
 | `#/skills` | Loadout config |
-| `#/about` | Awards (rows expand on hover/tap) |
+| `#/awards` | Awards, one row per prize; rows expand on hover/tap, photos open full screen |
 | `#/contact` | Comms |
 | `#/resume`, `#/resume/<variant id>` | Résumé viewer with download. Variants live in `RESUMES` in `src/data.ts`; the first is the main one |
 | `#/components` | Component sheet: live mobile frames + every component state |

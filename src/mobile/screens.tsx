@@ -5,9 +5,10 @@ import {
 } from '../components';
 import {
   AWARDS, EMAIL, EXPERIENCE, LEADERSHIP, LINKS, MEDIA, NOW_WORKING, PROFILE, PROJECT_TABS, RESUMES, SKILLS,
-  projectById, projectLinks, projectSlides, skillUse, tabIds, techCode,
+  awardSlides, chapterSlides, projectAwards, projectById, projectLinks, projectSlides, skillUse, tabIds, techCode,
 } from '../data';
-import { Hobbies } from '../shared/Hobbies';
+import { Gallery, Hobbies } from '../shared/Hobbies';
+import { useLightbox } from '../shared/Lightbox';
 import { useFileExists } from '../theme/useFileExists';
 import { EXP_TABS, currentProjectId, openProject, type AppState } from './state';
 
@@ -51,7 +52,7 @@ export const MENU = [
   { id: 'experience', label: 'EXPERIENCE', subs: EXP_TABS },
   { id: 'projects', label: 'PROJECTS', subs: PROJECT_TABS.map((t) => t.label), isNew: true },
   { id: 'skills', label: 'SKILLS' },
-  { id: 'about', label: 'ABOUT' },
+  { id: 'about', label: 'AWARDS' },
   { id: 'contact', label: 'CONTACT' },
   { id: 'resume', label: 'RÉSUMÉ', special: true },
 ] as const satisfies readonly { id: string; label: string; subs?: readonly string[]; isNew?: boolean; special?: boolean }[];
@@ -135,7 +136,8 @@ export function HomeScreen(ctx: Ctx) {
 
 /* -------------------------------------------------------------- projects */
 
-export function ProjectsScreen({ s, set }: Ctx) {
+export function ProjectsScreen({ s, set, go }: Ctx) {
+  const lightbox = useLightbox();
   const ids = tabIds(s.projTab);
   const projId = currentProjectId(s);
   const p = projId ? projectById(projId) : undefined;
@@ -164,7 +166,7 @@ export function ProjectsScreen({ s, set }: Ctx) {
       {p ? (
         <div className="m-body m-body--tight" key={p.id}>
           <span className="m-name">{p.short}</span>
-          <Slideshow slides={projectSlides(p)} />
+          <Slideshow slides={projectSlides(p)} onOpen={(i) => lightbox.open(p.short, projectSlides(p), i, p.gold)} />
           <div className="m-stack6">
             <span className="m-gold m-gold--lg">{p.gold}</span>
             <span className="m-blue">{p.blue}</span>
@@ -172,24 +174,30 @@ export function ProjectsScreen({ s, set }: Ctx) {
               {p.desc.map((d, k) => (d.hl ? <span key={k} className="m-hl">{d.t}</span> : d.t))}
             </p>
           </div>
-          {links.length > 0 && (
-            <div className="m-btns">
-              {links.map((b) => <CutCornerButton key={b.label} href={b.href}>{b.label}</CutCornerButton>)}
-            </div>
-          )}
-          {p.cards.map(([t, d], k) => (
-            <AbilityCard key={t} index={k + 1} title={t} desc={d} core={k === 3} />
-          ))}
-          {(p.awards || p.perks) && (
-            <div className="m-chips">
-              {p.awards?.map((a) => <span key={a} className="m-chip m-chip--gold">{a}</span>)}
-              {p.perks?.map((a) => <span key={a} className="m-chip">{a}</span>)}
-            </div>
-          )}
-          <SectionHeader style={{ marginTop: 6 }}>STACK</SectionHeader>
           <div className="m-chips">
             {p.stack.map((t) => <span key={t} className="m-chip">{techCode(t)} · {t}</span>)}
           </div>
+          {links.length > 0 && (
+            <div className="m-btns m-btns--row">
+              {links.map((b) => <CutCornerButton key={b.label} href={b.href}>{b.label}</CutCornerButton>)}
+            </div>
+          )}
+          {projectAwards(p.id).length > 0 && (
+            <div className="proj-awards">
+              {projectAwards(p.id).map((a) => (
+                <button key={a.result} type="button" className="btn-reset proj-award" onClick={() => go({ screen: 'about', awardIdx: AWARDS.indexOf(a) })}>
+                  <span className="proj-award__gem" aria-hidden />
+                  <span className="proj-award__result">{a.result}</span>
+                  <span className="proj-award__event">{a.event}</span>
+                </button>
+              ))}
+            </div>
+          )}
+          <SectionHeader style={{ marginTop: 6 }}>FEATURES</SectionHeader>
+          {p.cards.map(([t, d], k) => (
+            <AbilityCard key={t} index={k + 1} title={t} desc={d} />
+          ))}
+          {lightbox.element}
         </div>
       ) : (
         <div className="m-body"><p className="m-para">No projects in this tab yet.</p></div>
@@ -207,7 +215,7 @@ export function ExperienceScreen({ s, set }: Ctx) {
   const pick = (i: number) => set(s.expTab === 1 ? { leadIdx: i } : { expIdx: i });
   return (
     <>
-      <Head title={s.expTab === 1 ? 'LEADERSHIP' : 'SERVICE RECORD'} />
+      <Head title={s.expTab === 1 ? 'MULTIPLAYER' : 'CAMPAIGN'} />
       <div className="m-fixed">
         <SubOptionRow className="m-filter" label="Experience type" options={EXP_TABS} selected={s.expTab} onSelect={(i) => set({ expTab: i })} />
         <Strip selected={idx} key={s.expTab}>
@@ -226,6 +234,8 @@ export function ExperienceScreen({ s, set }: Ctx) {
             <CutCornerButton href={e.btn.href} disabled={!e.btn.href}>{e.btn.label}</CutCornerButton>
           </div>
         )}
+        <SectionHeader style={{ marginTop: 6 }}>GALLERY</SectionHeader>
+        <Gallery title={e.company} slides={chapterSlides(e)} className="gallery m-gallery" />
       </div>
     </>
   );
@@ -234,6 +244,7 @@ export function ExperienceScreen({ s, set }: Ctx) {
 /* ----------------------------------------------------------------- about */
 
 export function AboutScreen({ s, set, go }: Ctx) {
+  const lightbox = useLightbox();
   return (
     <>
       <Head title="AWARDS" />
@@ -241,8 +252,9 @@ export function AboutScreen({ s, set, go }: Ctx) {
         <span className="m-award-note">{AWARDS.length} on record · tap a row for the story</span>
         {AWARDS.map((a, i) => {
           const open = i === s.awardIdx;
+          const slides = awardSlides(a);
           return (
-            <div key={a.event} className={`m-award${open ? ' is-open' : ''}${i === 0 ? ' is-first' : ''}`}>
+            <div key={`${a.event}-${a.result}`} className={`m-award${open ? ' is-open' : ''}${i === 0 ? ' is-first' : ''}`}>
               <button type="button" className="btn-reset m-award__main" aria-expanded={open} onClick={() => set({ awardIdx: open ? -1 : i })}>
                 <span className="m-award__event">{a.event}</span>
                 <span className="m-award__result">{a.result}</span>
@@ -250,9 +262,16 @@ export function AboutScreen({ s, set, go }: Ctx) {
               </button>
               <div className="m-award__more">
                 <div className="m-award__more-inner">
-                  <div className="m-award__img">
-                    {a.image ? <img src={a.image} alt={a.event} /> : <span>event photo</span>}
-                  </div>
+                  <button
+                    type="button"
+                    className="btn-reset m-award__img"
+                    tabIndex={open ? 0 : -1}
+                    aria-label={`View ${a.event} photos`}
+                    onClick={() => lightbox.open(a.event, slides, 0, a.result)}
+                  >
+                    {slides[0].src ? <img src={slides[0].src} alt={a.event} /> : <span>event photo</span>}
+                    <span className="m-award__zoom">⤢ VIEW{slides.length > 1 ? ` · ${slides.length}` : ''}</span>
+                  </button>
                   <p className="m-para">{a.details}</p>
                   {a.project && (
                     <CutCornerButton onClick={() => go(openProject(a.project!, s.projTab))}>
@@ -264,6 +283,7 @@ export function AboutScreen({ s, set, go }: Ctx) {
             </div>
           );
         })}
+        {lightbox.element}
       </div>
     </>
   );

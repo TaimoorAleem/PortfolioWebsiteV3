@@ -16,12 +16,14 @@ interface SlideshowProps {
   ratio?: string;
   /** Fit images inside the frame instead of filling it. */
   contain?: boolean;
+  /** Clicking the current slide calls this (e.g. to open a full-screen view). */
+  onOpen?: (i: number) => void;
   className?: string;
   style?: CSSProperties;
 }
 
 /** Image carousel: arrows, dots, counter and swipe. Arrows and dots hide with one slide. */
-export function Slideshow({ slides, index, onIndex, ratio = '16 / 9', contain, className, style }: SlideshowProps) {
+export function Slideshow({ slides, index, onIndex, ratio = '16 / 9', contain, onOpen, className, style }: SlideshowProps) {
   const [own, setOwn] = useState(0);
   const n = slides.length;
   const cur = Math.min(index ?? own, n - 1);
@@ -51,6 +53,11 @@ export function Slideshow({ slides, index, onIndex, ratio = '16 / 9', contain, c
           </div>
         ))}
       </div>
+      {onOpen && (
+        <button type="button" className="btn-reset ss__open" aria-label={`View ${slides[cur]?.label ?? 'image'} full screen`} onClick={() => onOpen(cur)}>
+          <span className="ss__open-tag">⤢ VIEW</span>
+        </button>
+      )}
       {n > 1 && (
         <>
           <button type="button" className="btn-reset ss__arrow ss__arrow--prev" aria-label="Previous image" onClick={() => go(cur - 1)}>◀</button>
@@ -71,12 +78,14 @@ interface SlideshowOverlayProps {
   title: string;
   subtitle?: string;
   slides: Slide[];
+  /** Slide to open on. */
+  start?: number;
   onClose: () => void;
 }
 
 /** Full-screen slideshow. Esc closes, ←/→ change slide; it takes the keys before the page does. */
-export function SlideshowOverlay({ title, subtitle, slides, onClose }: SlideshowOverlayProps) {
-  const [i, setI] = useState(0);
+export function SlideshowOverlay({ title, subtitle, slides, start = 0, onClose }: SlideshowOverlayProps) {
+  const [i, setI] = useState(start);
   const n = slides.length;
   const closeRef = useRef<HTMLButtonElement>(null);
 

@@ -115,7 +115,7 @@ function ThemePanel({ name, bg }: { name: string; bg: string }) {
 
       <Block title="ABILITYCARD">
         <div className="sheet-two" style={{ gap: 8 }}>
-          <AbilityCard icon index={1} title="EDGE INFERENCE" desc="Integrated a Google Coral Edge TPU, taking person detection from 10 to 70 FPS." />
+          <AbilityCard icon index={1} title="EDGE INFERENCE" desc="Integrated a Google Coral Edge TPU, boosting person detection from 10 to 70 FPS." />
           <AbilityCard icon core index={4} title="BIOMETRIC STREAM" desc="Kotlin Wear OS app streaming vitals over WebSocket at about 1 Hz." />
         </div>
         <StateLabel>standard · core (gold header)</StateLabel>
@@ -138,7 +138,7 @@ function ThemePanel({ name, bg }: { name: string; bg: string }) {
         <Block title="SETTINGSROW">
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             <SettingsRow label="Python" value="Proprio, Cricket Coach, Ember" />
-            <SettingsRow label="Kafka" value="Dayforce" selected onPrev={() => {}} onNext={() => {}} />
+            <SettingsRow label="Kafka" value="Dayforce" selected onPrev={() => { }} onNext={() => { }} />
             <SettingsRow label="Docker and Kubernetes" value="Mercato" state="hover" />
           </div>
           <StateLabel>default · selected · hover</StateLabel>
