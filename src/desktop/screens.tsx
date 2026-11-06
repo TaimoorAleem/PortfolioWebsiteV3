@@ -448,7 +448,7 @@ export function DProfile({ s, go }: DCtx) {
       </div>
 
       <div className="d-prof">
-        <p className="d-prof__bio">{p.bio}</p>
+        {p.bio && <p className="d-prof__bio">{p.bio}</p>}
 
         <div className="d-prof__stats">
           {p.stats.map((st) => (

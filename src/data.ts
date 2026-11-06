@@ -63,7 +63,7 @@ export const MEDIA = {
   /** Desktop home "LATEST" card (Ember team photo). */
   latest: '/media/projects/ember/google-office-group.jpg',
   /** Desktop home tile: BearHacks 2026. */
-  bearhacks: '',
+  bearhacks: '/media/linkedin/bearhacks/2026-recap-02-ceremony-crowd.jpg',
   /** Desktop home tile: AI Cricket Coach. */
   cricket: '/media/projects/cricket/title-slide.jpg',
 };
@@ -104,7 +104,7 @@ export const PROJECTS: Project[] = [
     ],
     stack: ['Next.js', 'TypeScript', 'FastAPI', 'WebRTC', 'Three.js', 'Kotlin', 'Wear OS', 'Coral'],
     links: { github: `${GH}/Ember`, devpost: 'https://devpost.com/software/ember-xwdyzl' },
-    media: 'Ember', groups: ['hackathons'], images: ['/media/projects/ember/gsc-nyc-helmet.jpg', '/media/projects/ember/gsc-nyc-demo.jpg', '/media/projects/ember/google-office-group.jpg', '/media/projects/ember/helmet-rig.jpg', '/media/projects/ember/hud-lidar.jpg', '/media/projects/ember/hud-thermal.jpg', '/media/projects/ember/demo-headset.jpg', '/media/projects/ember/demo-laptop.jpg', '/media/projects/ember/wearos-biometrics.jpg', '/media/projects/ember/command-dashboard.jpg'],
+    media: 'Ember', groups: ['hackathons'], images: ['/media/projects/ember/gsc-nyc-helmet.jpg', '/media/projects/ember/gsc-nyc-demo.jpg', '/media/projects/ember/google-office-group.jpg', '/media/projects/ember/helmet-rig.jpg', '/media/projects/ember/hud-lidar.jpg', '/media/projects/ember/hud-thermal.jpg', '/media/projects/ember/demo-headset.jpg', '/media/projects/ember/demo-laptop.jpg', '/media/projects/ember/wearos-biometrics.jpg', '/media/projects/ember/command-dashboard.jpg', '/media/linkedin/hackathons/hack-canada/01-helmet-prototype.jpg', '/media/linkedin/hackathons/hack-canada/03-testing.jpg', '/media/linkedin/gsc/top3-03-helmet.jpg', '/media/linkedin/gsc/win-07-hud.jpg', '/media/linkedin/ember/fire-station-01-team.jpg', '/media/linkedin/ember/fire-station-10-trying-prototype.jpg'],
   },
   {
     id: 'proprio', name: 'Proprio', short: 'Proprio', isNew: true, featured: true,
@@ -163,7 +163,7 @@ export const PROJECTS: Project[] = [
     ],
     stack: ['Next.js', 'TypeScript', 'Supabase', 'ElevenLabs', 'Ollama', 'Vultr', 'Gemini API'],
     links: { github: `${GH}/Rocky`, devpost: 'https://devpost.com/software/lumo-2hd6ka' },
-    media: 'Rocky', groups: ['hackathons'], images: ['/media/projects/rocky/dashboard.jpg', '/media/projects/rocky/watch-home.jpg', '/media/projects/rocky/watch-vitals.jpg', '/media/projects/rocky/alerts.jpg', '/media/projects/rocky/analytics.jpg', '/media/projects/rocky/simulation-studio.jpg', '/media/projects/rocky/landing.jpg', '/media/projects/rocky/wearable-concept.jpg'],
+    media: 'Rocky', groups: ['hackathons'], images: ['/media/linkedin/hackathons/deerhacks/01-rocky-device.jpg', '/media/linkedin/hackathons/deerhacks/03-wear-os-app.jpg', '/media/projects/rocky/dashboard.jpg', '/media/projects/rocky/watch-home.jpg', '/media/projects/rocky/watch-vitals.jpg', '/media/projects/rocky/alerts.jpg', '/media/projects/rocky/analytics.jpg', '/media/projects/rocky/simulation-studio.jpg', '/media/projects/rocky/landing.jpg', '/media/projects/rocky/wearable-concept.jpg'],
   },
   {
     id: 'prismarine', name: 'Prismarine', short: 'Prismarine',
@@ -199,7 +199,7 @@ export const PROJECTS: Project[] = [
     ],
     stack: ['Flutter', 'Dart', 'ARCore', 'ARKit', 'Meshy API'],
     links: { github: `${GH}/Voxel`, devpost: 'https://devpost.com/software/voxel-pnxmlc' },
-    media: 'Voxel', groups: ['hackathons'], images: ['/media/projects/voxel/saturn-v-labels.jpg', '/media/projects/voxel/saturn-v-diagram.jpg', '/media/projects/voxel/plane-detection.jpg', '/media/projects/voxel/rocket-launch.jpg', '/media/projects/voxel/rocket-launch-2.jpg', '/media/projects/voxel/landing.png'],
+    media: 'Voxel', groups: ['hackathons'], images: ['/media/linkedin/hackathons/genai-genesis/11-voxel-award.jpg', '/media/projects/voxel/saturn-v-labels.jpg', '/media/projects/voxel/saturn-v-diagram.jpg', '/media/projects/voxel/plane-detection.jpg', '/media/projects/voxel/rocket-launch.jpg', '/media/projects/voxel/rocket-launch-2.jpg', '/media/projects/voxel/landing.png'],
   },
   {
     id: 'cricket', name: 'AI Cricket Coach', short: 'AI Cricket Coach', featured: true,
@@ -296,6 +296,7 @@ export const EXPERIENCE: Chapter[] = [
       ['VISION AND THERMAL', 'MobileNet SSD detections validated against live depth, plus thermal victim detection on an MLX90640 array.'],
       ['SENSOR FUSION', 'Multi threaded sensor fusion on Linux.'],
     ],
+    images: ['/media/linkedin/ignisxr/may-recap-01-demo.jpg', '/media/linkedin/ignisxr/may-recap-05-hardware.jpg', '/media/linkedin/ignisxr/may-recap-03-cutc-booth.jpg', '/media/linkedin/ignisxr/stan-demo-03-ignisxr-pitch.jpg', '/media/linkedin/ignisxr/stan-demo-04-ignisxr.jpg', '/media/linkedin/gsc/top3-12-winning-3-slide.jpg', '/media/linkedin/gsc/nyc-11-ember-demo.jpg', '/media/linkedin/ember/fire-station-10-trying-prototype.jpg'],
   },
   {
     name: 'Chapter 2 · Dayforce', num: '02', company: 'DAYFORCE', section: 'MISSION LOG',
@@ -308,6 +309,7 @@ export const EXPERIENCE: Chapter[] = [
     ],
     extra: 'Demoed features to 50+ senior engineers and managers; ran Agile ceremonies in Jira and Confluence.',
     btn: { label: 'LETTER OF RECOMMENDATION' },
+    images: ['/media/linkedin/dayforce/dayforce-logo.jpg', '/media/linkedin/gdg/dayforce-tech-interview-workshop-01.jpg', '/media/linkedin/datathon/2025-media-04-dayforce-workshop.jpg', '/media/linkedin/datathon/article-19-dayforce-booth.jpg'],
   },
   {
     name: 'Chapter 1 · Skill Squirrel', num: '01', company: 'SKILL SQUIRREL', section: 'MISSION LOG',
@@ -316,6 +318,7 @@ export const EXPERIENCE: Chapter[] = [
       ['GENAI PIPELINE', 'Python GenAI pipeline with Azure AI Vision and Azure OpenAI for badge enhancement via OCR and image generation.'],
       ['BADGE MAKER UI', 'React and TypeScript Badge Maker UI with live previews and state driven customization.'],
     ],
+    images: ['/media/linkedin/skillsquirrel/skill-squirrel-logo.jpg'],
   },
   {
     name: 'Prologue · Sheridan College', num: '00', company: 'SHERIDAN COLLEGE', section: 'PROLOGUE',
@@ -323,7 +326,9 @@ export const EXPERIENCE: Chapter[] = [
     cards: [
       ['DEGREE', 'Honours Bachelor of Computer Science, Data Analytics.'],
       ['HONOURS', "Valedictorian Nominee, Batch of '26."],
+      ['LEADERSHIP AWARDS', '2026 Student Leadership Award and Bruno Team Leadership Award nominee.'],
     ],
+    images: ['/media/linkedin/profile/profile-photo.jpg', '/media/linkedin/capstone/capstone-poster-abstract.jpg', '/media/linkedin/bearhacks/2026-bruno-award-nominees-poster.jpg'],
   },
 ];
 
@@ -344,48 +349,53 @@ export interface Award {
 export const AWARDS: Award[] = [
   {
     event: 'CS Capstone, Sheridan', result: 'First Place', team: 'Capstone team', year: '2025', project: 'cricket',
-    details: 'AI Cricket Coach ranked first among all 2025 CS capstones at Sheridan, across Data Analytics, Cloud Computing and Game Engineering.',
-    images: ['/media/projects/cricket/title-slide.jpg', '/media/projects/cricket/delivery-details.jpg'],
+    details: 'AI Cricket Coach ranked first among all 2025 CS capstones at Sheridan, across Data Analytics, Cloud Computing and Game Engineering, by student votes and faculty evaluation.',
+    images: ['/media/linkedin/capstone/capstone-poster-abstract.jpg', '/media/projects/cricket/title-slide.jpg', '/media/projects/cricket/delivery-details.jpg'],
   },
   {
     event: 'Google Solution Challenge', result: 'Top 3, North America', team: 'IgnisXR team', year: '2026', project: 'ember',
-    details: 'Ember, our XR firefighter helmet, placed in the top 3 in North America and was presented to Google engineers in New York City.',
-    images: ['/media/projects/ember/google-office-group.jpg', '/media/projects/ember/gsc-nyc-demo.jpg', '/media/projects/ember/gsc-nyc-helmet.jpg', '/media/projects/ember/gsc-nyc-presentation.jpg', '/media/projects/ember/google-nyc-team.jpg', '/media/projects/ember/gsc-nyc-photobooth.jpg', '/media/projects/ember/nyc-trip-airport.jpg'],
+    details: 'Ember, our XR firefighter helmet, placed in the top 3 in North America: the only Canadian team and the only hardware project in the top three. Google flew us to Google NYC on August 21, 2026 to demo it.',
+    images: ['/media/linkedin/gsc/top3-12-winning-3-slide.jpg', '/media/linkedin/gsc/win-01-welcoming-top3.jpg', '/media/projects/ember/google-office-group.jpg', '/media/projects/ember/gsc-nyc-demo.jpg', '/media/projects/ember/gsc-nyc-helmet.jpg', '/media/projects/ember/gsc-nyc-presentation.jpg', '/media/projects/ember/google-nyc-team.jpg', '/media/projects/ember/gsc-nyc-photobooth.jpg', '/media/projects/ember/nyc-trip-airport.jpg', '/media/linkedin/gsc/top10-04-finalist-email.jpg', '/media/linkedin/gsc/top10-05-cutc-demo-booth.jpg'],
   },
   {
     event: 'Hack Canada', result: 'Google Build With AI track', team: 'IgnisXR team', year: '2026', project: 'ember',
     details: "Ember won Google's Build With AI prize track.",
-    images: ['/media/projects/ember/demo-headset.jpg', '/media/projects/ember/demo-laptop.jpg', '/media/projects/ember/helmet-rig.jpg'],
+    images: ['/media/linkedin/hackathons/hack-canada/07-winners.jpg', '/media/linkedin/hackathons/hack-canada/01-helmet-prototype.jpg', '/media/linkedin/hackathons/hack-canada/04-laptop-detection.jpg', '/media/projects/ember/demo-headset.jpg', '/media/projects/ember/demo-laptop.jpg', '/media/projects/ember/helmet-rig.jpg'],
   },
   {
-    event: 'Hack Canada', result: 'SPUR Innovation track', team: 'IgnisXR team', year: '2026', project: 'ember',
-    details: 'Ember also won the SPUR Innovation prize track.',
-    images: ['/media/projects/ember/demo-laptop.jpg', '/media/projects/ember/hud-thermal.jpg'],
+    event: 'Hack Canada', result: 'SPUR startup track', team: 'IgnisXR team', year: '2026', project: 'ember',
+    details: 'Ember also won the Build a Real Canadian Startup track, sponsored by the SPUR Innovation Center, out of 600+ hackers.',
+    images: ['/media/linkedin/hackathons/hack-canada/07-winners.jpg', '/media/projects/ember/demo-laptop.jpg', '/media/projects/ember/hud-thermal.jpg'],
+  },
+  {
+    event: 'Sheridan Business Mixer', result: 'First Place, pitch competition', team: 'IgnisXR team', year: '2026', project: 'ember',
+    details: 'Pitched Ember in the Shark Tank pitch competition at the Sheridan Finance Club Business Mixer and took first place.',
+    images: ['/media/linkedin/ember/pitch-competition-01-medal.jpg', '/media/linkedin/ember/pitch-competition-02-group.jpg', '/media/linkedin/ember/pitch-competition-03-group.jpg'],
   },
   {
     event: 'DeerHacks, UofT', result: '2nd Place', team: 'Rocky team', year: '2026', project: 'rocky',
     details: 'Rocky, a real time child safety monitor, took 2nd place overall.',
-    images: ['/media/awards/deerhacks-2026-team.jpg', '/media/projects/rocky/dashboard.jpg'],
+    images: ['/media/linkedin/hackathons/deerhacks/02-team-prizes.jpg', '/media/awards/deerhacks-2026-team.jpg', '/media/projects/rocky/dashboard.jpg'],
   },
   {
     event: 'DeerHacks, UofT', result: 'Best Use of Vultr', team: 'Rocky team', year: '2026', project: 'rocky',
     details: "Rocky's private AI review runs Mixtral 8x22B on our own Vultr server, which won Best Use of Vultr.",
-    images: ['/media/awards/deerhacks-2026-team.jpg', '/media/projects/rocky/simulation-studio.jpg'],
+    images: ['/media/linkedin/hackathons/deerhacks/02-team-prizes.jpg', '/media/awards/deerhacks-2026-team.jpg', '/media/projects/rocky/simulation-studio.jpg'],
   },
   {
     event: 'GenAI Genesis, UofT', result: 'Best AI Hack using IBM Tech', team: 'Voxel team', year: '2026', project: 'voxel',
-    details: 'Voxel, an AR learning headset concept with generative 3D models, won Best AI Hack using IBM Tech.',
-    images: ['/media/projects/voxel/saturn-v-labels.jpg', '/media/projects/voxel/plane-detection.jpg'],
+    details: 'Voxel, an AR learning headset concept with generative 3D models, won Best AI Hack using IBM Tech. The prize was a tour of IBM’s Markham office.',
+    images: ['/media/linkedin/hackathons/genai-genesis/11-voxel-award.jpg', '/media/linkedin/hackathons/genai-genesis/02-ibm-prize.jpg', '/media/linkedin/hackathons/genai-genesis/12-team-ibm-box.jpg', '/media/linkedin/hackathons/genai-genesis/ibm-tour-07-group.jpg', '/media/projects/voxel/saturn-v-labels.jpg', '/media/projects/voxel/plane-detection.jpg'],
   },
   {
-    event: 'YorkU Hackathon', result: '5th of 60', team: 'Prismarine team', year: '2026', project: 'prismarine',
+    event: 'CTRL+HACK+DEL 2.0, YorkU', result: '5th of 60', team: 'Prismarine team', year: '2026', project: 'prismarine',
     details: 'Prismarine, a 3D visual search engine for research papers, placed 5th of 60 teams.',
-    images: ['/media/projects/prismarine/graph-3d.png', '/media/projects/prismarine/graph-2d.png'],
+    images: ['/media/linkedin/hackathons/ctrl-hack-del/02-hall.jpg', '/media/projects/prismarine/graph-3d.png', '/media/projects/prismarine/graph-2d.png'],
   },
   {
     event: 'Hackville', result: 'Best UI Design', team: 'BuddyFinder team', year: '2024',
-    details: 'Won Best UI (sponsored by Tempo Labs) with BuddyFinder.',
-    images: ['/media/awards/hackville-2024-team.jpg', '/media/projects/buddyfinder/welcome.jpg', '/media/projects/buddyfinder/home.jpg', '/media/projects/buddyfinder/edit-profile.jpg'],
+    details: 'Won Best UI Design (valued at $400, sponsored by Tempo Labs) with BuddyFinder, as the team\'s only front-end developer.',
+    images: ['/media/linkedin/hackville/2024-best-ui-team.jpg', '/media/linkedin/hackville/2024-closing-ceremony.jpg', '/media/awards/hackville-2024-team.jpg', '/media/projects/buddyfinder/welcome.jpg', '/media/projects/buddyfinder/home.jpg', '/media/projects/buddyfinder/edit-profile.jpg'],
   },
 ];
 
@@ -399,30 +409,64 @@ export const awardSlides = (a: Award): SlideData[] =>
 /** Experience › Leadership. Same shape and layout as the professional chapters. */
 export const LEADERSHIP: Chapter[] = [
   {
-    name: 'BearHacks 2026', num: '04', company: 'BEARHACKS 2026', section: 'COMMAND LOG',
-    meta: 'Director · Dec 2025 to Apr 2026 · Mississauga, ON',
+    name: 'BearHacks 2026', num: '05', company: 'BEARHACKS 2026', section: 'COMMAND LOG',
+    meta: 'Co-Director · Dec 2025 to Apr 2026 · Sheridan HMC, Mississauga',
     cards: [
-      ['EVENT', "Led Mississauga's largest hackathon: 7 teams of 41 organizers, 22 sponsors and $17K in funding, for 300+ participants."],
-      ['EVENT SITE', 'Built the event site in React and TypeScript; it reached 12.49k monthly visits across 84 countries.'],
-      ['RECOGNITION', 'Nominated for the Bruno Team Leadership Award and the Student Leadership Award.'],
+      ['EVENT', "Co-directed Mississauga's largest hackathon with Imran Yafith, leading 7 teams of 41 organizers: 300+ participants and 65+ projects over 36 hours."],
+      ['RECORD TURNOUT', '700+ applications, and 100+ RSVPs within an hour of sending acceptances, a record for hackathons at Sheridan.'],
+      ['SPONSORS', '22 sponsors, including the City of Mississauga, Scotiabank, Tangerine, ElevenLabs, siberX and Red Bull, and $10,000 in prizes.'],
+      ['RECOGNITION', 'Nominated for the Bruno Team Leadership Award; covered by INSAUGA. No post-event survey rated it below 4 out of 5.'],
     ],
+    extra: 'Built the event site in React and TypeScript; it reached 12.49k monthly visits across 84 countries.',
+    images: ['/media/linkedin/bearhacks/2026-recap-02-ceremony-crowd.jpg', '/media/linkedin/bearhacks/2026-recap-06-organizer-team.jpg', '/media/linkedin/bearhacks/2026-recap-07-co-directors.jpg', '/media/linkedin/bearhacks/2026-recap-03-atrium-hacking.jpg', '/media/linkedin/bearhacks/2026-recap-05-hacking-room.jpg', '/media/linkedin/bearhacks/2026-recap-04-hardware-hack.jpg', '/media/linkedin/bearhacks/2026-team-01-leadership.jpg', '/media/linkedin/bearhacks/2026-insauga-article.jpg', '/media/linkedin/bearhacks/2026-bruno-award-nomination-certificate.jpg', '/media/linkedin/bearhacks/2026-website.jpg', '/media/linkedin/bearhacks/2026-3d-printed-medal.jpg', '/media/linkedin/bearhacks/2026-recap-01-sunset-window.jpg'],
   },
   {
-    name: 'GDG Sheridan', num: '03', company: 'GOOGLE DEVELOPER GROUP SHERIDAN', section: 'COMMAND LOG',
-    meta: 'Vice President · Sheridan College',
+    name: 'GDG Sheridan', num: '04', company: 'GOOGLE DEVELOPER GROUP SHERIDAN', section: 'COMMAND LOG',
+    meta: 'Vice President · Sep 2025 to May 2026 · GDG on Campus Sheridan College',
     cards: [
       ['COMMUNITY', "Helped lead Sheridan's largest tech club, 800+ members, through 21 events."],
-      ['WORKSHOPS', 'Ran workshops on DSA and LeetCode with 100+ attendees.'],
-      ['GOOGLE I/O', 'Selected by Google to attend I/O in Mountain View.'],
+      ['FOUR ROLES', 'Workshop Team Member (2024), Outreach Team Lead and Social Media Team Lead (2025), then Vice President.'],
+      ['WORKSHOPS', 'Organized a serverless system design workshop and a Dayforce technical interview workshop, and ran DSA and LeetCode sessions for 100+ attendees.'],
+      ['GOOGLE I/O', 'Selected by Google to attend Google I/O 2026.'],
     ],
+    extra: 'Volunteered at DevFest 2024 with GDG Mississauga.',
+    images: ['/media/linkedin/gdg/system-design-workshop-01-group.jpg', '/media/linkedin/gdg/system-design-workshop-02-room.jpg', '/media/linkedin/gdg/system-design-workshop-04-speaker.jpg', '/media/linkedin/gdg/system-design-workshop-05-audience.jpg', '/media/linkedin/gdg/dayforce-tech-interview-workshop-01.jpg', '/media/linkedin/gdg/dayforce-tech-interview-workshop-02.jpg', '/media/linkedin/gdg/devfest-2024-talk.jpg', '/media/linkedin/misc/google-io-2026-06-gdg.jpg'],
   },
   {
-    name: 'Sheridan Datathon 2025', num: '02', company: 'SHERIDAN DATATHON 2025', section: 'COMMAND LOG',
-    meta: 'Founder · 2025', cards: [], extra: 'Details coming soon.',
+    name: 'Sheridan Datathon 2025', num: '03', company: 'SHERIDAN DATATHON 2025', section: 'COMMAND LOG',
+    meta: 'Founder · Apr 2025 to Nov 2025 · Sheridan HMC, Mississauga',
+    cards: [
+      ['FOUNDED', 'Founded and led the largest event in GDG Sheridan history over eight months: outreach, sponsorship, design, workshops, prize tracks, budget and logistics.'],
+      ['TURNOUT', '200+ participants and 37 projects. RSVPs passed 300 and check-ins hit the 200-person venue cap within 2 hours.'],
+      ['SPONSORS', 'Brought in Dayforce, Google and Major League Hacking (Hack Days) for $3,750+ in prizes, including a Best Use of Gemini API track.'],
+      ['JUDGING', 'Recruited and briefed 12 judges and 8 mentors, and ran 5 workshops and the demos for all 37 teams.'],
+    ],
+    extra: 'Theme: Data Science for Social Good, built around the 17 UN Sustainable Development Goals. Co-led with William Galvin, with 50+ organizers and volunteers.',
+    btn: { label: 'READ THE BEHIND THE SCENES', href: 'https://www.linkedin.com/pulse/organizing-sheridan-datathon-2025-behind-the-scenes-aleem-dcdwe/' },
+    images: ['/media/linkedin/datathon/2025-media-01-opening-ceremony.jpg', '/media/linkedin/datathon/2025-01-founder-badge.jpg', '/media/linkedin/datathon/2025-06-full-room.jpg', '/media/linkedin/datathon/2025-05-co-leads-presenting.jpg', '/media/linkedin/datathon/2025-media-06-judges-briefing.jpg', '/media/linkedin/datathon/2025-media-07-project-demos.jpg', '/media/linkedin/datathon/2025-media-04-dayforce-workshop.jpg', '/media/linkedin/datathon/article-26-google-cloud-prizes.jpg', '/media/linkedin/datathon/2025-02-organizers.jpg', '/media/linkedin/datathon/article-03-official-poster.jpg'],
+  },
+  {
+    name: 'BearHacks 2025', num: '02', company: 'BEARHACKS 2025', section: 'COMMAND LOG',
+    meta: 'Co-organizer and mentor · GDG Sheridan Outreach Lead · Apr 2025',
+    cards: [
+      ['GOOGLE SPONSORSHIP', 'Secured $1,750+ from Google and set up the Best Use of TensorFlow prize track and two technical workshops.'],
+      ['LOGISTICS', "Ran registrations and participant check-in for 260+ hackers at Sheridan's first hybrid hackathon."],
+      ['MENTORING', 'Mentored teams on ASP.NET Core and React.'],
+    ],
+    extra: 'Co-organized by GDG Sheridan, the Sheridan Computer Science Club and the Pixel Perfect Club, and prepared in a month.',
+    images: ['/media/linkedin/bearhacks/2025-07-group-photo.jpg', '/media/linkedin/bearhacks/2025-01-organizer-badges.jpg', '/media/linkedin/bearhacks/2025-03-hall.jpg', '/media/linkedin/bearhacks/2025-04-opening-slide.jpg', '/media/linkedin/bearhacks/2025-05-260-participants-slide.jpg', '/media/linkedin/bearhacks/2025-recap-02-stats.jpg', '/media/linkedin/bearhacks/2025-08-group-photo-2.jpg'],
   },
   {
     name: 'Hackville 2025', num: '01', company: 'HACKVILLE 2025', section: 'COMMAND LOG',
-    meta: 'Organizer · 2025', cards: [], extra: 'Details coming soon.',
+    meta: 'VP of Technology · Sheridan Hackademics Club · Mar 2024 to Jan 2025',
+    cards: [
+      ['WEBSITE', "On the technology team that built hackville.io for Sheridan's flagship 36-hour hackathon."],
+      ['GOOGLE SPONSORSHIP', 'Helped secure Google as a sponsor: a TensorFlow workshop and a Best Use of Google Cloud prize track ($520).'],
+      ['SPEAKERS AND JUDGING', 'Created the prize track, recruited and prepped speakers, and assisted the judges.'],
+      ['CHECK-IN', 'Checked in participants: 15% more than the year before.'],
+    ],
+    extra: 'Hackville 2023 participant, 2024 winner, 2025 organizer.',
+    images: ['/media/linkedin/hackville/2025-07-team.jpg', '/media/linkedin/hackville/2025-01-organizer-lanyard.jpg', '/media/linkedin/hackville/2025-03-check-in.jpg', '/media/linkedin/hackville/2025-05-hackers.jpg', '/media/linkedin/hackville/2025-06-organizers.jpg', '/media/linkedin/hackville/2025-04-google-cloud-prize-slide.jpg', '/media/linkedin/hackville/2025-vp-technology-banner.jpg'],
   },
 ];
 
@@ -542,7 +586,7 @@ export const PROFILE = {
   name: 'TAIMOOR ALEEM',
   role: 'AI Engineer · Software Developer',
   status: 'Open to new grad roles',
-  bio: 'I like building systems that run fast on real hardware.',
+  bio: '',
   now: {
     title: 'Founding Engineer, IgnisXR',
     text: 'Building Ember, an XR helmet for firefighters: edge AI, multi threaded sensor fusion and a wearable biometric stream.',

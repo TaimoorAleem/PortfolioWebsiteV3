@@ -358,7 +358,7 @@ export function ProfileScreen({ s, go }: Ctx) {
             <span className="m-id__status"><span className="m-id__dot" />{p.status}</span>
           </div>
         </div>
-        <p className="m-bio">{p.bio}</p>
+        {p.bio && <p className="m-bio">{p.bio}</p>}
         <div className="m-pstats">
           {p.stats.map((st) => (
             <div key={st.label} className="m-pstat">
