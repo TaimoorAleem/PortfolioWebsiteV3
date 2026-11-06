@@ -142,7 +142,7 @@
 .d-menu__subs .sub-row { height: 24px; align-items: center; flex-wrap: nowrap; }
 
 .d-latest { position: absolute; right: 70px; top: 420px; width: 440px; display: flex; flex-direction: column; background: oklch(var(--sf) / 0.55); }
-.d-latest__hero { position: relative; display: block; height: 150px; overflow: hidden; background: var(--hatch), var(--c-media); }
+.d-latest__hero { position: relative; display: block; height: 200px; overflow: hidden; background: var(--hatch), var(--c-media); }
 .d-latest__word {
   position: absolute; left: 18px; top: 28px; font-family: var(--f-mono); font-size: 64px; line-height: 64px; letter-spacing: 0.04em;
   color: var(--c-new); text-shadow: 1px 0 0 rgba(255,80,80,0.6), -1px 0 0 rgba(80,160,255,0.6);

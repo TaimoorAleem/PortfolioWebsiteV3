@@ -13,19 +13,30 @@
    ========================================================================== */
 :root {
   /* ---------------------------------------------------------------- KNOBS */
-  --hue: 25;                          /* background family (25 = red, 250 = blue) */
-  --alt-shift: -15;                   /* Skills + Contact hue = --hue + this (try 180 for a contrast colour) */
+  --hue: 25;
+  /* background family (25 = red, 250 = blue) */
+  --alt-shift: -15;
+  /* Skills + Contact hue = --hue + this (try 180 for a contrast colour) */
   --hue-alt: calc(var(--hue) + var(--alt-shift));
-  --vivid: 1;                         /* background saturation: 0 grey · 1 default · 1.5 punchy */
-  --light: 1;                         /* background brightness: 0.8 darker · 1 default · 1.2 lighter */
-  --glow: 1;                          /* strength of the soft lights/bokeh: 0 off · 1 default */
-  --tint: 0.012;                      /* how much panels and cards pick up --hue (0 = neutral grey) */
+  --vivid: 1;
+  /* background saturation: 0 grey · 1 default · 1.5 punchy */
+  --light: 0.5;
+  /* background brightness: 0.8 darker · 1 default · 1.2 lighter */
+  --glow: 1;
+  /* strength of the soft lights/bokeh: 0 off · 1 default */
+  --tint: 0.012;
+  /* how much panels and cards pick up --hue (0 = neutral grey) */
 
-  --hue-accent: 80;                   /* amber / gold highlights, Résumé, selection strip */
-  --hue-info: 225;                    /* blue sub-labels, links, the line beside your name */
-  --hue-alert: 25;                    /* "Incoming transmission" box */
-  --hue-new: 150;                     /* green NEW badges */
-  --hue-neutral: 90;                  /* the warm off-white of titles and selected rows */
+  --hue-accent: 80;
+  /* amber / gold highlights, Résumé, selection strip */
+  --hue-info: 225;
+  /* blue sub-labels, links, the line beside your name */
+  --hue-alert: 25;
+  /* "Incoming transmission" box */
+  --hue-new: 150;
+  /* green NEW badges */
+  --hue-neutral: 90;
+  /* the warm off-white of titles and selected rows */
 
   /* --------------------------------------------- background shade scale */
   /* Lightness/chroma steps; hue comes from the knobs. 950 = darkest. */
@@ -53,22 +64,29 @@
   --scene-boot: linear-gradient(170deg, var(--bg-700) 0%, var(--bg-500) 45%, var(--bg-850) 100%);
 
   /* scene glows: "L C H" triples used as oklch(var(--glow-x) / alpha) */
-  --glow-warm: 0.678 calc(0.152 * var(--vivid)) calc(var(--hue) + 4);     /* big soft light */
+  --glow-warm: 0.678 calc(0.152 * var(--vivid)) calc(var(--hue) + 4);
+  /* big soft light */
   --glow-warm-2: 0.730 calc(0.138 * var(--vivid)) calc(var(--hue) + 14);
   --glow-warm-3: 0.589 calc(0.130 * var(--vivid)) var(--hue);
-  --glow-hot: 0.876 calc(0.069 * var(--vivid)) calc(var(--hue) + 16);     /* small bright bokeh */
-  --glow-dark: 0.573 calc(0.168 * var(--vivid)) calc(var(--hue) + 5);     /* corner light, dark screens */
+  --glow-hot: 0.876 calc(0.069 * var(--vivid)) calc(var(--hue) + 16);
+  /* small bright bokeh */
+  --glow-dark: 0.573 calc(0.168 * var(--vivid)) calc(var(--hue) + 5);
+  /* corner light, dark screens */
   --glow-comms: 0.529 calc(0.184 * var(--vivid)) calc(var(--hue-alt) + 6);
   --glow-comms-2: 0.595 calc(0.175 * var(--vivid)) calc(var(--hue-alt) + 6);
   --glow-cool: 0.894 calc(0.058 * var(--vivid)) calc(var(--hue-alt) - 5);
-  --glow-spark: 0.760 0.135 calc(var(--hue-accent) - 6);                   /* amber sparks */
+  --glow-spark: 0.760 0.135 calc(var(--hue-accent) - 6);
+  /* amber sparks */
 
   /* -------------------------------------------------- surface scale */
   /* Dark, nearly neutral panels that pick up a hint of --hue. "L C H" triples. */
-  --sf: 0.167 var(--tint) var(--hue);                        /* panels, info boxes */
+  --sf: 0.167 var(--tint) var(--hue);
+  /* panels, info boxes */
   --sf-hover: 0.240 calc(var(--tint) * 1.2) var(--hue);
-  --sf-warm: 0.325 calc(var(--tint) * 1.8) var(--hue);       /* warm media wash */
-  --sf-alert: 0.200 0.050 var(--hue-alert);                  /* transmission window */
+  --sf-warm: 0.325 calc(var(--tint) * 1.8) var(--hue);
+  /* warm media wash */
+  --sf-alert: 0.200 0.050 var(--hue-alert);
+  /* transmission window */
 
   /* ---------------------------------------------------- text */
   --c-text: #FFFFFF;
@@ -98,10 +116,12 @@
   --c-special: oklch(0.763 0.138 calc(var(--hue-accent) + 3));
   --c-special-focus: oklch(0.863 0.149 calc(var(--hue-accent) + 5));
   --c-focus: oklch(0.70 0.17 calc(var(--hue-accent) - 32));
-  --c-highlight: oklch(0.888 0.182 calc(var(--hue-accent) + 17));   /* first award row, selected network */
+  --c-highlight: oklch(0.888 0.182 calc(var(--hue-accent) + 17));
+  /* first award row, selected network */
   --c-blue: oklch(0.86 0.07 var(--hue-info));
   --c-link: oklch(0.80 0.09 calc(var(--hue-info) + 10));
-  --c-hero-rule: oklch(0.841 0.069 calc(var(--hue-info) + 10));      /* line beside the name */
+  --c-hero-rule: oklch(0.841 0.069 calc(var(--hue-info) + 10));
+  /* line beside the name */
   --c-logbook-gem: oklch(0.68 0.12 calc(var(--hue-info) + 20));
   --c-new: oklch(0.78 0.15 var(--hue-new));
   --c-alert: oklch(0.66 0.17 var(--hue-alert));
@@ -138,12 +158,19 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  :root { --dur: 0ms; }
+  :root {
+    --dur: 0ms;
+  }
 }
 
-*, *::before, *::after { box-sizing: border-box; }
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
 
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
   background: var(--c-page);
@@ -153,8 +180,17 @@ html, body {
   -webkit-tap-highlight-color: transparent;
 }
 
-a { color: var(--c-text); text-decoration: none; }
+a {
+  color: var(--c-text);
+  text-decoration: none;
+}
 
-button { font: inherit; color: inherit; }
+button {
+  font: inherit;
+  color: inherit;
+}
 
-:focus-visible { outline: 1px solid var(--c-amber); outline-offset: 2px; }
+:focus-visible {
+  outline: 1px solid var(--c-amber);
+  outline-offset: 2px;
+}

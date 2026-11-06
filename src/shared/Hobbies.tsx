@@ -12,6 +12,13 @@ export function Hobbies({ className = 'hobbies' }: { className?: string }) {
             <>
               <span className="hobby__label">{h.label}</span>
               {h.detail && <span className="hobby__detail">{h.detail}</span>}
+              {h.items && (
+                <span className="hobby__items">
+                  {h.items.map((it) => (it.href ? (
+                    <a key={it.name} href={it.href} target="_blank" rel="noreferrer" title={it.site}>{it.name} ↗</a>
+                  ) : <span key={it.name}>{it.name}</span>))}
+                </span>
+              )}
               {(h.site || HOBBY_PHOTOS) && (
                 <span className="hobby__kind">
                   {h.site ? (h.href ? `${h.site} ↗` : 'link coming soon') : 'photos ▸'}

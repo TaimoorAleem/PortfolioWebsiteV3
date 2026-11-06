@@ -9,7 +9,6 @@ import {
 } from '../data';
 import { Gallery, Hobbies } from '../shared/Hobbies';
 import { useLightbox } from '../shared/Lightbox';
-import { useFileExists } from '../theme/useFileExists';
 import { EXP_TABS, currentProjectId, openProject, type AppState } from './state';
 
 export interface Ctx {
@@ -505,25 +504,22 @@ export function ContactScreen({ s, set }: Ctx) {
 
 export function ResumeScreen(_: Ctx) {
   const r = RESUME;
-  const exists = useFileExists(r.file);
   return (
     <>
       <Head title="RÉSUMÉ" />
       <div className="m-body">
-        <div className="m-resume">
-          <div className="m-resume__doc" aria-hidden>
-            <span /><span /><span /><span /><span />
-          </div>
+        {(r.label || r.note) && (
           <div className="m-stack6">
-            <span className="m-name" style={{ fontSize: 24, lineHeight: '30px' }}>{r.label}</span>
+            {r.label && <span className="m-name" style={{ fontSize: 24, lineHeight: '30px' }}>{r.label}</span>}
             {r.note && <p className="m-para">{r.note}</p>}
-            {r.updated && <span className="m-award__meta">UPDATED {r.updated.toUpperCase()}</span>}
           </div>
+        )}
+        <div className="m-resume__viewer">
+          <iframe title="Résumé" src={r.preview} allow="autoplay" />
         </div>
-        {exists === false && <InfoBox>PDF not uploaded yet. Add it at public{r.file}.</InfoBox>}
-        <div className="m-btns">
-          <CutCornerButton href={r.file} download="Taimoor-Aleem-Resume.pdf" disabled={exists === false}>DOWNLOAD PDF</CutCornerButton>
-          <CutCornerButton href={r.file} newTab disabled={exists === false}>OPEN PDF</CutCornerButton>
+        <div className="m-btns m-btns--row">
+          <CutCornerButton href={r.download}>DOWNLOAD PDF</CutCornerButton>
+          <CutCornerButton href={r.view}>OPEN IN DRIVE</CutCornerButton>
         </div>
       </div>
     </>

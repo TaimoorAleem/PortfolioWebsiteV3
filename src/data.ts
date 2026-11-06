@@ -50,7 +50,8 @@ export interface Project {
 
 export const GH = 'https://github.com/TaimoorAleem';
 export const EMAIL = 'taimooraleem01@gmail.com';
-export const RESUME_HREF = '/resume.pdf';
+/** Google Drive file id of the résumé. The site always shows the file's current version. */
+const RESUME_DRIVE_ID = '1ih7eesc2ERyomhJ1jvsg87G3FWbXinxY';
 
 /**
  * Site-wide images. Drop files in /public/media and set the path here ('' = show the placeholder).
@@ -60,7 +61,7 @@ export const MEDIA = {
   /** Profile portrait. */
   portrait: '/media/portrait/avatar.jpg',
   /** Desktop home "LATEST" card (Ember team photo). */
-  latest: '/media/projects/ember/demo-headset.jpg',
+  latest: '/media/projects/ember/google-office-group.jpg',
   /** Desktop home tile: BearHacks 2026. */
   bearhacks: '',
   /** Desktop home tile: AI Cricket Coach. */
@@ -103,7 +104,7 @@ export const PROJECTS: Project[] = [
     ],
     stack: ['Next.js', 'TypeScript', 'FastAPI', 'WebRTC', 'Three.js', 'Kotlin', 'Wear OS', 'Coral'],
     links: { github: `${GH}/Ember`, devpost: 'https://devpost.com/software/ember-xwdyzl' },
-    media: 'Ember', groups: ['hackathons'], images: ['/media/projects/ember/helmet-rig.jpg', '/media/projects/ember/hud-lidar.jpg', '/media/projects/ember/hud-thermal.jpg', '/media/projects/ember/demo-headset.jpg', '/media/projects/ember/demo-laptop.jpg', '/media/projects/ember/wearos-biometrics.jpg', '/media/projects/ember/command-dashboard.jpg'],
+    media: 'Ember', groups: ['hackathons'], images: ['/media/projects/ember/gsc-nyc-helmet.jpg', '/media/projects/ember/gsc-nyc-demo.jpg', '/media/projects/ember/google-office-group.jpg', '/media/projects/ember/helmet-rig.jpg', '/media/projects/ember/hud-lidar.jpg', '/media/projects/ember/hud-thermal.jpg', '/media/projects/ember/demo-headset.jpg', '/media/projects/ember/demo-laptop.jpg', '/media/projects/ember/wearos-biometrics.jpg', '/media/projects/ember/command-dashboard.jpg'],
   },
   {
     id: 'proprio', name: 'Proprio', short: 'Proprio', isNew: true, featured: true,
@@ -349,7 +350,7 @@ export const AWARDS: Award[] = [
   {
     event: 'Google Solution Challenge', result: 'Top 3, North America', team: 'IgnisXR team', year: '2026', project: 'ember',
     details: 'Ember, our XR firefighter helmet, placed in the top 3 in North America and was presented to Google engineers in New York City.',
-    images: ['/media/projects/ember/hud-lidar.jpg', '/media/projects/ember/helmet-rig.jpg'],
+    images: ['/media/projects/ember/google-office-group.jpg', '/media/projects/ember/gsc-nyc-demo.jpg', '/media/projects/ember/gsc-nyc-helmet.jpg', '/media/projects/ember/gsc-nyc-presentation.jpg', '/media/projects/ember/google-nyc-team.jpg', '/media/projects/ember/gsc-nyc-photobooth.jpg', '/media/projects/ember/nyc-trip-airport.jpg'],
   },
   {
     event: 'Hack Canada', result: 'Google Build With AI track', team: 'IgnisXR team', year: '2026', project: 'ember',
@@ -490,9 +491,16 @@ export const blogSlides = (b: Blog): SlideData[] =>
 export const blogDate = (d: string) =>
   new Date(`${d}T12:00:00`).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }).toUpperCase();
 
-/** The résumé shown on the Résumé page. Put the PDF in /public. */
-export const RESUME: { label: string; file: string; note?: string; updated?: string } = {
-  label: 'Software and AI', file: RESUME_HREF, note: 'Software and AI engineering roles.',
+/** The résumé shown on the Résumé page, served from Google Drive (shared as "anyone with the link"). */
+export const RESUME = {
+  label: '',
+  note: '',
+  /** Embedded viewer. */
+  preview: `https://drive.google.com/file/d/${RESUME_DRIVE_ID}/preview`,
+  /** Opens in Drive. */
+  view: `https://drive.google.com/file/d/${RESUME_DRIVE_ID}/view`,
+  /** Direct PDF download. */
+  download: `https://drive.google.com/uc?export=download&id=${RESUME_DRIVE_ID}`,
 };
 
 export const USE: Record<string, string> = {
@@ -569,6 +577,8 @@ export interface Hobby {
   href?: string;
   /** Name of the site the link goes to, e.g. 'Spotify'. */
   site?: string;
+  /** A list under the label instead of `detail`; an item with `href` links out on its own. */
+  items?: { name: string; href?: string; site?: string }[];
 }
 
 /** Profile › Hobbies & interests. */
@@ -580,7 +590,10 @@ export const HOBBIES: Hobby[] = [
   { label: 'Cooking', images: [] },
   { label: 'Running', images: [] },
   { label: 'Music', detail: 'Metal rock · Indie rock', href: SOCIAL.spotify, site: 'Spotify' },
-  { label: 'Titanfall 2', href: SOCIAL.youtube, site: 'YouTube' },
+  {
+    label: 'Gaming',
+    items: [{ name: 'Titanfall 2', href: SOCIAL.youtube, site: 'YouTube' }, { name: 'The Last Of Us' }, { name: 'and more' }],
+  },
   { label: 'Sports', detail: 'Cricket · Squash' },
 ];
 

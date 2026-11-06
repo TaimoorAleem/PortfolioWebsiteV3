@@ -9,7 +9,6 @@ import {
 } from '../data';
 import { Gallery, Hobbies } from '../shared/Hobbies';
 import { useLightbox } from '../shared/Lightbox';
-import { useFileExists } from '../theme/useFileExists';
 import { D_MENU, EXP_TABS, openProjectPatch, skillRows, titleCase, type DState } from './state';
 
 export interface DCtx {
@@ -153,8 +152,8 @@ export function DHome({ s, set, activate, go }: DCtx) {
       <div className="d-latest">
         <button type="button" className="btn-reset d-latest__hero" onClick={() => go(openProjectPatch('ember', s.projTab))}>
           {MEDIA.latest && <img className="d-img" src={MEDIA.latest} alt="Ember team" />}
-          <span className="d-latest__word">LATEST</span>
-          <span className="d-latest__scan" />
+          {!MEDIA.latest && <span className="d-latest__word">LATEST</span>}
+          {!MEDIA.latest && <span className="d-latest__scan" />}
           {!MEDIA.latest && <span className="d-latest__cap">ember team photo</span>}
         </button>
         <div className="d-latest__body">
@@ -322,7 +321,6 @@ export function DAwards({ s, set, go }: DCtx) {
     <div className="d-screen">
       <div className="d-tabs d-awards__top">
         <div className="d-awards__tab">ON RECORD · {AWARDS.length}</div>
-        <span className="d-note">Every one of these was a team effort. Hover a row for the story.</span>
       </div>
       <div className="d-awards">
         <div className="d-award-list" onMouseLeave={() => set({ awardIdx: -1 })}>
@@ -493,27 +491,21 @@ export function DProfile({ s, go }: DCtx) {
 
 export function DResume(_: DCtx) {
   const r = RESUME;
-  const exists = useFileExists(r.file);
   return (
     <div className="d-screen">
       <div className="d-resume">
         <div className="d-resume__head">
           <div className="d-stack2">
-            <span className="d-h30">{r.label}</span>
+            {r.label && <span className="d-h30">{r.label}</span>}
             {r.note && <span className="d-para">{r.note}</span>}
-            {r.updated && <span className="d-pending">UPDATED {r.updated.toUpperCase()}</span>}
           </div>
           <div className="d-resume__btns">
-            <CutCornerButton href={r.file} download="Taimoor-Aleem-Resume.pdf" disabled={exists === false}>DOWNLOAD PDF</CutCornerButton>
-            <CutCornerButton href={r.file} newTab disabled={exists === false}>OPEN IN NEW TAB</CutCornerButton>
+            <CutCornerButton href={r.download}>DOWNLOAD PDF</CutCornerButton>
+            <CutCornerButton href={r.view}>OPEN IN DRIVE</CutCornerButton>
           </div>
         </div>
         <div className="d-resume__viewer">
-          {exists ? (
-            <iframe title="Résumé" src={`${r.file}#view=FitH`} />
-          ) : (
-            <span className="d-pending">{exists === null ? 'LOADING…' : `PDF NOT FOUND · ADD public${r.file}`}</span>
-          )}
+          <iframe title="Résumé" src={r.preview} allow="autoplay" />
         </div>
       </div>
     </div>
