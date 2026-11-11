@@ -159,12 +159,9 @@
   background: var(--c-new); clip-path: polygon(0 0, 100% 0, 0 100%);
 }
 .list-bar__featured {
-  position: absolute; right: 0; bottom: 0; width: 20px; height: 20px;
-  background: var(--c-gold); clip-path: polygon(100% 0, 100% 100%, 0 100%);
-}
-.list-bar__featured::after {
-  content: ''; position: absolute; right: 3px; bottom: 3px; width: 5px; height: 5px;
-  background: var(--c-on-selected); transform: rotate(45deg);
+  /* Gold trim that follows the cut corner (8px cut, 5px band). */
+  position: absolute; right: 0; bottom: 0; width: 13px; height: 13px; background: var(--c-gold);
+  clip-path: polygon(100% 0, 100% 5px, 5px 100%, 0 100%);
 }
 .list-bar__trailing { margin-left: auto; font-family: var(--f-mono); font-size: 11px; font-weight: 400; }
 .level__suffix { font-size: 12px; line-height: 14px; font-weight: 400; color: var(--c-muted); }
@@ -380,6 +377,17 @@
 .chapter--compact .chapter__num { font-size: 72px; line-height: 72px; width: 92px; margin-left: 12px; }
 .chapter--compact .chapter__company { font-size: 26px; line-height: 30px; }
 .chapter--compact .chapter__meta { font-size: 13px; line-height: 18px; }
+/* Logo first, number on the right. */
+.chapter--logo { gap: 14px; padding-left: 14px; position: relative; }
+.chapter__logo {
+  width: 56px; height: 56px; flex: none; display: flex; align-items: center; justify-content: center; overflow: hidden;
+  background: rgba(255, 255, 255, 0.92); clip-path: polygon(0 0, 100% 0, 100% calc(100% - 9px), calc(100% - 9px) 100%, 0 100%);
+}
+.chapter__logo img { width: 72%; height: 72%; object-fit: contain; }
+.chapter__logo span { font-family: var(--f-display); font-weight: 700; font-size: 32px; color: var(--c-on-selected); text-shadow: none; }
+.chapter--logo .chapter__text { flex: 1; position: relative; z-index: 1; }
+.chapter--logo .chapter__num { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); width: auto; margin: 0; z-index: 0; opacity: 0.5; }
+.chapter--logo.chapter--compact .chapter__company { font-size: 22px; line-height: 26px; }
 
 /* ---------- LoadingBar / LoadingScreen ---------- */
 .loading { display: flex; flex-direction: column; gap: 10px; }
@@ -455,7 +463,7 @@
   background: var(--c-stat); color: var(--c-text); text-align: left; cursor: pointer;
   outline: 1px solid transparent; transition: outline-color 140ms, background 140ms;
 }
-.hobby::before { content: ''; position: absolute; left: 0; top: 0; width: 20px; height: 2px; background: var(--c-amber); }
+.hobby::before { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 2px; background: var(--c-amber); }
 .hobby:hover, .hobby:focus-visible { outline-color: rgba(255, 255, 255, 0.85); background: color-mix(in oklch, var(--c-stat), white 6%); }
 .hobby__label { font-size: 16px; line-height: 20px; font-weight: 600; }
 .hobby__detail { font-size: 12px; line-height: 16px; color: var(--c-blue); }
@@ -497,7 +505,7 @@
 }
 .proj-award::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--c-gold); }
 .proj-award:hover, .proj-award:focus-visible { background: color-mix(in oklch, var(--c-award-row) 92%, white 8%); }
-.proj-award__gem { width: 8px; height: 8px; flex: none; background: var(--c-gold); transform: rotate(45deg); }
+.proj-award__icon { flex: none; color: var(--c-gold); }
 .proj-award__result { font-weight: 600; color: var(--c-gold); }
 .proj-award__event { color: var(--c-muted); }
 .proj-award__year { margin-left: auto; font-family: var(--f-display); font-weight: 500; color: var(--c-faint); }

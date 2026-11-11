@@ -1,6 +1,6 @@
 import { useEffect, useRef, type MouseEvent, type ReactNode } from 'react';
 import {
-  AbilityCard, CutCornerButton, ListBar, Meter, ListGroupHeader, MenuItem, SettingsRow, Slideshow,
+  AbilityCard, CutCornerButton, ListBar, Meter, Trophy, TrophyCount, ListGroupHeader, MenuItem, SettingsRow, Slideshow,
   SubOptionRow,
 } from '../components';
 import {
@@ -108,7 +108,7 @@ export function DHome({ s, set, activate, go }: DCtx) {
         <h1 className="d-hero__name">TAIMOOR ALEEM</h1>
         <div className="d-hero__divider">
           <div className="d-hero__rule" />
-          <span className="d-build">build 2026.11</span>
+          <span className="d-build">v2026.11</span>
         </div>
         <div className="d-hero__roles"><span>AI ENGINEER</span><span>SOFTWARE DEVELOPER</span></div>
       </div>
@@ -191,7 +191,7 @@ export function DProjects({ s, set, go }: DCtx) {
       <div className="d-tabs">
         <SubOptionRow
           label="Project type"
-          options={PROJECT_TABS.map((t) => `${t.label} ${tabIds(PROJECT_TABS.indexOf(t)).length}`)}
+          options={PROJECT_TABS.map((t, i) => `${t.label} | ${tabIds(i).length}`)}
           selected={s.projTab}
           onSelect={(i) => set({ projTab: i, projIdx: 0, slideIdx: 0 })}
         />
@@ -202,7 +202,7 @@ export function DProjects({ s, set, go }: DCtx) {
           <SlideList
             width={200}
             sel={pi}
-            items={ids.map((id) => { const q = projectById(id)!; return { key: id, label: q.short, isNew: q.isNew, featured: q.featured }; })}
+            items={ids.map((id) => { const q = projectById(id)!; const n = projectAwards(id).length; return { key: id, label: q.short, isNew: q.isNew, featured: q.featured, trailing: n ? <TrophyCount n={n} /> : undefined }; })}
             onHover={(i) => { if (i !== pi) set({ projIdx: i, slideIdx: 0 }); }}
           />
         </div>
@@ -238,7 +238,9 @@ export function DProjects({ s, set, go }: DCtx) {
           </div>
           <div className="d-features">
             <span className="section-header">FEATURES</span>
-            {p.cards.map(([t, d], k) => <AbilityCard key={t} inline index={k + 1} title={t} desc={d} />)}
+            <div className="d-features__list">
+              {p.cards.map(([t, d], k) => <AbilityCard key={t} inline index={k + 1} title={t} desc={d} />)}
+            </div>
           </div>
           {lightbox.element}
         </div>
@@ -257,7 +259,7 @@ function ProjectAwards({ id, onOpen }: { id: string; onOpen: (awardIdx: number) 
     <div className="proj-awards">
       {won.map((a) => (
         <button key={a.result} type="button" className="btn-reset proj-award" onClick={() => onOpen(AWARDS.indexOf(a))}>
-          <span className="proj-award__gem" aria-hidden />
+          <Trophy className="trophy proj-award__icon" />
           <span className="proj-award__result">{a.result}</span>
           <span className="proj-award__event">{a.event}</span>
           <span className="proj-award__year">{a.year}</span>
@@ -287,23 +289,48 @@ function DChapters({ set, go, list, idx, tab }: DCtx & { list: Chapter[]; idx: n
       </div>
       <Rule left={324} />
       <div className="d-chapter" key={`c${tab}${idx}`}>
-        <span className="d-chapter__num">{e.num}</span>
+        <span className="d-chapter__logo" aria-hidden>
+          {e.logo ? <img src={e.logo} alt="" /> : <span>{e.company.charAt(0)}</span>}
+        </span>
         <div className="d-chapter__text">
-          <span className="d-chapter__company">{e.company}</span>
+          <span className={`d-chapter__company${e.company.length > 20 ? ' d-chapter__company--long' : ''}`}>{e.company}</span>
           <span className="d-chapter__meta">{e.meta}</span>
         </div>
+        <span className="d-chapter__num">{e.num}</span>
       </div>
       <div className="d-exp" key={`b${tab}${idx}`}>
-        <span className="section-header">{e.section}</span>
-        {e.cards.length > 0 && (
-          <div className="d-cards d-cards--panel">
-            {e.cards.map(([t, d], k) => <AbilityCard key={t} icon index={k + 1} title={t} desc={d} core={k === 3} />)}
+        <div className={`d-exp__cols${e.events?.length ? ' d-exp__cols--2' : ''}`}>
+          <div className="d-exp__col">
+            <span className="section-header">{e.section}</span>
+            <div className="d-exp__scroll">
+              {e.cards.length > 0 && (
+                <div className="d-cards d-cards--panel">
+                  {e.cards.map(([t, d], k) => <AbilityCard key={t} icon index={k + 1} title={t} desc={d} core={k === 3} />)}
+                </div>
+              )}
+              {e.extra && <span className="d-para">{e.extra}</span>}
+              {e.btn && <div><CutCornerButton href={e.btn.href} disabled={!e.btn.href}>{e.btn.label}</CutCornerButton></div>}
+            </div>
           </div>
-        )}
-        {e.extra && <span className="d-para">{e.extra}</span>}
-        {e.btn && <div><CutCornerButton href={e.btn.href} disabled={!e.btn.href}>{e.btn.label}</CutCornerButton></div>}
-        <span className="section-header d-exp__gallery-head">GALLERY</span>
-        <Gallery title={e.company} slides={chapterSlides(e)} />
+          {e.events && e.events.length > 0 && (
+            <div className="d-exp__col">
+              <span className="section-header">EVENTS ORGANIZED · {e.events.length}</span>
+              <ol className="d-exp__scroll d-events">
+                {e.events.map((ev) => (
+                  <li key={ev.name} className="d-event">
+                    <span className="d-event__date">{ev.date}</span>
+                    <span className="d-event__name">{ev.name}</span>
+                    {ev.note && <span className="d-event__note">{ev.note}</span>}
+                  </li>
+                ))}
+              </ol>
+            </div>
+          )}
+        </div>
+        <div className="d-exp__gallery">
+          <span className="section-header">GALLERY</span>
+          <Gallery title={e.company} slides={chapterSlides(e)} />
+        </div>
       </div>
     </div>
   );
@@ -337,8 +364,8 @@ export function DAwards({ s, set, go }: DCtx) {
               >
                 <div className="d-award__main">
                   <span className="d-award__year">{a.year}</span>
-                  <span className="d-award__event">{a.event}</span>
-                  <span className="d-award__result">{a.result}</span>
+                  <span className="d-award__event">{a.result}</span>
+                  <span className="d-award__result">{a.event}</span>
                   <span className="d-award__team">{a.team}</span>
                 </div>
                 <div className="d-award__more" aria-hidden={!open}>
@@ -463,7 +490,7 @@ export function DProfile({ s, go }: DCtx) {
 
         <div className="d-prof__cols">
           <div className="d-prof__col">
-            <span className="section-header">CURRENT MISSION</span>
+            <span className="section-header">CURRENT ROLE</span>
             <div className="d-mission">
               <span className="d-gold">{p.now.title}</span>
               <p className="d-para">{p.now.text}</p>
@@ -549,7 +576,6 @@ export function DBlogs({ s, set, go }: DCtx) {
         <div className="d-blog__col d-blog__info">
           <span className="blog-meta">{b.site.toUpperCase()} · {blogDate(b.date)} · {b.sections.length} SECTIONS</span>
           <a className="d-blog__title" href={b.href} target="_blank" rel="noopener noreferrer">{b.title}</a>
-          <div className="d-stack-tags">{b.tags.map((t) => <span key={t}>{t}</span>)}</div>
           {b.quote && <blockquote className="blog-quote">{b.quote}</blockquote>}
           <p className="d-para">{b.summary}</p>
           <div className="d-brief__btns">
@@ -592,7 +618,6 @@ export function DContact({ s, set, send, form, setField }: DCtx) {
             label={l.label}
             gold={l.gold}
             value={l.value}
-            arrows={i === 0}
             selected={s.contactIdx === i}
             href={l.href}
             onHover={() => set({ contactIdx: i })}

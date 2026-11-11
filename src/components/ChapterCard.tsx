@@ -5,9 +5,23 @@ interface ChapterCardProps {
   company: string;
   meta: string;
   compact?: boolean;
+  /** Square logo left of the name; pass '' for a monogram. Omit for the classic number-first layout. */
+  logo?: string;
 }
 
-export function ChapterCard({ num, company, meta, compact }: ChapterCardProps) {
+export function ChapterCard({ num, company, meta, compact, logo }: ChapterCardProps) {
+  if (logo !== undefined) {
+    return (
+      <div className={cls('chapter chapter--logo', compact && 'chapter--compact')}>
+        <span className="chapter__logo" aria-hidden>{logo ? <img src={logo} alt="" /> : <span>{company.charAt(0)}</span>}</span>
+        <div className="chapter__text">
+          <span className="chapter__company">{company}</span>
+          <span className="chapter__meta">{meta}</span>
+        </div>
+        <span className="chapter__num" aria-hidden>{num}</span>
+      </div>
+    );
+  }
   return (
     <div className={cls('chapter', compact && 'chapter--compact')}>
       <span className="chapter__num" aria-hidden>{num}</span>

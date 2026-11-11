@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import {
-  AbilityCard, ChapterCard, CutCornerButton, InfoBox, ListBar, Meter, MenuItem,
+  AbilityCard, ChapterCard, CutCornerButton, InfoBox, ListBar, Meter, Trophy, TrophyCount, MenuItem,
   SectionHeader, SettingsRow, Slideshow, SubOptionRow,
 } from '../components';
 import {
@@ -150,7 +150,7 @@ export function ProjectsScreen({ s, set, go }: Ctx) {
         <SubOptionRow
           className="m-strip m-filter"
           label="Project type"
-          options={PROJECT_TABS.map((t, i) => `${t.label} ${tabIds(i).length}`)}
+          options={PROJECT_TABS.map((t, i) => `${t.label} | ${tabIds(i).length}`)}
           selected={s.projTab}
           onSelect={(i) => set({ projTab: i, projId: tabIds(i)[0] ?? '' })}
         />
@@ -158,7 +158,7 @@ export function ProjectsScreen({ s, set, go }: Ctx) {
           {ids.map((id) => {
             const q = projectById(id)!;
             return (
-              <ListBar key={id} label={q.name} selected={id === projId} isNew={q.isNew} featured={q.featured} onClick={() => set({ projId: id })} />
+              <ListBar key={id} label={q.name} selected={id === projId} isNew={q.isNew} featured={q.featured} trailing={projectAwards(id).length ? <TrophyCount n={projectAwards(id).length} /> : undefined} onClick={() => set({ projId: id })} />
             );
           })}
         </Strip>
@@ -186,7 +186,7 @@ export function ProjectsScreen({ s, set, go }: Ctx) {
             <div className="proj-awards">
               {projectAwards(p.id).map((a) => (
                 <button key={a.result} type="button" className="btn-reset proj-award" onClick={() => go({ screen: 'about', awardIdx: AWARDS.indexOf(a) })}>
-                  <span className="proj-award__gem" aria-hidden />
+                  <Trophy className="trophy proj-award__icon" />
                   <span className="proj-award__result">{a.result}</span>
                   <span className="proj-award__event">{a.event}</span>
                 </button>
@@ -225,7 +225,7 @@ export function ExperienceScreen({ s, set }: Ctx) {
         </Strip>
       </div>
       <div className="m-body m-body--tight" key={`${s.expTab}-${idx}`}>
-        <ChapterCard compact num={e.num} company={e.company} meta={e.meta} />
+        <ChapterCard compact logo={e.logo ?? ''} num={e.num} company={e.company} meta={e.meta} />
         <SectionHeader style={{ marginTop: 6 }}>{e.section}</SectionHeader>
         {e.cards.map(([t, d], k) => <AbilityCard key={t} index={k + 1} title={t} desc={d} core={k === 3} />)}
         {e.extra && <p className="m-para">{e.extra}</p>}
@@ -233,6 +233,20 @@ export function ExperienceScreen({ s, set }: Ctx) {
           <div className="m-btns">
             <CutCornerButton href={e.btn.href} disabled={!e.btn.href}>{e.btn.label}</CutCornerButton>
           </div>
+        )}
+        {e.events && e.events.length > 0 && (
+          <>
+            <SectionHeader style={{ marginTop: 6 }}>EVENTS ORGANIZED · {e.events.length}</SectionHeader>
+            <ol className="d-events m-events">
+              {e.events.map((ev) => (
+                <li key={ev.name} className="d-event">
+                  <span className="d-event__date">{ev.date}</span>
+                  <span className="d-event__name">{ev.name}</span>
+                  {ev.note && <span className="d-event__note">{ev.note}</span>}
+                </li>
+              ))}
+            </ol>
+          </>
         )}
         <SectionHeader style={{ marginTop: 6 }}>GALLERY</SectionHeader>
         <Gallery title={e.company} slides={chapterSlides(e)} className="gallery m-gallery" />
@@ -256,8 +270,8 @@ export function AboutScreen({ s, set, go }: Ctx) {
           return (
             <div key={`${a.event}-${a.result}`} className={`m-award${open ? ' is-open' : ''}${i === 0 ? ' is-first' : ''}`}>
               <button type="button" className="btn-reset m-award__main" aria-expanded={open} onClick={() => set({ awardIdx: open ? -1 : i })}>
-                <span className="m-award__event">{a.event}</span>
-                <span className="m-award__result">{a.result}</span>
+                <span className="m-award__event">{a.result}</span>
+                <span className="m-award__result">{a.event}</span>
                 <span className="m-award__meta">{a.team} · {a.year}</span>
               </button>
               <div className="m-award__more">
@@ -317,7 +331,6 @@ export function BlogsScreen({ s, set, go }: Ctx) {
           <span className="blog-meta">{b.site.toUpperCase()} · {blogDate(b.date)}</span>
           <a className="m-blog__title" href={b.href} target="_blank" rel="noopener noreferrer">{b.title}</a>
         </div>
-        <div className="m-chips">{b.tags.map((t) => <span key={t} className="m-chip">{t}</span>)}</div>
         {b.quote && <blockquote className="blog-quote">{b.quote}</blockquote>}
         <p className="m-para">{b.summary}</p>
         <div className="m-btns m-btns--row">
@@ -370,7 +383,7 @@ export function ProfileScreen({ s, go }: Ctx) {
           ))}
         </div>
         <div className="m-stack6">
-          <SectionHeader>CURRENT MISSION</SectionHeader>
+          <SectionHeader>CURRENT ROLE</SectionHeader>
           <div className="m-mission">
             <span className="m-gold">{p.now.title}</span>
             <p className="m-para">{p.now.text}</p>
@@ -466,7 +479,6 @@ export function ContactScreen({ s, set }: Ctx) {
             label={l.label}
             gold={l.gold}
             value={l.short}
-            arrows={i === 0}
             selected={s.contactIdx === i}
             href={l.href}
             onClick={() => set({ contactIdx: i })}

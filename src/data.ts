@@ -278,6 +278,10 @@ export interface Chapter {
   btn?: ActionLink;
   /** Gallery photos, e.g. ['/media/experience/dayforce-1.jpg']. Placeholders show until set. */
   images?: string[];
+  /** Square logo shown left of the name; a monogram shows when unset. */
+  logo?: string;
+  /** Second column: events organized, newest first. */
+  events?: { name: string; date: string; note?: string }[];
 }
 
 /** Gallery slides for a chapter (four placeholders until images are added). */
@@ -288,6 +292,7 @@ export const chapterSlides = (c: Chapter): SlideData[] =>
 
 export const EXPERIENCE: Chapter[] = [
   {
+    logo: '/media/logos/ignisxr.png',
     name: 'Chapter 3 · IgnisXR', num: '03', company: 'IGNISXR', section: 'MISSION LOG',
     meta: 'Founding Engineer · Mar 2026 to Present · Toronto, ON',
     cards: [
@@ -299,6 +304,7 @@ export const EXPERIENCE: Chapter[] = [
     images: ['/media/linkedin/ignisxr/may-recap-01-demo.jpg', '/media/linkedin/ignisxr/may-recap-05-hardware.jpg', '/media/linkedin/ignisxr/may-recap-03-cutc-booth.jpg', '/media/linkedin/ignisxr/stan-demo-03-ignisxr-pitch.jpg', '/media/linkedin/ignisxr/stan-demo-04-ignisxr.jpg', '/media/linkedin/gsc/top3-12-winning-3-slide.jpg', '/media/linkedin/gsc/nyc-11-ember-demo.jpg', '/media/linkedin/ember/fire-station-10-trying-prototype.jpg'],
   },
   {
+    logo: '/media/logos/dayforce.png',
     name: 'Chapter 2 · Dayforce', num: '02', company: 'DAYFORCE', section: 'MISSION LOG',
     meta: 'Software Developer Intern · Jan 2025 to Dec 2025 · Toronto, ON',
     cards: [
@@ -312,6 +318,7 @@ export const EXPERIENCE: Chapter[] = [
     images: ['/media/linkedin/dayforce/dayforce-logo.jpg', '/media/linkedin/gdg/dayforce-tech-interview-workshop-01.jpg', '/media/linkedin/datathon/2025-media-04-dayforce-workshop.jpg', '/media/linkedin/datathon/article-19-dayforce-booth.jpg'],
   },
   {
+    logo: '/media/logos/skillsquirrel.png',
     name: 'Chapter 1 · Skill Squirrel', num: '01', company: 'SKILL SQUIRREL', section: 'MISSION LOG',
     meta: 'Jr. Software Developer · May 2024 to Nov 2024 · Mississauga, ON',
     cards: [
@@ -368,11 +375,6 @@ export const AWARDS: Award[] = [
     images: ['/media/linkedin/hackathons/hack-canada/07-winners.jpg', '/media/projects/ember/demo-laptop.jpg', '/media/projects/ember/hud-thermal.jpg'],
   },
   {
-    event: 'Sheridan Business Mixer', result: 'First Place, pitch competition', team: 'IgnisXR team', year: '2026', project: 'ember',
-    details: 'Pitched Ember in the Shark Tank pitch competition at the Sheridan Finance Club Business Mixer and took first place.',
-    images: ['/media/linkedin/ember/pitch-competition-01-medal.jpg', '/media/linkedin/ember/pitch-competition-02-group.jpg', '/media/linkedin/ember/pitch-competition-03-group.jpg'],
-  },
-  {
     event: 'DeerHacks, UofT', result: '2nd Place', team: 'Rocky team', year: '2026', project: 'rocky',
     details: 'Rocky, a real time child safety monitor, took 2nd place overall.',
     images: ['/media/linkedin/hackathons/deerhacks/02-team-prizes.jpg', '/media/awards/deerhacks-2026-team.jpg', '/media/projects/rocky/dashboard.jpg'],
@@ -409,6 +411,7 @@ export const awardSlides = (a: Award): SlideData[] =>
 /** Experience › Leadership. Same shape and layout as the professional chapters. */
 export const LEADERSHIP: Chapter[] = [
   {
+    logo: '/media/logos/bearhacks.png',
     name: 'BearHacks 2026', num: '05', company: 'BEARHACKS 2026', section: 'COMMAND LOG',
     meta: 'Co-Director · Dec 2025 to Apr 2026 · Sheridan HMC, Mississauga',
     cards: [
@@ -421,6 +424,7 @@ export const LEADERSHIP: Chapter[] = [
     images: ['/media/linkedin/bearhacks/2026-recap-02-ceremony-crowd.jpg', '/media/linkedin/bearhacks/2026-recap-06-organizer-team.jpg', '/media/linkedin/bearhacks/2026-recap-07-co-directors.jpg', '/media/linkedin/bearhacks/2026-recap-03-atrium-hacking.jpg', '/media/linkedin/bearhacks/2026-recap-05-hacking-room.jpg', '/media/linkedin/bearhacks/2026-recap-04-hardware-hack.jpg', '/media/linkedin/bearhacks/2026-team-01-leadership.jpg', '/media/linkedin/bearhacks/2026-insauga-article.jpg', '/media/linkedin/bearhacks/2026-bruno-award-nomination-certificate.jpg', '/media/linkedin/bearhacks/2026-website.jpg', '/media/linkedin/bearhacks/2026-3d-printed-medal.jpg', '/media/linkedin/bearhacks/2026-recap-01-sunset-window.jpg'],
   },
   {
+    logo: '/media/logos/gdg.png',
     name: 'GDG Sheridan', num: '04', company: 'GOOGLE DEVELOPER GROUP SHERIDAN', section: 'COMMAND LOG',
     meta: 'Vice President · Sep 2025 to May 2026 · GDG on Campus Sheridan College',
     cards: [
@@ -430,9 +434,19 @@ export const LEADERSHIP: Chapter[] = [
       ['GOOGLE I/O', 'Selected by Google to attend Google I/O 2026.'],
     ],
     extra: 'Volunteered at DevFest 2024 with GDG Mississauga.',
+    events: [
+      { name: 'Sheridan Datathon 2025', date: 'Nov 2025', note: 'Founder. 200+ participants, 37 projects.' },
+      { name: 'Dayforce Technical Interview Workshop', date: 'Nov 2025', note: 'Organized with William Galvin.' },
+      { name: 'System Design Workshop', date: 'Sep 2025', note: 'Building scalable social features with serverless architectures.' },
+      { name: 'BearHacks 2025', date: 'Apr 2025', note: 'Co-organizer. Secured $1,750+ from Google and the TensorFlow prize track.' },
+      { name: 'Machine Learning with TensorFlow Workshop', date: 'Jan 2025', note: 'Google sponsored workshop at Hackville 2025.' },
+      { name: 'DSA and LeetCode Workshops', date: '2024 to 2025', note: '100+ attendees.' },
+      { name: 'DevFest 2024', date: 'Nov 2024', note: 'Volunteer, with GDG Mississauga.' },
+    ],
     images: ['/media/linkedin/gdg/system-design-workshop-01-group.jpg', '/media/linkedin/gdg/system-design-workshop-02-room.jpg', '/media/linkedin/gdg/system-design-workshop-04-speaker.jpg', '/media/linkedin/gdg/system-design-workshop-05-audience.jpg', '/media/linkedin/gdg/dayforce-tech-interview-workshop-01.jpg', '/media/linkedin/gdg/dayforce-tech-interview-workshop-02.jpg', '/media/linkedin/gdg/devfest-2024-talk.jpg', '/media/linkedin/misc/google-io-2026-06-gdg.jpg'],
   },
   {
+    logo: '/media/logos/datathon.png',
     name: 'Sheridan Datathon 2025', num: '03', company: 'SHERIDAN DATATHON 2025', section: 'COMMAND LOG',
     meta: 'Founder · Apr 2025 to Nov 2025 · Sheridan HMC, Mississauga',
     cards: [
@@ -446,6 +460,7 @@ export const LEADERSHIP: Chapter[] = [
     images: ['/media/linkedin/datathon/2025-media-01-opening-ceremony.jpg', '/media/linkedin/datathon/2025-01-founder-badge.jpg', '/media/linkedin/datathon/2025-06-full-room.jpg', '/media/linkedin/datathon/2025-05-co-leads-presenting.jpg', '/media/linkedin/datathon/2025-media-06-judges-briefing.jpg', '/media/linkedin/datathon/2025-media-07-project-demos.jpg', '/media/linkedin/datathon/2025-media-04-dayforce-workshop.jpg', '/media/linkedin/datathon/article-26-google-cloud-prizes.jpg', '/media/linkedin/datathon/2025-02-organizers.jpg', '/media/linkedin/datathon/article-03-official-poster.jpg'],
   },
   {
+    logo: '/media/logos/bearhacks.png',
     name: 'BearHacks 2025', num: '02', company: 'BEARHACKS 2025', section: 'COMMAND LOG',
     meta: 'Co-organizer and mentor · GDG Sheridan Outreach Lead · Apr 2025',
     cards: [
@@ -457,6 +472,7 @@ export const LEADERSHIP: Chapter[] = [
     images: ['/media/linkedin/bearhacks/2025-07-group-photo.jpg', '/media/linkedin/bearhacks/2025-01-organizer-badges.jpg', '/media/linkedin/bearhacks/2025-03-hall.jpg', '/media/linkedin/bearhacks/2025-04-opening-slide.jpg', '/media/linkedin/bearhacks/2025-05-260-participants-slide.jpg', '/media/linkedin/bearhacks/2025-recap-02-stats.jpg', '/media/linkedin/bearhacks/2025-08-group-photo-2.jpg'],
   },
   {
+    logo: '/media/logos/hackville.png',
     name: 'Hackville 2025', num: '01', company: 'HACKVILLE 2025', section: 'COMMAND LOG',
     meta: 'VP of Technology · Sheridan Hackademics Club · Mar 2024 to Jan 2025',
     cards: [
@@ -480,7 +496,6 @@ export interface Blog {
   /** Where it's published, shown on the read button. */
   site: string;
   href: string;
-  tags: string[];
   /** One line from the post itself, shown as a pull quote. */
   quote?: string;
   summary: string;
@@ -504,7 +519,6 @@ export const BLOGS: Blog[] = [
     date: '2025-09-10',
     site: 'Medium',
     href: CAPSTONE_POST,
-    tags: ['Computer Vision', 'Machine Learning'],
     quote: '',
     summary:
       'How AI Cricket Coach went from an expression of interest (one of 7 approved out of 30) to first place at Sheridan: ' +
@@ -547,37 +561,56 @@ export const RESUME = {
   download: `https://drive.google.com/uc?export=download&id=${RESUME_DRIVE_ID}`,
 };
 
-export const USE: Record<string, string> = {
-  Proprio: 'Rebuilt evaluation for a sensor ML model, found 5 data leaks, and built event driven ingestion with S3, RabbitMQ and PostgreSQL tracked in MLflow and DVC.',
-  'Cricket Coach': 'YOLOv8 ball tracking, RANSAC pitch mapping and a Random Forest shot model in a Flutter app, deployed on GCP with Terraform.',
-  Ember: 'C++ and OpenCV HUD compositing, multi threaded sensor fusion on Linux, and a Kotlin Wear OS biometric stream.',
-  Dayforce: 'C#/.NET REST APIs for Wallet Gateway microservices, event driven Kafka ETL pipelines for live tip transactions, and Azure Functions recovery automation.',
-  Mercato: 'Spring Boot microservices with Kafka events, Keycloak security, Docker and Kubernetes, and an Angular front end.',
-  'BearHacks site': 'Built the BearHacks 2026 event site in React and TypeScript; it reached 12.49k monthly visits across 84 countries.',
-  Rocky: 'Next.js and TypeScript parent dashboard with a multi stage LLM pipeline and Mixtral served through Ollama on Vultr.',
-  'Skill Squirrel': 'Python GenAI pipeline with Azure AI Vision and Azure OpenAI, plus a React and TypeScript Badge Maker UI.',
-  Voxel: 'Agent orchestration in IBM Langflow with watsonx prompt refinement and Db2 storage.',
-  Prismarine: 'FastAPI back end with a Next.js front end, Gemini, Snowflake Cortex translation and ElevenLabs audio summaries.',
+/** What each skill was used for in each project: "<skill>|<project>" → one line. */
+export const SKILL_USE: Record<string, string> = {
+  'Python|Proprio': 'The workout_ml package: data loading, feature pipelines, leave one person out evaluation, the rep counter and the inference service.',
+  'Python|Cricket Coach': 'The computer vision and ML back end: ball tracking, pitch mapping and the shot recommendation model, served on Cloud Run.',
+  'Python|Ember': 'Edge inference on a Google Coral TPU: MobileNet SSD detections checked against live depth, plus thermal victim detection.',
+  'C# / .NET|Dayforce': 'REST APIs for the Wallet Gateway microservices, with the retry, timeout and re queue handling that cut failed tip transactions by 90%.',
+  'Java|Mercato': 'Spring Boot microservices for products, orders, inventory and notifications, behind a Spring Cloud Gateway that validates Keycloak JWTs.',
+  'Java|Proprio': 'core-api in Spring Boot: auth, sessions, labels and history, built contract first from an OpenAPI spec.',
+  'TypeScript|BearHacks site': 'The BearHacks 2026 event site in React; it reached 12.49k monthly visits across 84 countries.',
+  'TypeScript|Rocky': 'The Next.js parent dashboard and the Simulation Studio that drives the alert pipeline from laptop sensors.',
+  'TypeScript|Skill Squirrel': 'The React Badge Maker UI with live previews and state driven customization.',
+  'C++|Ember': 'HUD compositing over the camera feed with OpenCV, and multi threaded sensor fusion on Linux.',
+  'Kotlin|Ember': 'A Wear OS app that streams heart rate, SpO2, skin temperature and heading from the watch to the HUD.',
+  'Kotlin|Rocky': 'A Wear OS watch app for heart rate and fall detection.',
+  'Kotlin|Proprio': 'The Wear OS recorder and phone app (Jetpack Compose) that capture 50 Hz accelerometer and gyroscope sessions.',
+  'SQL|Dayforce': 'Efficient SQL queries behind the Wallet Gateway REST APIs.',
+  'PyTorch|Proprio': 'A 1D CNN with on the fly rotation augmentation, exported to ONNX.',
+  'scikit learn|Proprio': 'Feature pipelines and classical models, evaluated leave one person out so no lifter leaks between train and test.',
+  'scikit learn|Cricket Coach': 'The Random Forest model that recommends the best shot for each delivery.',
+  'OpenCV|Ember': 'Compositing detections, vitals and navigation onto the helmet HUD.',
+  'OpenCV|Cricket Coach': 'Ball tracking and the perspective transform that maps each delivery onto a top down pitch.',
+  'MLflow and DVC|Proprio': 'MLflow tracks runs and models, DVC versions the datasets, and every run records the data hash and git commit.',
+  'LLM tooling|Rocky': 'Self hosted Mixtral 8x22B on Vultr through Ollama for private safety analysis, with Gemini writing the parent report.',
+  'LLM tooling|Voxel': 'Meshy text to 3D generation through a Dart proxy, placed in AR by the Flutter app.',
+  'LLM tooling|Prismarine': 'Gemini embeddings and search grounding, Snowflake Cortex translation and ElevenLabs audio summaries.',
+  'Kafka|Dayforce': 'Event driven ETL pipelines for live POS tip transactions.',
+  'Kafka|Mercato': 'order-service publishes Avro OrderPlacedEvents that notification-service consumes to send confirmation emails.',
+  'Spring Boot|Mercato': 'Four services plus a Spring Cloud Gateway with JWT validation and circuit breaking.',
+  'Spring Boot|Proprio': 'core-api for auth, sessions, labels and history.',
+  'Docker|Mercato': 'Docker Compose for Keycloak, MongoDB, MySQL, Kafka and the schema registry.',
+  'Docker|Proprio': 'A Compose stack for core-api, the inference service, PostgreSQL and RabbitMQ.',
+  'GCP and Terraform|Cricket Coach': 'Cloud Run for CV and ML inference, Cloud Storage for videos, and Firestore for users, sessions and feedback.',
+  'Azure|Dayforce': 'Azure DevOps CI/CD pipelines, and Azure Functions that cut manual recovery by 80%.',
+  'Azure|Skill Squirrel': 'Azure AI Vision OCR and Azure OpenAI image generation for badge enhancement.',
+  'RabbitMQ|Proprio': 'Upload to inference events with retries and a dead letter queue.',
 };
 
-export const OVERRIDE: Record<string, string> = {
-  'Kafka|Dayforce': 'Maintained event driven Kafka ETL pipelines for live tip transactions and added retry, timeout and re queue handling that cut failures by 90%.',
-  'Kafka|Mercato': 'Kafka for asynchronous events between Spring Boot services.',
-};
-
-export const skillUse = (skill: string, where: string) => OVERRIDE[`${skill}|${where}`] ?? USE[where] ?? '';
+export const skillUse = (skill: string, where: string) => SKILL_USE[`${skill}|${where}`] ?? '';
 
 export const SKILLS: [string, [string, string[]][]][] = [
   ['LANGUAGES', [
     ['Python', ['Proprio', 'Cricket Coach', 'Ember']], ['C# / .NET', ['Dayforce']], ['Java', ['Mercato', 'Proprio']],
-    ['TypeScript', ['BearHacks site', 'Rocky', 'Skill Squirrel']], ['C++', ['Ember']], ['Kotlin', ['Ember']], ['SQL', ['Dayforce']],
+    ['TypeScript', ['BearHacks site', 'Rocky', 'Skill Squirrel']], ['C++', ['Ember']], ['Kotlin', ['Ember', 'Rocky', 'Proprio']], ['SQL', ['Dayforce']],
   ]],
   ['ML AND AI', [
-    ['PyTorch', ['Proprio']], ['scikit learn', ['Proprio']], ['OpenCV', ['Ember', 'Cricket Coach']],
+    ['PyTorch', ['Proprio']], ['scikit learn', ['Proprio', 'Cricket Coach']], ['OpenCV', ['Ember', 'Cricket Coach']],
     ['MLflow and DVC', ['Proprio']], ['LLM tooling', ['Rocky', 'Voxel', 'Prismarine']],
   ]],
   ['SYSTEMS AND CLOUD', [
-    ['Kafka', ['Dayforce', 'Mercato']], ['Spring Boot', ['Mercato', 'Proprio']], ['Docker and Kubernetes', ['Mercato']],
+    ['Kafka', ['Dayforce', 'Mercato']], ['Spring Boot', ['Mercato', 'Proprio']], ['Docker', ['Mercato', 'Proprio']],
     ['GCP and Terraform', ['Cricket Coach']], ['Azure', ['Dayforce', 'Skill Squirrel']], ['RabbitMQ', ['Proprio']],
   ]],
 ];
@@ -656,6 +689,6 @@ export const LINKS: { label: string; value: string; short: string; href: string;
 /** Home page "Currently working on" list. `project` opens that project; `leadership` opens that Leadership chapter. */
 export const NOW_WORKING: { label: string; project?: string; leadership?: number }[] = [
   { label: 'Ember at IgnisXR: Edge AI for firefighter helmets', project: 'ember' },
-  { label: 'Proprio: validating rep counting on a real Galaxy Watch', project: 'proprio' },
+  { label: 'Proprio: Validating barbell exercise classification in a real gym environment.', project: 'proprio' },
   { label: 'BearHacks 2027: advising the organizing team', leadership: 0 },
 ];
