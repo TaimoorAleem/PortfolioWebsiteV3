@@ -10,12 +10,12 @@ export function Trophy({ size = 14, className }: { size?: number; className?: st
   );
 }
 
-/** Trophy with a count, for list cells. Renders nothing for 0. */
+/** One trophy per award, for list cells. Renders nothing for 0. */
 export function TrophyCount({ n }: { n: number }) {
   if (!n) return null;
   return (
-    <span className="trophy-count" aria-label={`${n} award${n > 1 ? 's' : ''}`}>
-      <Trophy size={13} />{n > 1 && <span>{n}</span>}
+    <span className="trophy-count" role="img" aria-label={`${n} award${n > 1 ? 's' : ''}`}>
+      {Array.from({ length: n }, (_, i) => <Trophy key={i} size={12} />)}
     </span>
   );
 }

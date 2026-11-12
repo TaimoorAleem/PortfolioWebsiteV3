@@ -154,14 +154,12 @@
   background: var(--c-amber);
 }
 .list-bar:disabled { background: var(--c-bar-disabled); color: rgba(255, 255, 255, 0.35); }
-.list-bar__new {
-  position: absolute; left: 0; top: 0; width: 9px; height: 9px;
-  background: var(--c-new); clip-path: polygon(0 0, 100% 0, 0 100%);
-}
+.list-bar__new { margin-left: 6px; align-self: flex-start; margin-top: 7px; font-size: 9px; line-height: 10px; font-weight: 600; letter-spacing: 0.06em; color: var(--c-new); }
+.list-bar.is-selected .list-bar__new { color: color-mix(in oklch, var(--c-new) 70%, black); }
 .list-bar__featured {
-  /* Gold trim that follows the cut corner (8px cut, 5px band). */
-  position: absolute; right: 0; bottom: 0; width: 13px; height: 13px; background: var(--c-gold);
-  clip-path: polygon(100% 0, 100% 5px, 5px 100%, 0 100%);
+  /* Featured tag: gold corner on the top left. */
+  position: absolute; left: 0; top: 0; z-index: 1; width: 12px; height: 12px; background: var(--c-gold);
+  clip-path: polygon(0 0, 100% 0, 0 100%);
 }
 .list-bar__trailing { margin-left: auto; font-family: var(--f-mono); font-size: 11px; font-weight: 400; }
 .level__suffix { font-size: 12px; line-height: 14px; font-weight: 400; color: var(--c-muted); }

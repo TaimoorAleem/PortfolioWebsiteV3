@@ -1,14 +1,14 @@
 /* Every clickable button or cell gets the cut-out corner at the bottom right, like CutCornerButton.
    --cut sets the size per element. clip-path also clips outlines, so hover outlines become inset shadows. */
-.list-bar, .settings-row, .hobby, .proj-award, .gallery__thumb, .blog-cover, .ss,
-.d-latest__hero, .d-latest__tile, .d-tile, .d-award, .d-award__img, .d-send,
+.list-bar, .settings-row, .hobby, .proj-award, .gallery__thumb, .blog-cover, .ss, .d-event--link,
+.d-tile, .d-award, .d-award__img, .d-send,
 .m-award, .m-award__img, .m-send, .sub-opt {
   --cut: 10px;
   clip-path: polygon(0 0, 100% 0, 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, 0 100%);
 }
 .sub-opt { --cut: 6px; border-radius: 0; }
 .list-bar, .settings-row, .proj-award, .d-send, .m-send { --cut: 8px; }
-.ss, .blog-cover, .d-latest__hero, .d-award__img, .m-award__img { --cut: 14px; }
+.ss, .blog-cover, .d-award__img, .m-award__img { --cut: 14px; }
 
 .hobby, .gallery__thumb, .blog-cover, .d-tile { outline: none !important; }
 .hobby:not(.is-disabled):not(.is-plain):hover, .hobby:focus-visible,
@@ -23,12 +23,12 @@
 /* Hover colours change instantly on every button and clickable cell. */
 .cc-btn, .cc-btn__inner, .list-bar, .sub-opt, .settings-row, .hobby, .proj-award, .gallery__thumb, .blog-cover,
 .d-tile, .d-latest__hero, .d-latest__tile, .d-award, .m-award, .d-send, .m-send, .ss__arrow, .ss__open-tag,
-.ability, .menu-item, .media-btn, .ss-overlay__close, .hobby__items a { transition: none !important; }
+.ability, .menu-item, .media-btn, .d-event, .ss-overlay__close, .hobby__items a { transition: none !important; }
 
 /* Mission log bullet cards get the cut too. */
 .ability { --cut: 10px; clip-path: polygon(0 0, 100% 0, 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, 0 100%); }
 
 /* Trophy count in list cells. */
-.trophy-count { display: inline-flex; align-items: center; gap: 3px; color: var(--c-gold); }
+.trophy-count { display: inline-flex; align-items: center; gap: 1px; color: var(--c-gold); }
 .list-bar.is-selected .trophy-count { color: var(--c-on-selected); }
 .menu-item::before { transition: none !important; }

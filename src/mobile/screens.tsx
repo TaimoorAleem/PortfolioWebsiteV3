@@ -8,6 +8,7 @@ import {
   awardSlides, blogCover, blogDate, blogSlides, chapterSlides, projectAwards, projectById, projectLinks, projectSlides, skillUse, tabIds, techCode,
 } from '../data';
 import { Gallery, Hobbies } from '../shared/Hobbies';
+import { EventRow } from '../shared/EventRow';
 import { useLightbox } from '../shared/Lightbox';
 import { EXP_TABS, currentProjectId, openProject, type AppState } from './state';
 
@@ -226,7 +227,7 @@ export function ExperienceScreen({ s, set }: Ctx) {
       </div>
       <div className="m-body m-body--tight" key={`${s.expTab}-${idx}`}>
         <ChapterCard compact logo={e.logo ?? ''} num={e.num} company={e.company} meta={e.meta} />
-        <SectionHeader style={{ marginTop: 6 }}>{e.section}</SectionHeader>
+        {e.cards.length > 0 && <SectionHeader style={{ marginTop: 6 }}>{e.section}</SectionHeader>}
         {e.cards.map(([t, d], k) => <AbilityCard key={t} index={k + 1} title={t} desc={d} core={k === 3} />)}
         {e.extra && <p className="m-para">{e.extra}</p>}
         {e.btn && (
@@ -238,13 +239,7 @@ export function ExperienceScreen({ s, set }: Ctx) {
           <>
             <SectionHeader style={{ marginTop: 6 }}>EVENTS ORGANIZED · {e.events.length}</SectionHeader>
             <ol className="d-events m-events">
-              {e.events.map((ev) => (
-                <li key={ev.name} className="d-event">
-                  <span className="d-event__date">{ev.date}</span>
-                  <span className="d-event__name">{ev.name}</span>
-                  {ev.note && <span className="d-event__note">{ev.note}</span>}
-                </li>
-              ))}
+              {e.events.map((ev) => <EventRow key={ev.name} ev={ev} />)}
             </ol>
           </>
         )}
@@ -272,7 +267,7 @@ export function AboutScreen({ s, set, go }: Ctx) {
               <button type="button" className="btn-reset m-award__main" aria-expanded={open} onClick={() => set({ awardIdx: open ? -1 : i })}>
                 <span className="m-award__event">{a.result}</span>
                 <span className="m-award__result">{a.event}</span>
-                <span className="m-award__meta">{a.team} · {a.year}</span>
+                <span className="m-award__meta">{a.year}</span>
               </button>
               <div className="m-award__more">
                 <div className="m-award__more-inner">

@@ -32,10 +32,10 @@ export const ListBar = forwardRef<HTMLButtonElement, ListBarProps>(function List
       onClick={onClick}
       onMouseEnter={onMouseEnter}
     >
-      {isNew && <span className="list-bar__new" aria-label="New" />}
-      <span>{label}</span>
-      {trailing !== undefined && <span className="list-bar__trailing">{trailing}</span>}
       {featured && <span className="list-bar__featured" aria-label="Featured" />}
+      <span>{label}</span>
+      {isNew && <span className="list-bar__new">NEW</span>}
+      {trailing !== undefined && <span className="list-bar__trailing">{trailing}</span>}
     </button>
   );
 });

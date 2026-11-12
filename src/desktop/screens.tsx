@@ -7,6 +7,7 @@ import {
   AWARDS, BLOGS, EXPERIENCE, LEADERSHIP, LINKS, MEDIA, NOW_WORKING, PROFILE, PROJECT_TABS, RESUME, SKILLS,
   awardSlides, blogCover, blogDate, blogSlides, chapterSlides, projectAwards, projectById, projectLinks, projectSlides, skillUse, tabIds, type Chapter,
 } from '../data';
+import { EventRow } from '../shared/EventRow';
 import { Gallery, Hobbies } from '../shared/Hobbies';
 import { useLightbox } from '../shared/Lightbox';
 import { D_MENU, EXP_TABS, openProjectPatch, skillRows, titleCase, type DState } from './state';
@@ -110,7 +111,7 @@ export function DHome({ s, set, activate, go }: DCtx) {
           <div className="d-hero__rule" />
           <span className="d-build">v2026.11</span>
         </div>
-        <div className="d-hero__roles"><span>AI ENGINEER</span><span>SOFTWARE DEVELOPER</span></div>
+        <div className="d-hero__roles"><span>AI ENGINEER</span><span>SOFTWARE DEVELOPER</span><span>COMMUNITY BUILDER</span></div>
       </div>
 
       <nav className="d-menu" aria-label="Main">
@@ -273,6 +274,8 @@ function ProjectAwards({ id, onOpen }: { id: string; onOpen: (awardIdx: number) 
 
 function DChapters({ set, go, list, idx, tab }: DCtx & { list: Chapter[]; idx: number; tab: 0 | 1 }) {
   const e = list[idx];
+  const hasLog = e.cards.length > 0 || !!e.extra;
+  const hasEvents = !!e.events?.length;
   const pick = (i: number) => set(tab === 0 ? { expIdx: i } : { leadIdx: i });
   return (
     <div className="d-screen">
@@ -299,30 +302,29 @@ function DChapters({ set, go, list, idx, tab }: DCtx & { list: Chapter[]; idx: n
         <span className="d-chapter__num">{e.num}</span>
       </div>
       <div className="d-exp" key={`b${tab}${idx}`}>
-        <div className={`d-exp__cols${e.events?.length ? ' d-exp__cols--2' : ''}`}>
-          <div className="d-exp__col">
-            <span className="section-header">{e.section}</span>
-            <div className="d-exp__scroll">
-              {e.cards.length > 0 && (
-                <div className="d-cards d-cards--panel">
-                  {e.cards.map(([t, d], k) => <AbilityCard key={t} icon index={k + 1} title={t} desc={d} core={k === 3} />)}
-                </div>
-              )}
-              {e.extra && <span className="d-para">{e.extra}</span>}
-              {e.btn && <div><CutCornerButton href={e.btn.href} disabled={!e.btn.href}>{e.btn.label}</CutCornerButton></div>}
-            </div>
-          </div>
-          {e.events && e.events.length > 0 && (
+        <div className={`d-exp__cols${hasLog && hasEvents ? ' d-exp__cols--2' : ''}`}>
+          {hasLog && (
             <div className="d-exp__col">
-              <span className="section-header">EVENTS ORGANIZED · {e.events.length}</span>
-              <ol className="d-exp__scroll d-events">
-                {e.events.map((ev) => (
-                  <li key={ev.name} className="d-event">
-                    <span className="d-event__date">{ev.date}</span>
-                    <span className="d-event__name">{ev.name}</span>
-                    {ev.note && <span className="d-event__note">{ev.note}</span>}
-                  </li>
-                ))}
+              <span className="section-header">{e.section}</span>
+              <div className="d-exp__scroll">
+                {e.cards.length > 0 && (
+                  <div className="d-cards d-cards--panel">
+                    {e.cards.map(([t, d], k) => <AbilityCard key={t} icon index={k + 1} title={t} desc={d} core={k === 3} />)}
+                  </div>
+                )}
+                {e.extra && <span className="d-para">{e.extra}</span>}
+                {e.btn && <div><CutCornerButton href={e.btn.href} disabled={!e.btn.href}>{e.btn.label}</CutCornerButton></div>}
+              </div>
+            </div>
+          )}
+          {hasEvents && (
+            <div className="d-exp__col">
+              <div className="d-exp__head">
+                <span className="section-header">EVENTS ORGANIZED · {e.events!.length}</span>
+                {!hasLog && e.btn && <CutCornerButton href={e.btn.href} disabled={!e.btn.href}>{e.btn.label}</CutCornerButton>}
+              </div>
+              <ol className={`d-exp__scroll d-events${hasLog ? '' : ' d-events--wide'}`}>
+                {e.events!.map((ev) => <EventRow key={ev.name} ev={ev} />)}
               </ol>
             </div>
           )}
@@ -363,10 +365,9 @@ export function DAwards({ s, set, go }: DCtx) {
                 onFocus={() => set({ awardIdx: i })}
               >
                 <div className="d-award__main">
-                  <span className="d-award__year">{a.year}</span>
                   <span className="d-award__event">{a.result}</span>
                   <span className="d-award__result">{a.event}</span>
-                  <span className="d-award__team">{a.team}</span>
+                  <span className="d-award__year">{a.year}</span>
                 </div>
                 <div className="d-award__more" aria-hidden={!open}>
                   <div className="d-award__more-inner">
@@ -498,7 +499,7 @@ export function DProfile({ s, go }: DCtx) {
             </div>
           </div>
           <div className="d-prof__col">
-            <span className="section-header">FILE</span>
+            <span className="section-header">SUMMARY</span>
             <div>
               {p.facts.map(([k, v]) => <SettingsRow key={k} label={k} value={v} />)}
             </div>

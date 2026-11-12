@@ -281,7 +281,7 @@ export interface Chapter {
   /** Square logo shown left of the name; a monogram shows when unset. */
   logo?: string;
   /** Second column: events organized, newest first. */
-  events?: { name: string; date: string; note?: string }[];
+  events?: { name: string; date: string; note?: string; href?: string }[];
 }
 
 /** Gallery slides for a chapter (four placeholders until images are added). */
@@ -427,21 +427,31 @@ export const LEADERSHIP: Chapter[] = [
     logo: '/media/logos/gdg.png',
     name: 'GDG Sheridan', num: '04', company: 'GOOGLE DEVELOPER GROUP SHERIDAN', section: 'COMMAND LOG',
     meta: 'Vice President · Sep 2025 to May 2026 · GDG on Campus Sheridan College',
-    cards: [
-      ['COMMUNITY', "Helped lead Sheridan's largest tech club, 800+ members, through 21 events."],
-      ['FOUR ROLES', 'Workshop Team Member (2024), Outreach Team Lead and Social Media Team Lead (2025), then Vice President.'],
-      ['WORKSHOPS', 'Organized a serverless system design workshop and a Dayforce technical interview workshop, and ran DSA and LeetCode sessions for 100+ attendees.'],
-      ['GOOGLE I/O', 'Selected by Google to attend Google I/O 2026.'],
-    ],
-    extra: 'Volunteered at DevFest 2024 with GDG Mississauga.',
+    cards: [],
+    btn: { label: 'GDG COMMUNITY PAGE', href: 'https://gdg.community.dev/gdg-on-campus-sheridan-college-trafalgar-road-campus-oakville-canada/' },
     events: [
-      { name: 'Sheridan Datathon 2025', date: 'Nov 2025', note: 'Founder. 200+ participants, 37 projects.' },
+      { name: 'Build with AI: BearHacks 2026', date: 'Apr 2026', note: '36-hour hackathon at Sheridan, co-directed.', href: 'https://gdg.community.dev/events/details/google-gdg-on-campus-sheridan-college-trafalgar-road-campus-oakville-canada-presents-build-with-ai-bearhacks-2026/' },
+      { name: 'Google Solutions Challenge Kick-Off', date: 'Mar 2026', note: 'Virtual kick-off for Sheridan teams.', href: 'https://gdg.community.dev/events/details/google-gdg-on-campus-sheridan-college-trafalgar-road-campus-oakville-canada-presents-google-solutions-challenge-kick-off/' },
+      { name: 'Founders Fireside Chat', date: 'Mar 2026', note: 'Fireside chat with founders and speed networking.', href: 'https://gdg.community.dev/events/details/google-gdg-on-campus-sheridan-college-trafalgar-road-campus-oakville-canada-presents-founders-fireside-chat/' },
+      { name: 'Hackville: Build with AI', date: 'Jan 2026', note: 'Canada\'s first college-run hackathon club, January 17 to 18.', href: 'https://gdg.community.dev/events/details/google-gdg-on-campus-sheridan-college-trafalgar-road-campus-oakville-canada-presents-hackville-build-with-ai/' },
+      { name: 'Intern Fireside Chat', date: 'Jan 2026', note: 'With SCSC: current and former student interns.', href: 'https://gdg.community.dev/events/details/google-gdg-on-campus-sheridan-college-trafalgar-road-campus-oakville-canada-presents-intern-fireside-chat/cohost-gdg-on-campus-sheridan-college-trafalgar-road-campus-oakville-canada/' },
+      { name: 'DevFest 2025', date: 'Nov 2025', note: 'GDG Mississauga x GDG Sheridan.', href: 'https://gdg.community.dev/events/details/google-gdg-mississauga-presents-gdg-mississauga-x-gdg-sheridan-devfest-2025/cohost-gdg-on-campus-sheridan-college-trafalgar-road-campus-oakville-canada/' },
+      { name: 'Sheridan Datathon 2025', date: 'Nov 2025', note: 'Founder. 24-hour data science and AI hackathon: 200+ participants, 37 projects.', href: 'https://gdg.community.dev/events/details/google-gdg-on-campus-sheridan-college-trafalgar-road-campus-oakville-canada-presents-sheridan-datathon-2025-build-with-ai/' },
       { name: 'Dayforce Technical Interview Workshop', date: 'Nov 2025', note: 'Organized with William Galvin.' },
-      { name: 'System Design Workshop', date: 'Sep 2025', note: 'Building scalable social features with serverless architectures.' },
-      { name: 'BearHacks 2025', date: 'Apr 2025', note: 'Co-organizer. Secured $1,750+ from Google and the TensorFlow prize track.' },
-      { name: 'Machine Learning with TensorFlow Workshop', date: 'Jan 2025', note: 'Google sponsored workshop at Hackville 2025.' },
-      { name: 'DSA and LeetCode Workshops', date: '2024 to 2025', note: '100+ attendees.' },
-      { name: 'DevFest 2024', date: 'Nov 2024', note: 'Volunteer, with GDG Mississauga.' },
+      { name: 'System Design: Why Your AI App Breaks at Scale', date: 'Oct 2025', note: 'Co-hosted workshop at The Marquee, Trafalgar campus.', href: 'https://gdg.community.dev/events/details/google-gdg-on-campus-sheridan-college-trafalgar-road-campus-oakville-canada-presents-system-design-workshop-why-your-ai-app-breaks-at-scale-and-how-to-fix-it/' },
+      { name: 'Design Workshop: Foundations of UI/UX', date: 'Oct 2025', note: 'Hands-on intro to UI/UX design.', href: 'https://gdg.community.dev/events/details/google-gdg-on-campus-sheridan-college-trafalgar-road-campus-oakville-canada-presents-design-workshop-foundations-of-uiux/cohost-gdg-on-campus-sheridan-college-trafalgar-road-campus-oakville-canada/' },
+      { name: 'Building Scalable Social Features with Serverless', date: 'Sep 2025', note: 'Workshop with Jatinder Bhola.', href: 'https://gdg.community.dev/events/details/google-gdg-on-campus-sheridan-college-trafalgar-road-campus-oakville-canada-presents-building-scalable-social-features-with-serverless-architecture/cohost-gdg-on-campus-sheridan-college-trafalgar-road-campus-oakville-canada/' },
+      { name: 'Foundations of Language Processing: Tokens to ASTs', date: 'Jul 2025', note: 'Virtual workshop.', href: 'https://gdg.community.dev/events/details/google-gdg-on-campus-sheridan-college-trafalgar-road-campus-oakville-canada-presents-foundations-of-language-processing-from-tokens-to-asts/cohost-gdg-on-campus-sheridan-college-trafalgar-road-campus-oakville-canada/' },
+      { name: 'Intro to Blockchain and Polkadot', date: 'Jun 2025', note: 'Beginner-friendly blockchain workshop.', href: 'https://gdg.community.dev/events/details/google-gdg-on-campus-sheridan-college-trafalgar-road-campus-oakville-canada-presents-blockchain-gdg-on-campus-sheridan-college-presents-intro-to-blockchain-and-polkadot/cohost-gdg-on-campus-sheridan-college-trafalgar-road-campus-oakville-canada/' },
+      { name: 'Build with AI: BearHacks 2025', date: 'Mar 2025', note: 'Sheridan\'s first hybrid hackathon. Secured $1,750+ from Google.', href: 'https://gdg.community.dev/events/details/google-gdg-on-campus-sheridan-college-trafalgar-road-campus-oakville-canada-presents-build-with-ai-bearhacks-2025/' },
+      { name: 'Google Solution Challenge 2025 Info Session', date: 'Mar 2025', note: 'Virtual: forming teams and tackling real-world problems.', href: 'https://gdg.community.dev/events/details/google-gdg-on-campus-sheridan-college-trafalgar-road-campus-oakville-canada-presents-google-solution-challenge-2025-north-america-info-session/' },
+      { name: 'Blind LeetCode 75 Jam', date: 'Mar 2025', note: 'Group session on the Blind 75 problems.', href: 'https://gdg.community.dev/events/details/google-gdg-on-campus-sheridan-college-trafalgar-road-campus-oakville-canada-presents-gdg-on-campus-sheridan-college-blind-leetcode-75-jam/' },
+      { name: 'Monthly Meetup: Kaggle Workshop', date: 'Mar 2025', note: 'Hands-on Kaggle AI and ML workshop, then a LeetCode competition.', href: 'https://gdg.community.dev/events/details/google-gdg-on-campus-sheridan-college-trafalgar-road-campus-oakville-canada-presents-gdg-on-campus-sheridan-college-monthly-meetup-build-with-ai-1/' },
+      { name: 'Kaggle Week 2: Build with AI', date: 'Feb 2025', note: 'Pandas and intermediate ML, part of the ML Study Jam.', href: 'https://gdg.community.dev/events/details/google-gdg-on-campus-sheridan-college-trafalgar-road-campus-oakville-canada-presents-gdg-on-campus-kaggle-week-2-build-with-ai/' },
+      { name: 'Monthly Meetup: ML Study Jam Kickoff', date: 'Feb 2025', note: 'Kickoff for the ML Study Jam and Kaggle path.', href: 'https://gdg.community.dev/events/details/google-gdg-on-campus-sheridan-college-trafalgar-road-campus-oakville-canada-presents-gdg-on-campus-sheridan-college-monthly-meetup-build-with-ai/' },
+      { name: 'Build with AI: Hackville 2025', date: 'Jan 2025', note: 'TensorFlow workshops at Sheridan\'s flagship 36-hour hackathon.', href: 'https://gdg.community.dev/events/details/google-gdg-on-campus-sheridan-college-trafalgar-road-campus-oakville-canada-presents-build-with-ai-hackville-2025/' },
+      { name: 'Monthly Meetup: Google Cloud Lab', date: 'Nov 2024', note: 'Google Cloud lab and Launchpad insights.', href: 'https://gdg.community.dev/events/details/google-gdg-on-campus-sheridan-college-trafalgar-road-campus-oakville-canada-presents-gdg-on-campus-sheridan-college-monthly-meetup/' },
+      { name: 'DevFest 2024', date: 'Nov 2024', note: 'GDG Mississauga x GDG Sheridan.', href: 'https://gdg.community.dev/events/details/google-gdg-mississauga-presents-gdg-mississauga-x-gdg-sheridan-devfest-2024/cohost-gdg-on-campus-sheridan-college-trafalgar-road-campus-oakville-canada/' },
     ],
     images: ['/media/linkedin/gdg/system-design-workshop-01-group.jpg', '/media/linkedin/gdg/system-design-workshop-02-room.jpg', '/media/linkedin/gdg/system-design-workshop-04-speaker.jpg', '/media/linkedin/gdg/system-design-workshop-05-audience.jpg', '/media/linkedin/gdg/dayforce-tech-interview-workshop-01.jpg', '/media/linkedin/gdg/dayforce-tech-interview-workshop-02.jpg', '/media/linkedin/gdg/devfest-2024-talk.jpg', '/media/linkedin/misc/google-io-2026-06-gdg.jpg'],
   },
@@ -666,7 +676,7 @@ export const HOBBIES: Hobby[] = [
   { label: 'Piano', images: [] },
   { label: 'Cooking', images: [] },
   { label: 'Running', images: [] },
-  { label: 'Music', detail: 'Metal rock · Indie rock', href: SOCIAL.spotify, site: 'Spotify' },
+  { label: 'Music', detail: 'Indie Rock · Metal Rock', href: SOCIAL.spotify, site: 'Spotify' },
   {
     label: 'Gaming',
     items: [{ name: 'Titanfall 2', href: SOCIAL.youtube, site: 'YouTube' }, { name: 'The Last Of Us' }, { name: 'and more' }],
