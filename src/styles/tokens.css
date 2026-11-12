@@ -145,10 +145,11 @@
   --c-portrait-bg: oklch(0.209 0.047 var(--hue-alert));
 
   /* ---------------------------------------------------- type */
-  /* Saira: a clean, slightly sporty sans in matched widths; JetBrains Mono for labels and numbers. */
+  /* Saira: a clean, slightly sporty sans in matched widths. Small labels and numbers use it too,
+     with tabular figures so dates and counters still line up. */
   --f-ui: 'Saira Semi Condensed', system-ui, sans-serif;
   --f-display: 'Saira Condensed', 'Saira Semi Condensed', sans-serif;
-  --f-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --f-mono: 'Saira Semi Condensed', system-ui, sans-serif;
   --ts: 0 1px 3px rgba(0, 0, 0, 0.45);
 
   /* hatch used by media placeholders */
@@ -195,3 +196,5 @@ button {
   outline: 1px solid var(--c-amber);
   outline-offset: 2px;
 }
+/* Labels that used a monospace font keep aligned digits. */
+body { font-variant-numeric: tabular-nums; }
