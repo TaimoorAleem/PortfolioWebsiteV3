@@ -23,7 +23,7 @@
 .d-frame { position: absolute; width: 1440px; height: 900px; }
 
 /* scenes */
-.d-scene { position: absolute; inset: -60px; filter: blur(24px); transition: opacity 400ms ease; }
+.d-scene { position: absolute; inset: -60px; filter: blur(24px) hue-rotate(var(--page-hue)); transition: opacity 400ms ease; }
 .d-scene--a {
   background:
     radial-gradient(circle at calc(var(--s1x) + var(--d1x) * var(--drift)) calc(var(--s1y) + var(--d1y) * var(--drift)), oklch(var(--glow-warm) / calc(0.55 * var(--glow))) 0, oklch(var(--glow-warm) / 0) 18%),

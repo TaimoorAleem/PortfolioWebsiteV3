@@ -41,8 +41,15 @@ const MOBILE: Record<string, Layout> = {
   blogs:      { s: [[92, 88], [10, 40], [70, 8]] },
 };
 
-function toVars({ s }: Layout): CSSProperties {
-  const out: Record<string, string> = {};
+// Each page nudges the background hue a little (degrees, applied as hue-rotate on the scene),
+// so pages feel distinct while keeping the theme colour. Glides between pages like the glows.
+const PAGE_HUE: Record<string, number> = {
+  home: 0, profile: -10, experience: 10, leadership: 18, projects: -16, skills: 8,
+  awards: 14, about: 14, blogs: -22, contact: -6, resume: 5,
+};
+
+function toVars({ s }: Layout, screen: string): CSSProperties {
+  const out: Record<string, string> = { '--page-hue': `${PAGE_HUE[screen] ?? 0}deg` };
   s.forEach(([x, y], i) => {
     out[`--s${i + 1}x`] = `${x}%`;
     out[`--s${i + 1}y`] = `${y}%`;
@@ -50,5 +57,5 @@ function toVars({ s }: Layout): CSSProperties {
   return out as CSSProperties;
 }
 
-export const desktopGlows = (screen: string) => toVars(DESKTOP[screen] ?? DESKTOP.home);
-export const mobileGlows = (screen: string) => toVars(MOBILE[screen] ?? MOBILE.home);
+export const desktopGlows = (screen: string) => toVars(DESKTOP[screen] ?? DESKTOP.home, screen);
+export const mobileGlows = (screen: string) => toVars(MOBILE[screen] ?? MOBILE.home, screen);

@@ -415,7 +415,7 @@ export const leadershipIndex = (name: string) => Math.max(0, LEADERSHIP.findInde
 export const LEADERSHIP: Chapter[] = [
   {
     logo: '/media/logos/gdg.png',
-    name: 'GDG Sheridan', num: '00', company: 'GOOGLE DEVELOPER GROUP SHERIDAN', section: 'COMMAND LOG',
+    name: 'GDG Sheridan', num: '', company: 'GOOGLE DEVELOPER GROUP SHERIDAN', section: 'COMMAND LOG',
     meta: 'Vice President',
     cards: [],
     btn: { label: 'GDG COMMUNITY PAGE', href: 'https://gdg.community.dev/gdg-on-campus-sheridan-college-trafalgar-road-campus-oakville-canada/' },

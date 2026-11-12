@@ -158,7 +158,7 @@ export function DHome({ s, set, activate, go }: DCtx) {
           {!MEDIA.latest && <span className="d-latest__cap">ember team photo</span>}
         </button>
         <div className="d-latest__body">
-          <span className="d-latest__title">IgnisXR: Ember, an XR helmet system for firefighters</span>
+          <span className="d-latest__title">Ember, an XR helmet system for firefighters</span>
           <span className="d-latest__sub">Top 3 in North America at the Google Solution Challenge.</span>
         </div>
         <div className="d-latest__tiles">
@@ -168,7 +168,7 @@ export function DHome({ s, set, activate, go }: DCtx) {
           </button>
           <button type="button" className="btn-reset d-latest__tile" onClick={() => go(openProjectPatch('cricket', s.projTab))}>
             {MEDIA.cricket && <img className="d-img" src={MEDIA.cricket} alt="" />}
-            <span>AI Cricket Coach: first place capstone</span>
+            <span>AI Cricket Coach: First Place Capstone</span>
           </button>
         </div>
       </div>

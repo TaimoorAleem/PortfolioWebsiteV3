@@ -12,7 +12,7 @@
 }
 
 /* scenes: base gradient + glow + vignette */
-.scene { position: absolute; inset: 0; transition: opacity 400ms ease; overflow: hidden; }
+.scene { position: absolute; inset: 0; transition: opacity 400ms ease; overflow: hidden; filter: hue-rotate(var(--page-hue)); }
 .scene::before, .scene::after { content: ''; position: absolute; }
 .scene--home { background: var(--scene-home); }
 .scene--home::before {
