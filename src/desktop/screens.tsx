@@ -1,10 +1,10 @@
 import { useEffect, useRef, type MouseEvent, type ReactNode } from 'react';
 import {
-  AbilityCard, CutCornerButton, ListBar, Meter, Trophy, TrophyCount, ListGroupHeader, MenuItem, SettingsRow, Slideshow,
+  AbilityCard, CutCornerButton, ListBar, Meter, SocialIcons, Trophy, TrophyCount, ListGroupHeader, MenuItem, SettingsRow, Slideshow,
   SubOptionRow,
 } from '../components';
 import {
-  AWARDS, BLOGS, EXPERIENCE, LEADERSHIP, LINKS, MEDIA, NOW_WORKING, PROFILE, PROJECT_TABS, RESUME, SKILLS,
+  AWARDS, BLOGS, PROFILE_LINKS, EXPERIENCE, LEADERSHIP, LINKS, MEDIA, NOW_WORKING, PROFILE, PROJECT_TABS, RESUME, SKILLS,
   awardSlides, leadershipIndex, blogCover, blogDate, blogSlides, chapterSlides, projectAwards, projectById, projectLinks, projectSlides, skillUse, tabIds, type Chapter,
 } from '../data';
 import { EventRow } from '../shared/EventRow';
@@ -473,6 +473,7 @@ export function DProfile({ s, go }: DCtx) {
         <span className="d-id__name">{p.name}</span>
         <span className="d-blue">{p.role}</span>
         <span className="d-id__status"><span className="d-id__dot" />{p.status}</span>
+        <SocialIcons links={PROFILE_LINKS} />
       </div>
 
       <div className="d-prof">

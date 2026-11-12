@@ -662,6 +662,14 @@ export const SOCIAL = {
   youtube: 'https://youtube.com/@taimoorrr',
 };
 
+/** Icon links under the profile portrait. */
+export const PROFILE_LINKS = [
+  { id: 'linkedin', label: 'LinkedIn', href: 'https://www.linkedin.com/in/taimooraleem/' },
+  { id: 'github', label: 'GitHub', href: GH },
+  { id: 'devpost', label: 'Devpost', href: 'https://devpost.com/TaimoorAleem' },
+  { id: 'medium', label: 'Medium', href: 'https://medium.com/@taimooraleem01' },
+];
+
 export interface Hobby {
   label: string;
   /** Small line under the label. */

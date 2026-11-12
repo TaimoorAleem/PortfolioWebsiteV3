@@ -15,3 +15,4 @@ export * from './Slideshow';
 export { cls } from './cls';
 export { Meter } from './Meter';
 export { Trophy, TrophyCount } from './Trophy';
+export { SocialIcons, type SocialLink } from './SocialIcons';

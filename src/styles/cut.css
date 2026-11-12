@@ -33,3 +33,12 @@
 .list-bar.is-selected .trophy-count { color: var(--c-on-selected); }
 .menu-item::before { transition: none !important; }
 .list-bar__trailing { padding-left: 10px; }
+
+/* Profile link icons */
+.social { display: flex; gap: 6px; margin-top: 10px; }
+.social__btn {
+  --cut: 7px; width: 34px; height: 34px; display: flex; align-items: center; justify-content: center;
+  background: var(--c-bar); color: rgba(255, 255, 255, 0.85);
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, 0 100%);
+}
+.social__btn:hover, .social__btn:focus-visible { background: var(--c-selected); color: var(--c-on-selected); outline: none; }

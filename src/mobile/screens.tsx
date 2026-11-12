@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import {
-  AbilityCard, ChapterCard, CutCornerButton, InfoBox, ListBar, Meter, Trophy, TrophyCount, MenuItem,
+  AbilityCard, ChapterCard, CutCornerButton, InfoBox, ListBar, Meter, SocialIcons, Trophy, TrophyCount, MenuItem,
   SectionHeader, SettingsRow, Slideshow, SubOptionRow,
 } from '../components';
 import {
-  AWARDS, BLOGS, EMAIL, EXPERIENCE, LEADERSHIP, LINKS, MEDIA, NOW_WORKING, PROFILE, PROJECT_TABS, RESUME, SKILLS,
+  AWARDS, BLOGS, PROFILE_LINKS, EMAIL, EXPERIENCE, LEADERSHIP, LINKS, MEDIA, NOW_WORKING, PROFILE, PROJECT_TABS, RESUME, SKILLS,
   awardSlides, blogCover, blogDate, blogSlides, chapterSlides, projectAwards, projectById, projectLinks, projectSlides, skillUse, tabIds, techCode,
 } from '../data';
 import { Gallery, Hobbies } from '../shared/Hobbies';
@@ -364,6 +364,7 @@ export function ProfileScreen({ s, go }: Ctx) {
             <span className="m-id__name">{p.name}</span>
             <span className="m-blue">{p.role}</span>
             <span className="m-id__status"><span className="m-id__dot" />{p.status}</span>
+            <SocialIcons links={PROFILE_LINKS} />
           </div>
         </div>
         {p.bio && <p className="m-bio">{p.bio}</p>}
