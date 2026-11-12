@@ -45,7 +45,6 @@
   background: radial-gradient(circle at calc(var(--s1x) + var(--d1x) * var(--drift)) calc(var(--s1y) + var(--d1y) * var(--drift)), oklch(var(--glow-spark) / calc(0.5 * var(--glow))) 0, oklch(var(--glow-spark) / 0) 3%), radial-gradient(ellipse at calc(var(--s2x) + var(--d2x) * var(--drift)) calc(var(--s2y) + var(--d2y) * var(--drift)), oklch(var(--glow-comms) / calc(0.35 * var(--glow))) 0, oklch(var(--glow-comms) / 0) 40%), radial-gradient(ellipse at 50% 50%, rgba(0, 0, 0, 0) 30%, rgba(0, 0, 0, 0.6) 100%);
 }
 
-.m-player { position: absolute; right: 20px; top: 24px; z-index: 3; }
 
 .m-screen {
   position: relative;
@@ -65,7 +64,7 @@
 .m-stage[data-phase='out'] { opacity: 0; transform: translateX(-12px); }
 .m-stage[data-phase='pre'] { opacity: 0; transform: translateX(12px); transition: none; }
 
-.m-head { flex: none; padding-top: 64px; }
+.m-head { flex: none; padding-top: 40px; }
 .m-title {
   margin: 0;
   padding: 0 20px;

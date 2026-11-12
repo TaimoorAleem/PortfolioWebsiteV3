@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { LoadingScreen, MobilePromptBar, PlayerTag } from '../components';
+import { LoadingScreen, MobilePromptBar } from '../components';
 import { mobileGlows } from '../theme/glowLayout';
 import { INITIAL, PARENT, fromHash, toHash, type AppState, type ScreenId } from './state';
 import {
@@ -145,7 +145,6 @@ export function MobileApp({ routing = true, boot = routing, initial }: MobileApp
       {(['home', 'haze', 'dark', 'comms'] as const).map((k) => (
         <div key={k} className={`scene scene--${k}`} style={{ opacity: scene === k ? 1 : 0 }} aria-hidden />
       ))}
-      <div className="m-player"><PlayerTag onClick={() => go({ screen: 'profile' })} /></div>
       <div className="m-screen">
         <main className="m-stage" data-phase={phase} key={s.screen}>
           <Screen {...ctx} />
