@@ -145,11 +145,11 @@
   --c-portrait-bg: oklch(0.209 0.047 var(--hue-alert));
 
   /* ---------------------------------------------------- type */
-  /* Saira: a clean, slightly sporty sans in matched widths. Small labels and numbers use it too,
-     with tabular figures so dates and counters still line up. */
-  --f-ui: 'Saira Semi Condensed', system-ui, sans-serif;
-  --f-display: 'Saira Condensed', 'Saira Semi Condensed', sans-serif;
-  --f-mono: 'Saira Semi Condensed', system-ui, sans-serif;
+  /* Saira (regular width): clean and slightly sporty. One family everywhere; labels use
+     tabular figures so dates and counters still line up. */
+  --f-ui: 'Saira', system-ui, sans-serif;
+  --f-display: 'Saira', system-ui, sans-serif;
+  --f-mono: 'Saira', system-ui, sans-serif;
   --ts: 0 1px 3px rgba(0, 0, 0, 0.45);
 
   /* hatch used by media placeholders */
