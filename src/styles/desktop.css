@@ -239,7 +239,7 @@
   width: 84px; height: 84px; flex: none; display: flex; align-items: center; justify-content: center; overflow: hidden;
   background: rgba(255, 255, 255, 0.92); clip-path: polygon(0 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%);
 }
-.d-chapter__logo img { width: 72%; height: 72%; object-fit: contain; image-rendering: auto; }
+.d-chapter__logo img { width: 100%; height: 100%; object-fit: contain; }
 .d-chapter__logo span { font-family: var(--f-display); font-weight: 700; font-size: 48px; color: var(--c-on-selected); text-shadow: none; }
 .d-chapter__text { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
 .d-chapter__company { font-family: var(--f-display); font-weight: 700; font-size: 44px; line-height: 48px; letter-spacing: 0.02em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }

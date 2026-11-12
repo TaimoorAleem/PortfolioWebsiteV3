@@ -381,7 +381,7 @@
   width: 56px; height: 56px; flex: none; display: flex; align-items: center; justify-content: center; overflow: hidden;
   background: rgba(255, 255, 255, 0.92); clip-path: polygon(0 0, 100% 0, 100% calc(100% - 9px), calc(100% - 9px) 100%, 0 100%);
 }
-.chapter__logo img { width: 72%; height: 72%; object-fit: contain; }
+.chapter__logo img { width: 100%; height: 100%; object-fit: contain; }
 .chapter__logo span { font-family: var(--f-display); font-weight: 700; font-size: 32px; color: var(--c-on-selected); text-shadow: none; }
 .chapter--logo .chapter__text { flex: 1; position: relative; z-index: 1; }
 .chapter--logo .chapter__num { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); width: auto; margin: 0; z-index: 0; opacity: 0.5; }
