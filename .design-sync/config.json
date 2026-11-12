@@ -1,0 +1,21 @@
+{
+  "projectId": "267b7b95-9e06-4fc7-b396-40bb8fbd27eb",
+  "pkg": "portfolio-ui",
+  "globalName": "PortfolioUI",
+  "shape": "package",
+  "buildCmd": "node .design-sync/build-lib.mjs",
+  "entry": "./ds-lib/index.js",
+  "srcDir": "../src/components",
+  "cssEntry": "styles.css",
+  "overrides": {
+    "LoadingScreen": {
+      "cardMode": "single",
+      "viewport": "468x368"
+    },
+    "SlideshowOverlay": {
+      "cardMode": "single",
+      "viewport": "768x648"
+    }
+  },
+  "readmeHeader": ".design-sync/conventions.md"
+}

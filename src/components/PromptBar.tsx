@@ -17,7 +17,7 @@ export function PromptBar({ prompts }: { prompts: Prompt[] }) {
   );
 }
 
-/** Mobile bottom bar: "Tap Select" hint plus either © or a Back control. */
+/** Mobile bottom bar: a Back control on inner screens, or the © line on the home screen. */
 export function MobilePromptBar({ onBack }: { onBack?: () => void }) {
   return (
     <footer className="m-footer">
