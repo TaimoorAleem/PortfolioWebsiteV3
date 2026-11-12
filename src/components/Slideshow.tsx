@@ -88,11 +88,13 @@ interface SlideshowOverlayProps {
   slides: Slide[];
   /** Slide to open on. */
   start?: number;
+  /** Phone layout: the image spans the screen width at its natural height; tall images scroll. */
+  fitWidth?: boolean;
   onClose: () => void;
 }
 
 /** Full-screen slideshow. Esc closes, ←/→ change slide; it takes the keys before the page does. */
-export function SlideshowOverlay({ title, subtitle, slides, start = 0, onClose }: SlideshowOverlayProps) {
+export function SlideshowOverlay({ title, subtitle, slides, start = 0, fitWidth, onClose }: SlideshowOverlayProps) {
   const [i, setI] = useState(start);
   const n = slides.length;
   const closeRef = useRef<HTMLButtonElement>(null);
@@ -112,7 +114,7 @@ export function SlideshowOverlay({ title, subtitle, slides, start = 0, onClose }
   }, [n, onClose]);
 
   return (
-    <div className="ss-overlay" role="dialog" aria-modal="true" aria-label={title} onClick={onClose}>
+    <div className={cls('ss-overlay', fitWidth && 'ss-overlay--fit')} role="dialog" aria-modal="true" aria-label={title} onClick={onClose}>
       <div className="ss-overlay__box" onClick={(e) => e.stopPropagation()}>
         <div className="ss-overlay__head">
           <div className="ss-overlay__titles">
@@ -123,7 +125,7 @@ export function SlideshowOverlay({ title, subtitle, slides, start = 0, onClose }
             <span className="prompt__key">Esc</span>Close
           </button>
         </div>
-        <Slideshow slides={slides} index={i} onIndex={setI} contain />
+        <Slideshow slides={slides} index={i} onIndex={setI} contain fitWidth={fitWidth} />
       </div>
     </div>
   );

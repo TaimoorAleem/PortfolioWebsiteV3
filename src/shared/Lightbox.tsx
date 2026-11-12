@@ -23,7 +23,11 @@ export function useLightbox(): { open: (title: string, slides: Slide[], start?: 
     <>
       <span ref={anchor} hidden />
       {state && host && createPortal(
-        <SlideshowOverlay title={state.title} subtitle={state.subtitle} slides={state.slides} start={state.start} onClose={() => setState(null)} />,
+        <SlideshowOverlay
+          title={state.title} subtitle={state.subtitle} slides={state.slides} start={state.start}
+          fitWidth={host.classList.contains('m-app')}
+          onClose={() => setState(null)}
+        />,
         host,
       )}
     </>
