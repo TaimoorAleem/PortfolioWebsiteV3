@@ -20,7 +20,7 @@
   --hue-alt: calc(var(--hue) + var(--alt-shift));
   --vivid: 1;
   /* background saturation: 0 grey · 1 default · 1.5 punchy */
-  --light: 0.5;
+  --light: 0.7;
   /* background brightness: 0.8 darker · 1 default · 1.2 lighter */
   --glow: 1;
   /* strength of the soft lights/bokeh: 0 off · 1 default */
