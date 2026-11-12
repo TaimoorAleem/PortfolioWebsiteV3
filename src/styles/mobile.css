@@ -230,7 +230,7 @@
 .m-award__img img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 
 /* ---------- profile ---------- */
-.m-id { display: flex; gap: 14px; align-items: center; }
+.m-id { display: flex; gap: 14px; align-items: center; padding-top: 5px; } /* room for the portrait frame, which sits 4px outside the photo */
 .m-id__portrait {
   position: relative; width: 104px; height: 124px; flex: none; overflow: hidden;
   background: var(--hatch), var(--c-media); display: flex; align-items: center; justify-content: center;

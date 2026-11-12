@@ -672,7 +672,7 @@ export const PROFILE = {
     { value: '22', label: 'Sponsors closed', caption: 'BearHacks 2026 ', meter: 9 },
   ],
   facts: [
-    ['Based in', 'Toronto, ON (GTA)'],
+    ['Based in', 'Toronto, ON'],
     ['Education', "Hon. BCS, Data Analytics · Sheridan '26"],
     ['Focus', 'Backend Systems · ML · CV'],
     ['Honours', 'Valedictorian Nominee'],
