@@ -5,7 +5,7 @@ import {
 } from '../components';
 import {
   AWARDS, BLOGS, EXPERIENCE, LEADERSHIP, LINKS, MEDIA, NOW_WORKING, PROFILE, PROJECT_TABS, RESUME, SKILLS,
-  awardSlides, blogCover, blogDate, blogSlides, chapterSlides, projectAwards, projectById, projectLinks, projectSlides, skillUse, tabIds, type Chapter,
+  awardSlides, leadershipIndex, blogCover, blogDate, blogSlides, chapterSlides, projectAwards, projectById, projectLinks, projectSlides, skillUse, tabIds, type Chapter,
 } from '../data';
 import { EventRow } from '../shared/EventRow';
 import { Gallery, Hobbies } from '../shared/Hobbies';
@@ -162,7 +162,7 @@ export function DHome({ s, set, activate, go }: DCtx) {
           <span className="d-latest__sub">Top 3 in North America at the Google Solution Challenge.</span>
         </div>
         <div className="d-latest__tiles">
-          <button type="button" className="btn-reset d-latest__tile" onClick={() => go({ screen: 'leadership', leadIdx: 0 })}>
+          <button type="button" className="btn-reset d-latest__tile" onClick={() => go({ screen: 'leadership', leadIdx: leadershipIndex('BearHacks 2026') })}>
             {MEDIA.bearhacks && <img className="d-img" src={MEDIA.bearhacks} alt="" />}
             <span>BearHacks 2026: Mississauga's largest hackathon</span>
           </button>
