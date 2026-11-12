@@ -21,7 +21,6 @@ export function PromptBar({ prompts }: { prompts: Prompt[] }) {
 export function MobilePromptBar({ onBack }: { onBack?: () => void }) {
   return (
     <footer className="m-footer">
-      <span className="prompt"><span className="prompt__tap" aria-hidden />Tap Select</span>
       {onBack ? (
         <button type="button" className="btn-reset m-footer__back" onClick={onBack}>
           <span className="prompt__chev" aria-hidden />Back

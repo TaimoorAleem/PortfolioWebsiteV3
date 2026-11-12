@@ -51,7 +51,7 @@ export interface Project {
 export const GH = 'https://github.com/TaimoorAleem';
 export const EMAIL = 'taimooraleem01@gmail.com';
 /** Google Drive file id of the résumé. The site always shows the file's current version. */
-const RESUME_DRIVE_ID = '1ih7eesc2ERyomhJ1jvsg87G3FWbXinxY';
+const RESUME_DRIVE_ID = '1ih7eesc2ERyomhJ1jvsg87G3FWbXinxY'; // also in api/resume-source.js
 
 /**
  * Site-wide images. Drop files in /public/media and set the path here ('' = show the placeholder).
@@ -591,7 +591,9 @@ export const blogDate = (d: string) =>
 export const RESUME = {
   label: '',
   note: '',
-  /** Embedded viewer. */
+  /** Same PDF served from this site (api/resume.js), shown in the browser's PDF viewer at full width on desktop. */
+  inline: '/api/resume#view=FitH',
+  /** Google Drive's embedded viewer (used on mobile, where browsers can't show PDFs in a frame). */
   preview: `https://drive.google.com/file/d/${RESUME_DRIVE_ID}/preview`,
   /** Opens in Drive. */
   view: `https://drive.google.com/file/d/${RESUME_DRIVE_ID}/view`,
@@ -728,8 +730,6 @@ export const hobbySlides = (h: Hobby): SlideData[] =>
 export const LINKS: { label: string; value: string; short: string; href: string; gold?: boolean }[] = [
   { label: 'Email', value: EMAIL, short: EMAIL, href: `mailto:${EMAIL}` },
   { label: 'LinkedIn', value: 'linkedin.com/in/TaimoorAleem', short: 'in/TaimoorAleem', href: 'https://linkedin.com/in/TaimoorAleem' },
-  { label: 'GitHub', value: 'github.com/TaimoorAleem', short: 'TaimoorAleem', href: GH },
-  { label: 'Résumé', value: 'View and download', short: 'View', href: '#/resume', gold: true },
 ];
 
 /** Home page "Currently working on" list. `project` opens that project; `leadership` opens that Leadership chapter. */

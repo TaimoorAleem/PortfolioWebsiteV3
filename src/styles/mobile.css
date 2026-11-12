@@ -109,7 +109,8 @@
 .m-strip > * { flex: none; scroll-snap-align: start; }
 .m-strip--cards { gap: 16px; }
 
-.m-filter { margin: 0 20px 10px -8px; }
+/* Tab pills line up with the list cells below; a scrolling row runs to the screen edge like the list. */
+.m-filter { margin: 0 0 10px; }
 
 /* ---------- home ---------- */
 .m-home {

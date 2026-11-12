@@ -534,7 +534,7 @@ export function DResume(_: DCtx) {
           </div>
         </div>
         <div className="d-resume__viewer">
-          <iframe title="Résumé" src={r.preview} allow="autoplay" />
+          <iframe title="Résumé" src={r.inline} />
         </div>
       </div>
     </div>
