@@ -531,6 +531,26 @@ export interface Blog {
  *  public/media/blogs/ and point `cover` / `images` at '/media/blogs/<file>' to host them here. */
 export const BLOGS: Blog[] = [
   {
+    id: 'datathon-behind-the-scenes',
+    title: 'Organizing Sheridan Datathon 2025: A Behind-The-Scenes Recap',
+    short: 'Datathon Recap',
+    date: '2025-12-01',
+    site: 'LinkedIn',
+    href: 'https://www.linkedin.com/pulse/organizing-sheridan-datathon-2025-behind-the-scenes-aleem-dcdwe/',
+    quote: 'Some organizers worked up to 20 hours a week for several months just to bring this 2-day event to you.',
+    summary:
+      'How Sheridan Datathon 2025 went from an idea on a call in April to the largest event GDG Sheridan has hosted: ' +
+      '200+ participants, 37 projects, 50+ organizers and volunteers and $3,750 in prizes. ' +
+      'It covers building the team, switching from a hackathon to a datathon, the SD card branding, outreach, ' +
+      'sponsorships and catering, both event days, and a judging process that pushed the closing ceremony to 9 PM.',
+    sections: [
+      'Team Formation', 'Ideation', 'Design', 'Outreach', 'Sponsorships', 'Catering',
+      'Marketing', 'Day 1: Saturday', 'Day 2: Sunday', 'Demos and Judging', 'Epilogue',
+    ],
+    cover: '/media/linkedin/datathon/article-01-cover.jpg',
+    images: [{ src: '/media/linkedin/datathon/article-02-logo.jpg', label: 'The SD card logo' }, { src: '/media/linkedin/datathon/article-03-official-poster.jpg', label: 'Official event poster' }, { src: '/media/linkedin/datathon/article-08-judging-criteria.jpg', label: 'Judging criteria' }, { src: '/media/linkedin/datathon/article-10-opening-ceremony.jpg', label: 'Opening ceremony at max capacity' }, { src: '/media/linkedin/datathon/article-11-announcing-theme.jpg', label: 'Announcing the theme' }, { src: '/media/linkedin/datathon/article-23-dayforce-booth.jpg', label: 'Dayforce booth' }, { src: '/media/linkedin/datathon/article-30-demos.jpg', label: 'Project demos' }, { src: '/media/linkedin/datathon/article-34-lead-organizers.jpg', label: 'Lead organizers' }],
+  },
+  {
     id: 'capstone-journey',
     title: 'My Capstone’s Journey from EOI to the First Place Award',
     short: 'Capstone Journey',
