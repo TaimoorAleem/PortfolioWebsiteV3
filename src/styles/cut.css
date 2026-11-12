@@ -32,3 +32,4 @@
 .trophy-count { display: inline-flex; align-items: center; gap: 1px; color: var(--c-gold); }
 .list-bar.is-selected .trophy-count { color: var(--c-on-selected); }
 .menu-item::before { transition: none !important; }
+.list-bar__trailing { padding-left: 10px; }

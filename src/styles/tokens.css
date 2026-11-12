@@ -145,9 +145,10 @@
   --c-portrait-bg: oklch(0.209 0.047 var(--hue-alert));
 
   /* ---------------------------------------------------- type */
-  --f-ui: 'Titillium Web', system-ui, sans-serif;
-  --f-display: 'Encode Sans Semi Condensed', 'Titillium Web', sans-serif;
-  --f-mono: 'Share Tech Mono', ui-monospace, monospace;
+  /* Saira: a clean, slightly sporty sans in matched widths; JetBrains Mono for labels and numbers. */
+  --f-ui: 'Saira Semi Condensed', system-ui, sans-serif;
+  --f-display: 'Saira Condensed', 'Saira Semi Condensed', sans-serif;
+  --f-mono: 'JetBrains Mono', ui-monospace, monospace;
   --ts: 0 1px 3px rgba(0, 0, 0, 0.45);
 
   /* hatch used by media placeholders */
