@@ -16,6 +16,8 @@ interface SlideshowProps {
   ratio?: string;
   /** Fit images inside the frame instead of filling it. */
   contain?: boolean;
+  /** Show each image at the full width with its natural height (no cropping or letterboxing). */
+  fitWidth?: boolean;
   /** Clicking the current slide calls this (e.g. to open a full-screen view). */
   onOpen?: (i: number) => void;
   className?: string;
@@ -23,7 +25,7 @@ interface SlideshowProps {
 }
 
 /** Image carousel: arrows, dots, counter and swipe. Arrows and dots hide with one slide. */
-export function Slideshow({ slides, index, onIndex, ratio = '16 / 9', contain, onOpen, className, style }: SlideshowProps) {
+export function Slideshow({ slides, index, onIndex, ratio = '16 / 9', contain, fitWidth, onOpen, className, style }: SlideshowProps) {
   const [own, setOwn] = useState(0);
   const n = slides.length;
   const cur = Math.min(index ?? own, n - 1);
@@ -33,11 +35,12 @@ export function Slideshow({ slides, index, onIndex, ratio = '16 / 9', contain, o
     onIndex?.(next);
   };
   const touch = useRef<number | null>(null);
+  const fit = fitWidth && !!slides[cur]?.src;
 
   return (
     <div
-      className={cls('ss', contain && 'ss--contain', className)}
-      style={{ aspectRatio: ratio, ...style }}
+      className={cls('ss', contain && 'ss--contain', fit && 'ss--fit', className)}
+      style={{ aspectRatio: fit ? undefined : ratio, ...style }}
       onTouchStart={(e) => { touch.current = e.touches[0].clientX; }}
       onTouchEnd={(e) => {
         if (touch.current === null) return;
@@ -46,13 +49,18 @@ export function Slideshow({ slides, index, onIndex, ratio = '16 / 9', contain, o
         if (Math.abs(dx) > 40) go(cur + (dx < 0 ? 1 : -1));
       }}
     >
-      <div className="ss__track" style={{ transform: `translateX(${-cur * 100}%)` }}>
-        {slides.map((s, i) => (
-          <div key={i} className="ss__slide" aria-hidden={i !== cur}>
-            {s.src ? <img src={s.src} alt={s.label} loading="lazy" /> : <span className="ss__label">{s.label}</span>}
-          </div>
-        ))}
-      </div>
+      {fit ? (
+        // Natural height: only the current image is laid out, so the frame takes its shape.
+        <div className="ss__fit"><img key={cur} src={slides[cur].src} alt={slides[cur].label} /></div>
+      ) : (
+        <div className="ss__track" style={{ transform: `translateX(${-cur * 100}%)` }}>
+          {slides.map((s, i) => (
+            <div key={i} className="ss__slide" aria-hidden={i !== cur}>
+              {s.src ? <img src={s.src} alt={s.label} loading="lazy" /> : <span className="ss__label">{s.label}</span>}
+            </div>
+          ))}
+        </div>
+      )}
       {onOpen && (
         <button type="button" className="btn-reset ss__open" aria-label={`View ${slides[cur]?.label ?? 'image'} full screen`} onClick={() => onOpen(cur)}>
           <span className="ss__open-tag">⤢ VIEW</span>

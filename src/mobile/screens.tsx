@@ -167,7 +167,7 @@ export function ProjectsScreen({ s, set, go }: Ctx) {
       {p ? (
         <div className="m-body m-body--tight" key={p.id}>
           <span className="m-name">{p.short}</span>
-          <Slideshow contain slides={projectSlides(p)} onOpen={(i) => lightbox.open(p.short, projectSlides(p), i, p.gold)} />
+          <Slideshow fitWidth slides={projectSlides(p)} onOpen={(i) => lightbox.open(p.short, projectSlides(p), i, p.gold)} />
           <div className="m-stack6">
             <span className="m-gold m-gold--lg">{p.gold}</span>
             <span className="m-blue">{p.blue}</span>

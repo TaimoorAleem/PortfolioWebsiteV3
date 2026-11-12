@@ -282,3 +282,12 @@
 /* Experience: events list (GDG) */
 .m-events { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 6px; }
 .m-events .d-event { grid-template-columns: 64px minmax(0, 1fr); }
+
+/* Mobile: images span the full width at their natural height, so portrait shots aren't cropped. */
+.m-gallery { grid-template-columns: 1fr; }
+.m-gallery .gallery__thumb:has(img) { aspect-ratio: auto; display: block; }
+.m-gallery .gallery__thumb img { position: static; display: block; width: 100%; height: auto; }
+.m-award__img:has(img) { aspect-ratio: auto; display: block; }
+.m-award__img img { position: static; display: block; width: 100%; height: auto; }
+.m-app .blog-cover:has(img) { aspect-ratio: auto; display: block; }
+.m-app .blog-cover img { position: static; display: block; width: 100%; height: auto; }
