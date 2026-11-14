@@ -259,6 +259,7 @@ export function DesktopApp({ grain = true, bootScreen = true }: { grain?: boolea
               xp={PROFILE.quest.done}
               xpOf={PROFILE.quest.of}
               xpLabel={`Quest: ${PROFILE.quest.name}, phase ${PROFILE.quest.done} of ${PROFILE.quest.of}`}
+              xpCaption={`QUEST: ${PROFILE.quest.name.toUpperCase()} ${PROFILE.quest.done}/${PROFILE.quest.of}`}
               onXpClick={() => go(openProjectPatch(PROFILE.quest.project, ref.current.projTab))}
             />
           </div>

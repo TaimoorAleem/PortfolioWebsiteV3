@@ -41,6 +41,8 @@ interface PlayerBlockProps {
   xpOf?: number;
   /** What the bar tracks; shown as a tooltip and read by screen readers (e.g. "Quest: Proprio, phase 1 of 6"). */
   xpLabel?: string;
+  /** Short caption on the same row, left of the bar (e.g. "PROPRIO 1/6"). */
+  xpCaption?: string;
   /** Makes the bar and its label a button (e.g. open Awards). */
   onXpClick?: () => void;
   levelSuffix?: string;
@@ -48,7 +50,7 @@ interface PlayerBlockProps {
   onClick?: () => void;
 }
 
-export function PlayerBlock({ name = 'TAIMOOR', initials = 'TA', status = 'Toronto, ON', level, xp = 8, xpOf = 10, xpLabel, onXpClick, levelSuffix, onClick }: PlayerBlockProps) {
+export function PlayerBlock({ name = 'TAIMOOR', initials = 'TA', status = 'Toronto, ON', level, xp = 8, xpOf = 10, xpLabel, xpCaption, onXpClick, levelSuffix, onClick }: PlayerBlockProps) {
   const id = (
     <>
       <div className="player-block__row">
@@ -59,9 +61,12 @@ export function PlayerBlock({ name = 'TAIMOOR', initials = 'TA', status = 'Toron
     </>
   );
   const bar = (
-    <div className="player-block__xp" style={{ gridTemplateColumns: `repeat(${xpOf}, 1fr)` }} aria-hidden>
-      {Array.from({ length: xpOf }, (_, i) => <span key={i} className={i < xp ? 'on' : undefined} />)}
-    </div>
+    <>
+      {xpCaption && <span className="player-block__xp-caption">{xpCaption}</span>}
+      <div className="player-block__xp" style={{ gridTemplateColumns: `repeat(${xpOf}, 1fr)` }} aria-hidden>
+        {Array.from({ length: xpOf }, (_, i) => <span key={i} className={i < xp ? 'on' : undefined} />)}
+      </div>
+    </>
   );
   return (
     <div className="player-block">
