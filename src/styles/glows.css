@@ -67,3 +67,8 @@
 @media (prefers-reduced-motion: reduce) {
   .d-stage, .m-app { transition: none; animation: none; }
 }
+
+/* Award rows follow the page's background colour, so they never clash with it. */
+.d-stage, .m-app {
+  --c-award-row: oklch(calc(0.36 * var(--light)) calc(0.11 * var(--vivid)) calc((var(--hue) - 3) * 1deg + var(--page-hue)));
+}
