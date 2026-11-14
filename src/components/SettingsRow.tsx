@@ -48,6 +48,10 @@ export function SettingsRow({ label, value, selected, state, size = 'sm', gold, 
   if (children) {
     return <label className={classes} data-state={state} onClick={onClick} onMouseEnter={onHover}>{labelEl}{valueEl}</label>;
   }
+  // Nothing to do on click: a plain read-only row (no pointer, no hover, square corners).
+  if (!onClick && !onPrev && !onNext && !onHover) {
+    return <div className={cls(classes, 'is-static')} data-state={state}>{labelEl}{valueEl}</div>;
+  }
   const onKey = (e: KeyboardEvent) => {
     if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onClick?.(); }
     if (selected && e.key === 'ArrowLeft') onPrev?.();

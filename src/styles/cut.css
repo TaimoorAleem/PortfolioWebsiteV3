@@ -54,3 +54,7 @@
 .gallery__thumb:hover::after, .gallery__thumb:focus-visible::after,
 .blog-cover:hover::after, .blog-cover:focus-visible::after,
 .d-tile:hover::after, .d-tile:focus-visible::after { opacity: 1; }
+
+/* Read-only settings rows (e.g. the profile Summary) aren't clickable. */
+.settings-row.is-static { cursor: default; clip-path: none; }
+.settings-row.is-static:hover { background: transparent; }
