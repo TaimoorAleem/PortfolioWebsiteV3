@@ -682,6 +682,7 @@ export const PROFILE = {
 export const SOCIAL = {
   spotify: 'https://open.spotify.com/user/jrlooyy8uvskrw9b4fqugh32o',
   youtube: 'https://youtube.com/@taimoorrr',
+  strava: 'https://strava.app.link/fI1Nj7S127b',
 };
 
 /** Icon links under the profile portrait. */
@@ -713,11 +714,14 @@ export const HOBBY_PHOTOS = false;
 export const HOBBIES: Hobby[] = [
   { label: 'Piano', images: [] },
   { label: 'Cooking', images: [] },
-  { label: 'Running', images: [] },
+  { label: 'Running', href: SOCIAL.strava, site: 'Strava' },
   { label: 'Music', detail: 'Indie Rock · Metal Rock', href: SOCIAL.spotify, site: 'Spotify' },
   {
-    label: 'Gaming',
-    items: [{ name: 'Titanfall 2', href: SOCIAL.youtube, site: 'YouTube' }, { name: 'The Last Of Us' }, { name: 'and more' }],
+    label: 'Gaming', href: SOCIAL.youtube, site: 'YouTube',
+    items: [
+      { name: 'Titanfall 2' }, { name: 'Apex Legends' }, { name: 'Cyberpunk 2077' },
+      { name: 'Call of Duty: Modern Warfare' }, { name: 'The Last Of Us' }, { name: 'and more' },
+    ],
   },
   { label: 'Sports', detail: 'Cricket · Squash' },
 ];

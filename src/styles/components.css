@@ -461,7 +461,8 @@
 @media (prefers-reduced-motion: reduce) { .ss-overlay { animation: none; } }
 
 /* ---------- Hobbies (Profile) ---------- */
-.hobbies { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 8px; }
+/* Each card is as tall as its own content. */
+.hobbies { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 8px; align-items: start; }
 .hobby {
   position: relative; min-height: 72px; padding: 10px 12px; display: flex; flex-direction: column; justify-content: flex-start; gap: 2px;
   background: var(--c-stat); color: var(--c-text); text-align: left; cursor: pointer;
