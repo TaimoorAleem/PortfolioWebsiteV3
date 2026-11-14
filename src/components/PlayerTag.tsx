@@ -76,7 +76,6 @@ export function PlayerBlock({ name = 'TAIMOOR', initials = 'TA', status = 'Toron
       {onXpClick
         ? <button type="button" className="btn-reset player-block__bar player-block__bar--link" onClick={onXpClick} title={xpLabel} aria-label={xpLabel ?? 'Open'}>{bar}</button>
         : <div className="player-block__bar" title={xpLabel}>{bar}</div>}
-      <div className="player-block__rule" />
       {level !== undefined && <Level value={level} size="lg" suffix={levelSuffix} />}
     </div>
   );

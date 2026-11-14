@@ -689,7 +689,7 @@ export const PROFILE = {
   role: 'AI Engineer · Software Developer',
   status: 'Open to new grad roles',
   /** Current quest: the bar under your name (top right) fills one segment per finished phase. Update `done` as phases ship. */
-  quest: { name: 'Proprio', done: 1, of: 6, project: 'proprio' },
+  quest: { name: 'Proprio', done: 5, of: 14, project: 'proprio' },
   bio: '',
   now: {
     title: 'Founding Engineer, IgnisXR',
