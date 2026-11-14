@@ -42,3 +42,15 @@
   clip-path: polygon(0 0, 100% 0, 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, 0 100%);
 }
 .social__btn:hover, .social__btn:focus-visible { background: var(--c-selected); color: var(--c-on-selected); outline: none; }
+
+/* The hover border is an inset shadow, which the clip-path cuts off along the corner.
+   Draw that diagonal edge as a thin line so the border follows the whole shape. */
+.hobby::after, .gallery__thumb::after, .blog-cover::after, .d-tile::after {
+  content: ''; position: absolute; z-index: 2; right: 0; bottom: var(--cut);
+  width: calc(var(--cut) * 1.4142 + 1px); height: 1.5px; transform-origin: 100% 0; transform: translateY(-0.5px) rotate(-45deg);
+  background: rgba(255, 255, 255, 0.85); opacity: 0; pointer-events: none;
+}
+.hobby:not(.is-disabled):not(.is-plain):hover::after, .hobby:focus-visible::after,
+.gallery__thumb:hover::after, .gallery__thumb:focus-visible::after,
+.blog-cover:hover::after, .blog-cover:focus-visible::after,
+.d-tile:hover::after, .d-tile:focus-visible::after { opacity: 1; }
