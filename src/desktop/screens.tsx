@@ -359,7 +359,7 @@ export function DAwards({ s, set, go }: DCtx) {
             return (
               <div
                 key={`${a.event}-${a.result}`}
-                className={`d-award${open ? ' is-open' : ''}${i < 3 ? ' is-top' : ''}`}
+                className={`d-award${open ? ' is-open' : ''}${a.highlight ? ' is-top' : ''}`}
                 tabIndex={0}
                 onMouseEnter={() => set({ awardIdx: i })}
                 onFocus={() => set({ awardIdx: i })}

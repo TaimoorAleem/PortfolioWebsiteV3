@@ -263,7 +263,7 @@ export function AboutScreen({ s, set, go }: Ctx) {
           const open = i === s.awardIdx;
           const slides = awardSlides(a);
           return (
-            <div key={`${a.event}-${a.result}`} className={`m-award${open ? ' is-open' : ''}${i < 3 ? ' is-top' : ''}`}>
+            <div key={`${a.event}-${a.result}`} className={`m-award${open ? ' is-open' : ''}${a.highlight ? ' is-top' : ''}`}>
               <button type="button" className="btn-reset m-award__main" aria-expanded={open} onClick={() => set({ awardIdx: open ? -1 : i })}>
                 <span className="m-award__event">{a.result}</span>
                 <span className="m-award__result">{a.event}</span>

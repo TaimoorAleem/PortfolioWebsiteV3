@@ -348,6 +348,8 @@ export interface Award {
   details: string;
   /** Project id: links the row to that project and lists the award on the project. */
   project?: string;
+  /** Show the award title in gold (top results). */
+  highlight?: boolean;
   /** Photos, e.g. ['/media/awards/capstone-1.jpg']. Click to view them in an overlay. Placeholder until set. */
   images?: string[];
 }
@@ -355,12 +357,12 @@ export interface Award {
 /** One row per award; an event with two prizes gets two rows. */
 export const AWARDS: Award[] = [
   {
-    event: 'CS Capstone, Sheridan', result: 'First Place', team: 'Capstone team', year: '2025', project: 'cricket',
+    event: 'CS Capstone, Sheridan', result: 'First Place', team: 'Capstone team', year: '2025', project: 'cricket', highlight: true,
     details: 'AI Cricket Coach ranked first among all 2025 CS capstones at Sheridan, across Data Analytics, Cloud Computing and Game Engineering, by student votes and faculty evaluation.',
     images: ['/media/linkedin/capstone/capstone-poster-abstract.jpg', '/media/projects/cricket/title-slide.jpg', '/media/projects/cricket/delivery-details.jpg'],
   },
   {
-    event: 'Google Solution Challenge', result: 'Top 3, North America', team: 'IgnisXR team', year: '2026', project: 'ember',
+    event: 'Google Solution Challenge', result: 'Top 3, North America', team: 'IgnisXR team', year: '2026', project: 'ember', highlight: true,
     details: 'Ember, our XR firefighter helmet, placed in the top 3 in North America: the only Canadian team and the only hardware project in the top three. Google flew us to Google NYC on August 21, 2026 to demo it.',
     images: ['/media/linkedin/gsc/top3-12-winning-3-slide.jpg', '/media/linkedin/gsc/win-01-welcoming-top3.jpg', '/media/projects/ember/google-office-group.jpg', '/media/projects/ember/gsc-nyc-demo.jpg', '/media/projects/ember/gsc-nyc-helmet.jpg', '/media/projects/ember/gsc-nyc-presentation.jpg', '/media/projects/ember/google-nyc-team.jpg', '/media/projects/ember/gsc-nyc-photobooth.jpg', '/media/projects/ember/nyc-trip-airport.jpg', '/media/linkedin/gsc/top10-04-finalist-email.jpg', '/media/linkedin/gsc/top10-05-cutc-demo-booth.jpg'],
   },
@@ -770,5 +772,5 @@ export const LINKS: { label: string; value: string; short: string; href: string;
 export const NOW_WORKING: { label: string; project?: string; leadership?: number }[] = [
   { label: 'Ember at IgnisXR: Edge AI for firefighter helmets', project: 'ember' },
   { label: 'Proprio: Validating barbell exercise classification in a real gym environment.', project: 'proprio' },
-  { label: 'BearHacks 2027: advising the organizing team', leadership: leadershipIndex('BearHacks 2026') },
+  { label: 'BearHacks 2027: Advising the organizing team', leadership: leadershipIndex('BearHacks 2026') },
 ];
