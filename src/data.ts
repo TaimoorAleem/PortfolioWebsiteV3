@@ -693,7 +693,7 @@ export const PROFILE = {
   bio: '',
   now: {
     title: 'Founding Engineer, IgnisXR',
-    text: 'Building Ember, an XR helmet for firefighters: edge AI, multi threaded sensor fusion and a wearable biometric stream.',
+    text: 'Building Ember, an XR helmet for firefighters: edge AI, multi threaded sensor fusion and AR-powered navigation.',
   },
   stats: [
     // meter: how many of the 10 bar segments under the tile light up.
@@ -757,7 +757,7 @@ export const HOBBIES: Hobby[] = [
       { name: 'Call of Duty: Modern Warfare' }, { name: 'The Last Of Us' }, { name: 'and more' },
     ],
   },
-  { label: 'Sports', detail: 'Cricket · Squash' },
+  { label: 'Sports', items: [{ name: 'Cricket' }, { name: 'Squash' }] },
 ];
 
 export const hobbySlides = (h: Hobby): SlideData[] =>
