@@ -214,7 +214,7 @@
 .m-award.is-open { background: color-mix(in oklch, var(--c-award-row) 90%, white 8%); }
 .m-award.is-open::before { transform: scaleY(1); }
 .m-award__main { width: 100%; display: flex; flex-direction: column; gap: 2px; padding: 14px 14px 12px; }
-.m-award.is-first .m-award__event { color: var(--c-highlight); }
+.m-award.is-top .m-award__event { color: var(--c-highlight); }
 .m-award__event { font-size: 17px; line-height: 22px; font-weight: 600; }
 .m-award__result { font-size: 14px; color: var(--c-blue); }
 .m-award__meta { font-family: var(--f-mono); font-size: 11px; color: var(--c-faint); margin-top: 2px; }

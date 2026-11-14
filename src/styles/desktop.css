@@ -298,7 +298,7 @@
 .d-award__year { margin-left: auto; flex: none; text-align: right; font-family: var(--f-display); font-weight: 700; font-size: 22px; color: var(--c-faint); }
 .d-award.is-open .d-award__year { color: var(--c-amber); }
 .d-award__event { font-size: 19px; line-height: 24px; font-weight: 600; white-space: nowrap; }
-.d-award.is-first .d-award__event { color: var(--c-highlight); }
+.d-award.is-top .d-award__event { color: var(--c-highlight); }
 .d-award__result { font-size: 15px; color: var(--c-blue); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .d-award__more { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 280ms var(--ease); }
 .d-award.is-open .d-award__more { grid-template-rows: 1fr; }

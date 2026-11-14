@@ -742,7 +742,10 @@ export const HOBBIES: Hobby[] = [
   { label: 'Piano', images: [] },
   { label: 'Cooking', images: [] },
   { label: 'Running', href: SOCIAL.strava, site: 'Strava' },
-  { label: 'Music', detail: 'Indie Rock · Metal Rock', href: SOCIAL.spotify, site: 'Spotify' },
+  {
+    label: 'Music', href: SOCIAL.spotify, site: 'Spotify',
+    items: [{ name: 'Indie Rock' }, { name: 'Metal Rock' }, { name: 'Psychedelic Rock' }],
+  },
   {
     label: 'Gaming', href: SOCIAL.youtube, site: 'YouTube',
     items: [
