@@ -124,7 +124,7 @@ export const PROJECTS: Project[] = [
       { label: 'Robustness', value: '7×', caption: 'misalignment tolerance', tech: ['PyTorch'] },
     ],
     stack: ['Python', 'PyTorch', 'scikit learn', 'MLflow', 'DVC', 'Kotlin', 'Wear OS', 'Spring Boot', 'RabbitMQ', 'PostgreSQL'],
-    links: { github: `${GH}/Proprio` },
+    links: { github: `${GH}/Proprio`, article: 'https://dev.to/taimooraleem/building-proprio-bbb' },
     media: 'Proprio', groups: ['personal'], images: ['/media/projects/proprio/exercises.jpg', '/media/projects/proprio/rotation-sensitivity.png'],
   },
   {
@@ -521,6 +521,8 @@ export interface Blog {
   sections: string[];
   /** Cover image. Falls back to the first of `images`, then a placeholder. */
   cover?: string;
+  /** 'contain' shows the whole cover (wide diagrams); default fills and crops. */
+  coverFit?: 'contain';
   /** Figures from the post, shown as a gallery that opens full screen. */
   images?: SlideData[];
   /** Related project id: adds a button to it, and the project links back. */
@@ -530,6 +532,31 @@ export interface Blog {
 /** Blog posts, newest first. Medium images are loaded from Medium's CDN; drop your own in
  *  public/media/blogs/ and point `cover` / `images` at '/media/blogs/<file>' to host them here. */
 export const BLOGS: Blog[] = [
+  {
+    id: 'building-proprio',
+    title: 'Building Proprio',
+    short: 'Building Proprio',
+    date: '2026-11-13',
+    site: 'DEV',
+    href: 'https://dev.to/taimooraleem/building-proprio-bbb',
+    quote: 'A number that good deserves a hard second look before I build anything on top of it.',
+    summary:
+      'Part 0 of my build-in-public series on turning a machine learning research project into a real smartwatch product. ' +
+      'It starts from a study that recognized barbell exercises and counted reps from a wrist sensor, and from my own rebuild of its pipeline, ' +
+      'whose 99.9% accuracy made me suspicious rather than happy. Then it covers the gap between a study and a product, ' +
+      'who actually needs one, the five parts of Proprio, and the roadmap from proving it works on a real Galaxy Watch to making it useful.',
+    sections: [
+      'Where This Started', 'The Original Work', 'How the Original Pipeline Works', 'From Study to Product',
+      'Who Actually Needs This', 'Meet Proprio', 'The Roadmap', 'Limitations', "What's Next",
+    ],
+    cover: '/media/projects/proprio/exercises.jpg',
+    coverFit: 'contain',
+    images: [
+      { src: '/media/blogs/proprio/original-pipeline.png', label: 'The original pipeline, from raw files to a predicted exercise' },
+      { src: '/media/blogs/proprio/diary-vs-sensor.png', label: 'Exercises recorded: diaries vs a hidden accelerometer' },
+    ],
+    project: 'proprio',
+  },
   {
     id: 'datathon-behind-the-scenes',
     title: 'Organizing Sheridan Datathon 2025: A Behind-The-Scenes Recap',

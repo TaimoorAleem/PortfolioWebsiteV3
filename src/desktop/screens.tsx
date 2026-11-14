@@ -564,7 +564,7 @@ export function DBlogs({ s, set, go }: DCtx) {
       <Rule left={340} />
       <article className="d-blog" key={b.id}>
         <div className="d-blog__col">
-          <button type="button" className="btn-reset blog-cover" onClick={() => lightbox.open(b.title, blogSlides(b), 0, b.site)}>
+          <button type="button" className={`btn-reset blog-cover${b.coverFit === 'contain' ? ' blog-cover--contain' : ''}`} onClick={() => lightbox.open(b.title, blogSlides(b), 0, b.site)}>
             {cover ? <img src={cover} alt="" /> : <span className="blog-cover__ph">cover image</span>}
             <span className="ss__open-tag">⤢ VIEW</span>
           </button>
