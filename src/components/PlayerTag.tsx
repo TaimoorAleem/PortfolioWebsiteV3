@@ -35,29 +35,45 @@ interface PlayerBlockProps {
   status?: string;
   /** Omit to hide the ◆ level line. */
   level?: number;
-  /** Filled XP segments out of 10. */
+  /** Filled segments of the 10-segment bar. */
   xp?: number;
+  /** What the bar counts, shown under it (e.g. "7× HACKATHON PRIZES"). Omit for a bare bar. */
+  xpLabel?: string;
+  /** Makes the bar and its label a button (e.g. open Awards). */
+  onXpClick?: () => void;
   levelSuffix?: string;
-  /** Makes the block a button (e.g. open Profile). */
+  /** Makes the name, badge and status a button (e.g. open Profile). */
   onClick?: () => void;
 }
 
-export function PlayerBlock({ name = 'TAIMOOR', initials = 'TA', status = 'Toronto, ON', level, xp = 8, levelSuffix, onClick }: PlayerBlockProps) {
-  const inner = (
+export function PlayerBlock({ name = 'TAIMOOR', initials = 'TA', status = 'Toronto, ON', level, xp = 8, xpLabel, onXpClick, levelSuffix, onClick }: PlayerBlockProps) {
+  const id = (
     <>
       <div className="player-block__row">
         <span className="player-block__name">{name}</span>
         <span className="player-block__avatar">{initials}</span>
       </div>
       <span className="player-block__status">{status}</span>
+    </>
+  );
+  const bar = (
+    <>
       <div className="player-block__xp" aria-hidden>
         {Array.from({ length: 10 }, (_, i) => <span key={i} className={i < xp ? 'on' : undefined} />)}
       </div>
-      <div className="player-block__rule" />
-      {level !== undefined && <Level value={level} size="lg" suffix={levelSuffix} />}
+      {xpLabel && <span className="player-block__xp-label">{xpLabel}</span>}
     </>
   );
-  return onClick
-    ? <button type="button" className="btn-reset player-block player-block--link" onClick={onClick} aria-label="Open profile">{inner}</button>
-    : <div className="player-block">{inner}</div>;
+  return (
+    <div className="player-block">
+      {onClick
+        ? <button type="button" className="btn-reset player-block__id player-block--link" onClick={onClick} aria-label="Open profile">{id}</button>
+        : <div className="player-block__id">{id}</div>}
+      {onXpClick
+        ? <button type="button" className="btn-reset player-block__bar player-block__bar--link" onClick={onXpClick} aria-label={xpLabel ?? 'Open'}>{bar}</button>
+        : <div className="player-block__bar">{bar}</div>}
+      <div className="player-block__rule" />
+      {level !== undefined && <Level value={level} size="lg" suffix={levelSuffix} />}
+    </div>
+  );
 }

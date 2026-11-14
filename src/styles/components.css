@@ -72,6 +72,11 @@
 .player-block__xp { display: grid; grid-template-columns: repeat(10, 1fr); gap: 2px; width: 200px; margin-top: 8px; }
 .player-block__xp > span { height: 2px; background: rgba(255, 255, 255, 0.2); }
 .player-block__xp > span.on { background: var(--c-special); }
+.player-block__id { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
+.player-block__bar { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
+.player-block__xp-label { font-size: 10px; line-height: 12px; font-weight: 600; letter-spacing: 0.08em; color: var(--c-muted); }
+.player-block__bar--link { cursor: pointer; }
+.player-block__bar--link:hover .player-block__xp-label, .player-block__bar--link:focus-visible .player-block__xp-label { color: var(--c-amber); }
 .player-block__rule { width: 200px; height: 1px; background: var(--c-hair); margin-top: 3px; }
 .player-block .level { margin-top: 8px; }
 

@@ -363,7 +363,7 @@ export const AWARDS: Award[] = [
   },
   {
     event: 'Google Solution Challenge', result: 'Top 3, North America', team: 'IgnisXR team', year: '2026', project: 'ember', highlight: true,
-    details: 'Ember, our XR firefighter helmet, placed in the top 3 in North America: the only Canadian team and the only hardware project in the top three. Google flew us to Google NYC on August 21, 2026 to demo it.',
+    details: 'Ember, our XR firefighter helmet, placed in the top 3 in North America: the only Canadian team and the only hardware project in the top three. Google flew us out to New York City where we presented it to Google Engineers.',
     images: ['/media/linkedin/gsc/top3-12-winning-3-slide.jpg', '/media/linkedin/gsc/win-01-welcoming-top3.jpg', '/media/projects/ember/google-office-group.jpg', '/media/projects/ember/gsc-nyc-demo.jpg', '/media/projects/ember/gsc-nyc-helmet.jpg', '/media/projects/ember/gsc-nyc-presentation.jpg', '/media/projects/ember/google-nyc-team.jpg', '/media/projects/ember/gsc-nyc-photobooth.jpg', '/media/projects/ember/nyc-trip-airport.jpg', '/media/linkedin/gsc/top10-04-finalist-email.jpg', '/media/linkedin/gsc/top10-05-cutc-demo-booth.jpg'],
   },
   {
@@ -688,6 +688,8 @@ export const PROFILE = {
   name: 'TAIMOOR ALEEM',
   role: 'AI Engineer · Software Developer',
   status: 'Open to new grad roles',
+  /** Hackathon prizes won (matches the LinkedIn headline); fills the bar under your name, top right. */
+  hackathonPrizes: 7,
   bio: '',
   now: {
     title: 'Founding Engineer, IgnisXR',

@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState, type CSSProperties } from 'react';
 import { LoadingBar, PlayerBlock, PromptBar, type Prompt } from '../components';
 import { desktopGlows } from '../theme/glowLayout';
-import { AWARDS, BLOGS, EMAIL, EXPERIENCE, LEADERSHIP, LINKS, projectById, projectSlides, tabIds } from '../data';
+import { AWARDS, BLOGS, EMAIL, PROFILE, EXPERIENCE, LEADERSHIP, LINKS, projectById, projectSlides, tabIds } from '../data';
 import {
   DAwards, DBlogs, DContact, DExperience, DHome, DLeadership, DProfile, DProjects, DResume, DSkills, FIELDS,
   type DCtx, type FormKey,
@@ -253,7 +253,14 @@ export function DesktopApp({ grain = true, bootScreen = true }: { grain?: boolea
             </>
           )}
 
-          <div className="d-player"><PlayerBlock onClick={() => go({ screen: 'profile' })} /></div>
+          <div className="d-player">
+            <PlayerBlock
+              onClick={() => go({ screen: 'profile' })}
+              xp={Math.min(10, PROFILE.hackathonPrizes)}
+              xpLabel={`${PROFILE.hackathonPrizes}× HACKATHON PRIZES`}
+              onXpClick={() => go({ screen: 'awards', awardIdx: -1 })}
+            />
+          </div>
 
           <main className="d-content" key={s.screen}>
             <Screen {...ctx} />
