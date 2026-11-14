@@ -68,7 +68,29 @@
   .d-stage, .m-app { transition: none; animation: none; }
 }
 
-/* Award rows follow the page's background colour, so they never clash with it. */
+/* The UI follows each page's background colour: panels, cards, tiles, list cells, buttons, media
+   slots and award rows are re-tinted with the page hue (--ui-hue) so nothing clashes with the scene.
+   --ui-tint sets how strongly they pick it up (0 = neutral grey). Redefined here, on the app root,
+   because tokens built from --hue on :root wouldn't see the per-page shift. */
 .d-stage, .m-app {
-  --c-award-row: oklch(calc(0.36 * var(--light)) calc(0.11 * var(--vivid)) calc((var(--hue) - 3) * 1deg + var(--page-hue)));
+  --ui-hue: calc(var(--hue) * 1deg + var(--page-hue));
+  --ui-tint: 0.034;
+  --sf: 0.167 var(--ui-tint) var(--ui-hue);
+  --sf-hover: 0.240 calc(var(--ui-tint) * 1.2) var(--ui-hue);
+  --sf-warm: 0.325 calc(var(--ui-tint) * 1.6) var(--ui-hue);
+  --c-panel: oklch(var(--sf) / 0.78);
+  --c-panel-soft: oklch(var(--sf) / 0.6);
+  --c-stat: oklch(0.296 calc(var(--ui-tint) * 1.1) var(--ui-hue) / 0.62);
+  --c-card: oklch(0.32 calc(var(--ui-tint) * 1.2) var(--ui-hue) / 0.22);
+  --c-bar: oklch(0.13 calc(var(--ui-tint) * 0.9) var(--ui-hue) / 0.55);
+  --c-btn-fill: oklch(0.218 var(--ui-tint) var(--ui-hue));
+  --c-btn-fill-hover: oklch(0.321 calc(var(--ui-tint) * 1.2) var(--ui-hue));
+  --c-btn-fill-disabled: oklch(0.203 calc(var(--ui-tint) * 0.8) var(--ui-hue));
+  --c-media: oklch(0.265 calc(var(--ui-tint) * 1.3) var(--ui-hue));
+  --c-media-tile: oklch(0.294 calc(var(--ui-tint) * 1.4) var(--ui-hue));
+  --c-result-border: oklch(0.393 calc(0.122 * var(--vivid)) var(--ui-hue));
+  --c-result-glow: oklch(0.633 calc(0.189 * var(--vivid)) calc(var(--ui-hue) + 6deg) / 0.45);
+  --c-result-bg: oklch(0.187 calc(0.028 * var(--vivid)) var(--ui-hue));
+  --c-result-title: oklch(0.221 calc(0.062 * var(--vivid)) var(--ui-hue) / 0.9);
+  --c-award-row: oklch(calc(0.36 * var(--light)) calc(0.11 * var(--vivid)) calc(var(--ui-hue) - 3deg));
 }
