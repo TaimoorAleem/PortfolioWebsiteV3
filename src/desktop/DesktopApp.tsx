@@ -7,7 +7,7 @@ import {
   type DCtx, type FormKey,
 } from './screens';
 import {
-  D_INITIAL, D_MENU, D_SCENE, D_TITLES, dFromHash, dToHash, skillRows, type DScreen, type DState,
+  D_INITIAL, D_MENU, D_SCENE, D_TITLES, dFromHash, dToHash, openProjectPatch, skillRows, type DScreen, type DState,
 } from './state';
 
 type Phase = 'in' | 'out' | 'pre';
@@ -256,9 +256,10 @@ export function DesktopApp({ grain = true, bootScreen = true }: { grain?: boolea
           <div className="d-player">
             <PlayerBlock
               onClick={() => go({ screen: 'profile' })}
-              xp={Math.min(10, PROFILE.hackathonPrizes)}
-              xpLabel={`${PROFILE.hackathonPrizes}× HACKATHON PRIZES`}
-              onXpClick={() => go({ screen: 'awards', awardIdx: -1 })}
+              xp={PROFILE.quest.done}
+              xpOf={PROFILE.quest.of}
+              xpLabel={`Quest: ${PROFILE.quest.name}, phase ${PROFILE.quest.done} of ${PROFILE.quest.of}`}
+              onXpClick={() => go(openProjectPatch(PROFILE.quest.project, ref.current.projTab))}
             />
           </div>
 

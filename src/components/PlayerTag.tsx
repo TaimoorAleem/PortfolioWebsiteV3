@@ -35,9 +35,11 @@ interface PlayerBlockProps {
   status?: string;
   /** Omit to hide the ◆ level line. */
   level?: number;
-  /** Filled segments of the 10-segment bar. */
+  /** Filled segments of the bar. */
   xp?: number;
-  /** What the bar counts, shown under it (e.g. "7× HACKATHON PRIZES"). Omit for a bare bar. */
+  /** Total segments in the bar (default 10). */
+  xpOf?: number;
+  /** What the bar tracks; shown as a tooltip and read by screen readers (e.g. "Quest: Proprio, phase 1 of 6"). */
   xpLabel?: string;
   /** Makes the bar and its label a button (e.g. open Awards). */
   onXpClick?: () => void;
@@ -46,7 +48,7 @@ interface PlayerBlockProps {
   onClick?: () => void;
 }
 
-export function PlayerBlock({ name = 'TAIMOOR', initials = 'TA', status = 'Toronto, ON', level, xp = 8, xpLabel, onXpClick, levelSuffix, onClick }: PlayerBlockProps) {
+export function PlayerBlock({ name = 'TAIMOOR', initials = 'TA', status = 'Toronto, ON', level, xp = 8, xpOf = 10, xpLabel, onXpClick, levelSuffix, onClick }: PlayerBlockProps) {
   const id = (
     <>
       <div className="player-block__row">
@@ -57,12 +59,9 @@ export function PlayerBlock({ name = 'TAIMOOR', initials = 'TA', status = 'Toron
     </>
   );
   const bar = (
-    <>
-      <div className="player-block__xp" aria-hidden>
-        {Array.from({ length: 10 }, (_, i) => <span key={i} className={i < xp ? 'on' : undefined} />)}
-      </div>
-      {xpLabel && <span className="player-block__xp-label">{xpLabel}</span>}
-    </>
+    <div className="player-block__xp" style={{ gridTemplateColumns: `repeat(${xpOf}, 1fr)` }} aria-hidden>
+      {Array.from({ length: xpOf }, (_, i) => <span key={i} className={i < xp ? 'on' : undefined} />)}
+    </div>
   );
   return (
     <div className="player-block">
@@ -70,8 +69,8 @@ export function PlayerBlock({ name = 'TAIMOOR', initials = 'TA', status = 'Toron
         ? <button type="button" className="btn-reset player-block__id player-block--link" onClick={onClick} aria-label="Open profile">{id}</button>
         : <div className="player-block__id">{id}</div>}
       {onXpClick
-        ? <button type="button" className="btn-reset player-block__bar player-block__bar--link" onClick={onXpClick} aria-label={xpLabel ?? 'Open'}>{bar}</button>
-        : <div className="player-block__bar">{bar}</div>}
+        ? <button type="button" className="btn-reset player-block__bar player-block__bar--link" onClick={onXpClick} title={xpLabel} aria-label={xpLabel ?? 'Open'}>{bar}</button>
+        : <div className="player-block__bar" title={xpLabel}>{bar}</div>}
       <div className="player-block__rule" />
       {level !== undefined && <Level value={level} size="lg" suffix={levelSuffix} />}
     </div>

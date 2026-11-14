@@ -688,8 +688,8 @@ export const PROFILE = {
   name: 'TAIMOOR ALEEM',
   role: 'AI Engineer · Software Developer',
   status: 'Open to new grad roles',
-  /** Hackathon prizes won (matches the LinkedIn headline); fills the bar under your name, top right. */
-  hackathonPrizes: 7,
+  /** Current quest: the bar under your name (top right) fills one segment per finished phase. Update `done` as phases ship. */
+  quest: { name: 'Proprio', done: 1, of: 6, project: 'proprio' },
   bio: '',
   now: {
     title: 'Founding Engineer, IgnisXR',
