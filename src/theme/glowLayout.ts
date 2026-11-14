@@ -41,11 +41,12 @@ const MOBILE: Record<string, Layout> = {
   blogs:      { s: [[92, 88], [10, 40], [70, 8]] },
 };
 
-// Each page nudges the background hue a little (degrees, applied as hue-rotate on the scene),
-// so pages feel distinct while keeping the theme colour. Glides between pages like the glows.
+// Each page shifts the background to its own colour (degrees of hue-rotate applied to the scene,
+// on top of the --hue theme, which is red at 25). The shift glides between pages like the glows.
+// Roughly: 0 red, 30 orange, 60 gold, 120 green, 170 teal, 200 cyan-blue, 230 blue, 270 violet, 320 magenta.
 const PAGE_HUE: Record<string, number> = {
-  home: 0, profile: -10, experience: 10, leadership: 18, projects: -16, skills: 8,
-  awards: 14, about: 14, blogs: -22, contact: -6, resume: 5,
+  home: 0, profile: 200, experience: 120, leadership: 170, projects: 270, skills: 30,
+  awards: 60, about: 60, blogs: 320, contact: 230, resume: 340,
 };
 
 function toVars({ s }: Layout, screen: string): CSSProperties {
