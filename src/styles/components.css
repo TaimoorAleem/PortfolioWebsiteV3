@@ -73,9 +73,8 @@
 .player-block__xp > span { height: 2px; background: rgba(255, 255, 255, 0.2); }
 .player-block__xp > span.on { background: var(--c-special); }
 .player-block__id { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
-.player-block__bar { display: flex; align-items: center; justify-content: flex-end; gap: 8px; width: 200px; margin-top: 8px; }
-.player-block__bar .player-block__xp { flex: 1; width: auto; margin-top: 0; }
-/* Caption sits on the bar's row, so the block keeps its height. */
+.player-block__bar { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; width: 200px; }
+/* Bar spans the full width; the caption sits under it, right-aligned. */
 .player-block__xp-caption { flex: none; font-size: 10px; line-height: 12px; font-weight: 600; letter-spacing: 0.08em; color: var(--c-muted); white-space: nowrap; }
 .player-block__bar--link:hover .player-block__xp-caption, .player-block__bar--link:focus-visible .player-block__xp-caption { color: var(--c-amber); }
 .player-block__bar--link { cursor: pointer; padding: 6px 0; margin: -6px 0; }

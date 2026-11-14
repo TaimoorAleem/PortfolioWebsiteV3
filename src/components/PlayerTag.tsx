@@ -41,7 +41,7 @@ interface PlayerBlockProps {
   xpOf?: number;
   /** What the bar tracks; shown as a tooltip and read by screen readers (e.g. "Quest: Proprio, phase 1 of 6"). */
   xpLabel?: string;
-  /** Short caption on the same row, left of the bar (e.g. "PROPRIO 1/6"). */
+  /** Short caption under the bar (e.g. "QUEST: PROPRIO 1/6"). */
   xpCaption?: string;
   /** Makes the bar and its label a button (e.g. open Awards). */
   onXpClick?: () => void;
@@ -62,10 +62,10 @@ export function PlayerBlock({ name = 'TAIMOOR', initials = 'TA', status = 'Toron
   );
   const bar = (
     <>
-      {xpCaption && <span className="player-block__xp-caption">{xpCaption}</span>}
       <div className="player-block__xp" style={{ gridTemplateColumns: `repeat(${xpOf}, 1fr)` }} aria-hidden>
         {Array.from({ length: xpOf }, (_, i) => <span key={i} className={i < xp ? 'on' : undefined} />)}
       </div>
+      {xpCaption && <span className="player-block__xp-caption">{xpCaption}</span>}
     </>
   );
   return (
