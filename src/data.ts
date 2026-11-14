@@ -743,8 +743,6 @@ export interface Hobby {
 export const HOBBY_PHOTOS = false;
 
 export const HOBBIES: Hobby[] = [
-  { label: 'Piano', images: [] },
-  { label: 'Cooking', images: [] },
   { label: 'Running', href: SOCIAL.strava, site: 'Strava' },
   {
     label: 'Music', href: SOCIAL.spotify, site: 'Spotify',
@@ -753,11 +751,12 @@ export const HOBBIES: Hobby[] = [
   {
     label: 'Gaming', href: SOCIAL.youtube, site: 'YouTube',
     items: [
-      { name: 'Titanfall 2' }, { name: 'Apex Legends' }, { name: 'Cyberpunk 2077' },
-      { name: 'Call of Duty: Modern Warfare' }, { name: 'The Last Of Us' }, { name: 'and more' },
+      { name: 'Titanfall 2' }
     ],
   },
   { label: 'Sports', items: [{ name: 'Cricket' }, { name: 'Squash' }] },
+  { label: 'Piano', images: [] },
+  { label: 'Cooking', images: [] }
 ];
 
 export const hobbySlides = (h: Hobby): SlideData[] =>
