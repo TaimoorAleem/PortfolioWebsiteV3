@@ -457,7 +457,7 @@ export const LEADERSHIP: Chapter[] = [
     name: 'BearHacks 2026', num: '04', company: 'BEARHACKS 2026', section: 'COMMAND LOG',
     meta: 'Co-Director',
     cards: [
-      ['EVENT', "Co-directed Mississauga's largest hackathon with Imran Yafith, leading 7 teams of 41 organizers: 300+ participants and 65+ projects over 36 hours."],
+      ['EVENT', "Co-directed Mississauga's largest hackathons; leading 7 teams of 41 organizers, 300+ participants and 65+ projects over 36 hours."],
       ['RECORD TURNOUT', '700+ applications, and 100+ RSVPs within an hour of sending acceptances, a record for hackathons at Sheridan.'],
       ['SPONSORS', '22 sponsors, including the City of Mississauga, Scotiabank, Tangerine, ElevenLabs, siberX and Red Bull, and $10,000 in prizes.'],
       ['RECOGNITION', 'Nominated for the Bruno Team Leadership Award; covered by INSAUGA. No post-event survey rated it below 4 out of 5.'],
